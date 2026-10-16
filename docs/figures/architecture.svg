@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470" width="1000" height="470" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8a96ab"/>
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b87a00"/>
+    </marker>
+  </defs>
+  <rect x="0.5" y="0.5" width="999" height="469" rx="18" fill="#ffffff" stroke="#e3e7ee"/>
+
+  <g>
+    <rect x="28" y="170" width="120" height="96" rx="14" fill="#f6f8fb" stroke="#d6dce6"/>
+    <text x="88" y="210" text-anchor="middle" fill="#14213d" font-size="15" font-weight="600">Clients</text>
+    <text x="88" y="232" text-anchor="middle" fill="#5a6780" font-size="12">OpenAI API</text>
+  </g>
+
+  <path d="M148 218 H 196" stroke="#8a96ab" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="198" y="40" width="540" height="390" rx="18" fill="#fbfcfe" stroke="#b87a00" stroke-opacity="0.55"/>
+  <text x="222" y="72" fill="#14213d" font-size="16" font-weight="600">Abyss gateway</text>
+  <text x="222" y="92" fill="#5a6780" font-size="12">Streams requests through, observes every token, prices every placement</text>
+
+  <rect x="222" y="112" width="150" height="70" rx="12" fill="#f2f5f9" stroke="#d6dce6"/>
+  <text x="297" y="142" text-anchor="middle" fill="#14213d" font-size="13" font-weight="600">Prompt hashing</text>
+  <text x="297" y="162" text-anchor="middle" fill="#5a6780" font-size="11.5">chained block hashes</text>
+
+  <rect x="222" y="200" width="150" height="70" rx="12" fill="#f2f5f9" stroke="#d6dce6"/>
+  <text x="297" y="230" text-anchor="middle" fill="#14213d" font-size="13" font-weight="600">Stream observer</text>
+  <text x="297" y="250" text-anchor="middle" fill="#5a6780" font-size="11.5">first token, token times</text>
+
+  <rect x="222" y="288" width="150" height="70" rx="12" fill="#f2f5f9" stroke="#d6dce6"/>
+  <text x="297" y="318" text-anchor="middle" fill="#14213d" font-size="13" font-weight="600">Online estimators</text>
+  <text x="297" y="338" text-anchor="middle" fill="#5a6780" font-size="11.5">output length, block reuse</text>
+
+  <rect x="398" y="112" width="316" height="246" rx="14" fill="#f6f8fb" stroke="#d6dce6"/>
+  <text x="414" y="138" fill="#14213d" font-size="13" font-weight="600">One twin per replica</text>
+  <text x="414" y="156" fill="#5a6780" font-size="11.5">scheduler, paged KV, prefix cache, roofline step model,</text>
+  <text x="414" y="172" fill="#5a6780" font-size="11.5">speed scale fitted to observed inter-token gaps</text>
+
+  <rect x="414" y="188" width="136" height="56" rx="10" fill="#e9eef6"/>
+  <text x="482" y="212" text-anchor="middle" fill="#14213d" font-size="12.5">Rollout with</text>
+  <text x="482" y="230" text-anchor="middle" fill="#14213d" font-size="12.5">the request</text>
+  <rect x="562" y="188" width="136" height="56" rx="10" fill="#e9eef6"/>
+  <text x="630" y="212" text-anchor="middle" fill="#14213d" font-size="12.5">Rollout</text>
+  <text x="630" y="230" text-anchor="middle" fill="#14213d" font-size="12.5">without it</text>
+
+  <rect x="414" y="258" width="284" height="84" rx="10" fill="#2a2a2a" fill-opacity="0" stroke="#b87a00" stroke-opacity="0.6"/>
+  <text x="556" y="282" text-anchor="middle" fill="#b87a00" font-size="13" font-weight="600">Price of placing the request here</text>
+  <circle cx="436" cy="304" r="5" fill="#2a78d6"/><text x="448" y="308" fill="#2e3a52" font-size="12">risk to this request</text>
+  <circle cx="556" cy="304" r="5" fill="#eb6834"/><text x="568" y="308" fill="#2e3a52" font-size="12">harm to other requests</text>
+  <circle cx="436" cy="326" r="5" fill="#1baf7a"/><text x="448" y="330" fill="#2e3a52" font-size="12">cache it would evict</text>
+
+  <path d="M372 147 H 396" stroke="#8a96ab" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <path d="M372 235 H 396" stroke="#8a96ab" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <path d="M372 323 H 396" stroke="#8a96ab" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <rect x="398" y="374" width="316" height="40" rx="10" fill="#b87a00" fill-opacity="0.14" stroke="#b87a00" stroke-opacity="0.6"/>
+  <text x="556" y="399" text-anchor="middle" fill="#7a5200" font-size="13" font-weight="600">Dispatch to the cheapest replica</text>
+
+  <path d="M714 394 C 760 394, 760 330, 792 300" stroke="#b87a00" stroke-width="2" fill="none" marker-end="url(#arrowAmber)"/>
+
+  <g>
+    <rect x="794" y="72" width="180" height="70" rx="12" fill="#f6f8fb" stroke="#d6dce6"/>
+    <text x="884" y="102" text-anchor="middle" fill="#14213d" font-size="13" font-weight="600">H100 TP4 replica</text>
+    <text x="884" y="122" text-anchor="middle" fill="#5a6780" font-size="11.5">vLLM or SGLang</text>
+    <rect x="794" y="158" width="180" height="70" rx="12" fill="#f6f8fb" stroke="#d6dce6"/>
+    <text x="884" y="188" text-anchor="middle" fill="#14213d" font-size="13" font-weight="600">H100 TP4 replica</text>
+    <text x="884" y="208" text-anchor="middle" fill="#5a6780" font-size="11.5">vLLM or SGLang</text>
+    <rect x="794" y="244" width="180" height="70" rx="12" fill="#f6f8fb" stroke="#d6dce6"/>
+    <text x="884" y="274" text-anchor="middle" fill="#14213d" font-size="13" font-weight="600">A100 TP4 replica</text>
+    <text x="884" y="294" text-anchor="middle" fill="#5a6780" font-size="11.5">slower, same model</text>
+    <rect x="794" y="330" width="180" height="70" rx="12" fill="#f6f8fb" stroke="#d6dce6"/>
+    <text x="884" y="360" text-anchor="middle" fill="#14213d" font-size="13" font-weight="600">Emulated replica</text>
+    <text x="884" y="380" text-anchor="middle" fill="#5a6780" font-size="11.5">abyss emulate</text>
+  </g>
+
+  <path d="M792 120 C 760 120, 740 120, 716 160" stroke="#8a96ab" stroke-width="1.6" stroke-dasharray="5 4" fill="none" marker-end="url(#arrow)"/>
+  <text x="742" y="112" fill="#5a6780" font-size="11" text-anchor="middle">token streams</text>
+</svg>
