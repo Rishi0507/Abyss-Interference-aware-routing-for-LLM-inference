@@ -1,0 +1,215 @@
+{
+  "chars_per_token": 3.992202729044834,
+  "deployment": {
+    "model": "llama-3.1-8b",
+    "hardware": "h100",
+    "tp": 1,
+    "mem_util": 0,
+    "efficiency": {
+      "gemm": 0.4972060727847716,
+      "gemm_half_tokens": 96,
+      "attention": 0.27498572913010694,
+      "bandwidth": 0.5290532738127578,
+      "step_overhead_s": 0.0010419876449465266,
+      "seq_overhead_s": 0.000012,
+      "reserve_bytes": 3000000000
+    }
+  },
+  "efficiency": {
+    "gemm": 0.4972060727847716,
+    "gemm_half_tokens": 96,
+    "attention": 0.27498572913010694,
+    "bandwidth": 0.5290532738127578,
+    "step_overhead_s": 0.0010419876449465266,
+    "seq_overhead_s": 0.000012,
+    "reserve_bytes": 3000000000
+  },
+  "network_overhead_s": 0.006337533893867705,
+  "samples": [
+    {
+      "kind": "prefill",
+      "prompt_tokens": 258,
+      "batch": 1,
+      "context": 0,
+      "seconds": 0.01788
+    },
+    {
+      "kind": "prefill",
+      "prompt_tokens": 1024,
+      "batch": 1,
+      "context": 0,
+      "seconds": 0.0374058
+    },
+    {
+      "kind": "prefill",
+      "prompt_tokens": 2046,
+      "batch": 1,
+      "context": 0,
+      "seconds": 0.0742334
+    },
+    {
+      "kind": "prefill",
+      "prompt_tokens": 4090,
+      "batch": 1,
+      "context": 0,
+      "seconds": 0.1464442
+    },
+    {
+      "kind": "prefill",
+      "prompt_tokens": 8178,
+      "batch": 1,
+      "context": 0,
+      "seconds": 0.3096973
+    },
+    {
+      "kind": "prefill",
+      "prompt_tokens": 16354,
+      "batch": 1,
+      "context": 0,
+      "seconds": 0.7254632
+    },
+    {
+      "kind": "decode",
+      "prompt_tokens": 512,
+      "batch": 1,
+      "context": 592,
+      "seconds": 0.010192993706293707
+    },
+    {
+      "kind": "decode",
+      "prompt_tokens": 512,
+      "batch": 4,
+      "context": 592,
+      "seconds": 0.010308165034965034
+    },
+    {
+      "kind": "decode",
+      "prompt_tokens": 512,
+      "batch": 16,
+      "context": 592,
+      "seconds": 0.010995271328671329
+    },
+    {
+      "kind": "decode",
+      "prompt_tokens": 512,
+      "batch": 32,
+      "context": 592,
+      "seconds": 0.011879021678321678
+    }
+  ],
+  "rows": [
+    {
+      "sample": {
+        "kind": "prefill",
+        "prompt_tokens": 258,
+        "batch": 1,
+        "context": 0,
+        "seconds": 0.01788
+      },
+      "predicted_s": 0.017507653129167418,
+      "default_predicted_s": 0.009915101705531133
+    },
+    {
+      "sample": {
+        "kind": "prefill",
+        "prompt_tokens": 1024,
+        "batch": 1,
+        "context": 0,
+        "seconds": 0.0374058
+      },
+      "predicted_s": 0.04019835319158725,
+      "default_predicted_s": 0.027972342055203245
+    },
+    {
+      "sample": {
+        "kind": "prefill",
+        "prompt_tokens": 2046,
+        "batch": 1,
+        "context": 0,
+        "seconds": 0.0742334
+      },
+      "predicted_s": 0.07223443681224159,
+      "default_predicted_s": 0.053218155776205804
+    },
+    {
+      "sample": {
+        "kind": "prefill",
+        "prompt_tokens": 4090,
+        "batch": 1,
+        "context": 0,
+        "seconds": 0.1464442
+      },
+      "predicted_s": 0.14234744361499269,
+      "default_predicted_s": 0.10766491166318283
+    },
+    {
+      "sample": {
+        "kind": "prefill",
+        "prompt_tokens": 8178,
+        "batch": 1,
+        "context": 0,
+        "seconds": 0.3096973
+      },
+      "predicted_s": 0.3067362905474723,
+      "default_predicted_s": 0.23237851626087755
+    },
+    {
+      "sample": {
+        "kind": "prefill",
+        "prompt_tokens": 16354,
+        "batch": 1,
+        "context": 0,
+        "seconds": 0.7254632
+      },
+      "predicted_s": 0.7359441505926546,
+      "default_predicted_s": 0.5490832735164638
+    },
+    {
+      "sample": {
+        "kind": "decode",
+        "prompt_tokens": 512,
+        "batch": 1,
+        "context": 592,
+        "seconds": 0.010192993706293707
+      },
+      "predicted_s": 0.010159436822114537,
+      "default_predicted_s": 0.007833584620895522
+    },
+    {
+      "sample": {
+        "kind": "decode",
+        "prompt_tokens": 512,
+        "batch": 4,
+        "context": 592,
+        "seconds": 0.010308165034965034
+      },
+      "predicted_s": 0.010327224077306244,
+      "default_predicted_s": 0.007956737719402985
+    },
+    {
+      "sample": {
+        "kind": "decode",
+        "prompt_tokens": 512,
+        "batch": 16,
+        "context": 592,
+        "seconds": 0.010995271328671329
+      },
+      "predicted_s": 0.010998373098073074,
+      "default_predicted_s": 0.008449350113432836
+    },
+    {
+      "sample": {
+        "kind": "decode",
+        "prompt_tokens": 512,
+        "batch": 32,
+        "context": 592,
+        "seconds": 0.011879021678321678
+      },
+      "predicted_s": 0.011893238459095514,
+      "default_predicted_s": 0.00910616663880597
+    }
+  ],
+  "median_abs_rel_error": 0.014447253275775583,
+  "max_abs_rel_error": 0.07465562002649988,
+  "default_median_abs_rel_error": 0.24965921155632437
+}
