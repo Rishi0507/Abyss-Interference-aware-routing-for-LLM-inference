@@ -1,0 +1,18 @@
+goos: windows
+goarch: amd64
+pkg: abyss/internal/policy
+cpu: AMD Ryzen 3 3250U with Radeon Graphics         
+BenchmarkAbyssDecision/replicas=8/all-4         	     200	    263229 ns/op
+BenchmarkAbyssDecision/replicas=8/all-parallel-4         	     200	    135860 ns/op
+BenchmarkAbyssDecision/replicas=8/k8-4                   	     200	    256568 ns/op
+BenchmarkAbyssDecision/replicas=16/all-4                 	     200	    564378 ns/op
+BenchmarkAbyssDecision/replicas=16/all-parallel-4        	     200	    280364 ns/op
+BenchmarkAbyssDecision/replicas=16/k8-4                  	     200	    358254 ns/op
+BenchmarkAbyssDecision/replicas=32/all-4                 	     200	   1452464 ns/op
+BenchmarkAbyssDecision/replicas=32/all-parallel-4        	     200	    560426 ns/op
+BenchmarkAbyssDecision/replicas=32/k8-4                  	     200	    318601 ns/op
+BenchmarkAbyssDecision/replicas=64/all-4                 	     200	   2593542 ns/op
+BenchmarkAbyssDecision/replicas=64/all-parallel-4        	     200	   1147180 ns/op
+BenchmarkAbyssDecision/replicas=64/k8-4                  	     200	    326054 ns/op
+PASS
+ok  	abyss/internal/policy	3.086s

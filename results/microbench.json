@@ -1,0 +1,65 @@
+{
+  "cpu": "AMD Ryzen 3 3250U with Radeon Graphics",
+  "rows": [
+    {
+      "replicas": 8,
+      "mode": "all",
+      "micros": 263.229
+    },
+    {
+      "replicas": 8,
+      "mode": "all-parallel",
+      "micros": 135.86
+    },
+    {
+      "replicas": 8,
+      "mode": "k8",
+      "micros": 256.568
+    },
+    {
+      "replicas": 16,
+      "mode": "all",
+      "micros": 564.378
+    },
+    {
+      "replicas": 16,
+      "mode": "all-parallel",
+      "micros": 280.364
+    },
+    {
+      "replicas": 16,
+      "mode": "k8",
+      "micros": 358.254
+    },
+    {
+      "replicas": 32,
+      "mode": "all",
+      "micros": 1452.464
+    },
+    {
+      "replicas": 32,
+      "mode": "all-parallel",
+      "micros": 560.426
+    },
+    {
+      "replicas": 32,
+      "mode": "k8",
+      "micros": 318.601
+    },
+    {
+      "replicas": 64,
+      "mode": "all",
+      "micros": 2593.542
+    },
+    {
+      "replicas": 64,
+      "mode": "all-parallel",
+      "micros": 1147.18
+    },
+    {
+      "replicas": 64,
+      "mode": "k8",
+      "micros": 326.054
+    }
+  ]
+}
