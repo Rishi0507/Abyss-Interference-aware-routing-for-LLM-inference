@@ -1,10 +1,10 @@
 # Theory
 
-This note defines the routing problem Abyss addresses, derives the marginal-cost rule it approximates, and states every estimator the implementation uses. The classical results quoted in sections 3 and 7 hold for idealized models that differ from LLM serving in the ways listed in section 4, so they motivate the design without guaranteeing its performance.
+This note defines the routing problem Abyss addresses, derives the marginal-cost rule it approximates, and states every estimator the implementation uses. The classical results quoted in sections 3 and 7 hold for idealized models that differ from LLM serving in the ways listed in section 4, so they motivate the design without guaranteeing its performance. Bracketed numbers refer to the references at the end; section 8 lists the source of every equation, including those that are modeling choices of this work.
 
 ## 1. Problem
 
-A router assigns each arriving request to one of $R$ replicas. Request $j$ arrives at $a_j$ with $I_j$ prompt tokens, receives its first token at $f_j$, finishes at $d_j$ and produces $o_j$ output tokens. Its objectives are
+A router assigns each arriving request to one of $R$ replicas. Request $j$ arrives at $a_j$ with $I_j$ prompt tokens, receives its first token at $f_j$, finishes at $d_j$ and produces $o_j$ output tokens. Its objectives are a time to first token (TTFT) and a time per output token (TPOT), as in DistServe [10]:
 
 ```math
 T_j = \beta_0 + \beta_1 \frac{I_j}{1000}, \qquad P_j = P,
@@ -22,9 +22,9 @@ A request abandoned by its client, or rejected, has $M_j = 1$. With per-request 
 \min_{\pi} \; \mathbb{E}\Big[\sum_{j} w_j M_j\Big].
 ```
 
-The evaluation reports attainment $A = 1 - \frac{1}{n}\sum_j M_j$ and token-weighted attainment $A_I = \sum_j I_j (1 - M_j) / \sum_j I_j$.
+Minimizing expected misses is equivalent to maximizing goodput, the rate of requests that meet both objectives [10]. The evaluation reports attainment $A = 1 - \frac{1}{n}\sum_j M_j$ and token-weighted attainment $A_I = \sum_j I_j (1 - M_j) / \sum_j I_j$.
 
-The state $s_r(t)$ of replica $r$ is its running and waiting requests, the progress of each, its KV memory and its prefix cache. Given its inputs, a replica evolves deterministically up to step-time noise.
+The state $s_r(t)$ of replica $r$ is its running and waiting requests, the progress of each, its KV memory and its prefix cache [12]. Given its inputs, a replica evolves deterministically up to step-time noise.
 
 ## 2. Selfish and marginal-cost placement
 
@@ -34,7 +34,7 @@ Write $s_r \oplus q$ for the state of replica $r$ with request $q$ added. The ow
 r^{\mathrm{own}}(q) = \arg\min_{r} \; \mathbb{E}\big[M_q \mid s_r \oplus q\big].
 ```
 
-Prefix-affinity, least-load and predicted-latency routers approximate this rule. The marginal-cost rule adds the change $q$ causes in the expected misses of the requests already on $r$, and the expected cost of the cache entries $q$ evicts:
+Prefix-affinity, least-load and predicted-latency routers approximate this rule. The marginal-cost rule adds the change $q$ causes in the expected misses of the requests already on $r$, and the expected cost of the cache entries $q$ evicts. Charging an arrival for the delay it imposes on others is the externality toll of Pigou [1] and Beckmann, McGuire and Winsten [3], applied to queues by Naor [4]:
 
 ```math
 r^{\mathrm{mc}}(q) = \arg\min_{r} \;
@@ -49,29 +49,29 @@ r^{\mathrm{mc}}(q) = \arg\min_{r} \;
 J(s \oplus_r q) - J(s) = w_q\,\mathbb{E}\big[M_q \mid s_r \oplus q\big] + \sum_{j \in s_r} w_j \Big(\mathbb{E}\big[M_j \mid s_r \oplus q\big] - \mathbb{E}\big[M_j \mid s_r\big]\Big).
 ```
 
-Minimizing this increment over $r$ is the marginal-cost rule without $K_r$. It is the greedy policy for the objective of section 1. It is not optimal over a sequence of arrivals; $K_r$ is a first-order correction for the effect of the placement on future requests through the prefix cache.
+Minimizing this increment over $r$ is the marginal-cost rule without $K_r$. It is the one-step lookahead policy for the objective of section 1, and estimating each expectation by simulating the system forward under each candidate action is the rollout approach of Bertsekas, Tsitsiklis and Wu [8] and Bertsekas and Castañon [9]. It is not optimal over a sequence of arrivals; $K_r$ is a first-order correction for the effect of the placement on future requests through the prefix cache.
 
 ## 3. Why selfish placement can be much worse
 
-**Pigou's example.** One unit of nonatomic traffic chooses between two parallel links with latencies $\ell_1(x) = 1$ and $\ell_2(x) = x$. With a share $x$ on the second link, the total cost is
+**Pigou's example.** One unit of nonatomic traffic chooses between two parallel links with latencies $\ell_1(x) = 1$ and $\ell_2(x) = x$ [1]. With a share $x$ on the second link, the total cost is
 
 ```math
 C(x) = (1 - x)\cdot 1 + x \cdot x .
 ```
 
-Since $\ell_2(x) \le \ell_1(x)$ for all $x \le 1$, the selfish equilibrium is $x = 1$ with $C(1) = 1$. The optimum solves $C'(x) = 2x - 1 = 0$, giving $x^\star = \tfrac12$ and $C(x^\star) = \tfrac34$. The price of anarchy of this instance is
+At a Wardrop equilibrium no unit of traffic can lower its own latency by switching links [2]. Since $\ell_2(x) \le \ell_1(x)$ for all $x \le 1$, the equilibrium is $x = 1$ with $C(1) = 1$. The optimum solves $C'(x) = 2x - 1 = 0$, giving $x^\star = \tfrac12$ and $C(x^\star) = \tfrac34$. The ratio of the two, the price of anarchy [5], is
 
 ```math
 \mathrm{PoA} = \frac{C(1)}{C(x^\star)} = \frac{4}{3}.
 ```
 
-For affine latencies $4/3$ is the worst case over all networks (Roughgarden and Tardos, 2002). For polynomial latencies of degree $p$ the worst case is
+For affine latencies $4/3$ is the worst case over all networks [6]. For polynomial latencies of degree $p$ the worst case is
 
 ```math
 \mathrm{PoA}_p = \left(1 - \frac{p}{(p+1)^{(p+1)/p}}\right)^{-1} = \Theta\!\left(\frac{p}{\ln p}\right),
 ```
 
-independent of the network topology (Roughgarden, 2003), and it is unbounded over all continuous latency functions.
+independent of the network topology [7], and it is unbounded over all continuous latency functions.
 
 **Marginal-cost tolls.** Charging each unit of traffic on link $e$ the toll $\tau_e = x_e\,\ell_e'(x_e)$ makes its perceived cost
 
@@ -79,9 +79,9 @@ independent of the network topology (Roughgarden, 2003), and it is unbounded ove
 \ell_e(x_e) + x_e\,\ell_e'(x_e) = \frac{d}{dx_e}\big(x_e\,\ell_e(x_e)\big),
 ```
 
-the marginal social cost. The equilibrium conditions under tolls are then the first-order optimality conditions of $\min \sum_e x_e \ell_e(x_e)$, so for convex costs the tolled equilibrium is optimal (Beckmann, McGuire and Winsten, 1956). In the example the toll on the second link is $x$, the perceived cost is $2x$, and the equilibrium moves to $x = \tfrac12$. The externality term of section 2 is the per-request analogue of $x_e \ell_e'(x_e)$.
+the marginal social cost. The equilibrium conditions under tolls are then the first-order optimality conditions of $\min \sum_e x_e \ell_e(x_e)$, so for convex costs the tolled equilibrium is optimal [3]. In the example the toll on the second link is $x$, the perceived cost is $2x$, and the equilibrium moves to $x = \tfrac12$. The externality term of section 2 is the per-request analogue of $x_e \ell_e'(x_e)$.
 
-**The externality in LLM serving.** With chunked prefill and a step budget of $B$ tokens, a replica decoding $n$ streams that admits an uncached prompt of $I$ tokens spends about $\lceil I / (B - n) \rceil$ steps on it, and every decode stream waits for each of those steps. If $t_p$ is the prefill time per token, each stream is delayed by roughly $I\,t_p$ and the aggregate delay is
+**The externality in LLM serving.** With chunked prefill [11] and a step budget of $B$ tokens, a replica decoding $n$ streams that admits an uncached prompt of $I$ tokens spends about $\lceil I / (B - n) \rceil$ steps on it, and every decode stream waits for each of those steps; this prefill-decode interference is the motivation for disaggregated serving [10]. If $t_p$ is the prefill time per token, each stream is delayed by roughly $I\,t_p$ and the aggregate delay is
 
 ```math
 \Delta_{\mathrm{agg}} \approx n\, I\, t_p ,
@@ -101,11 +101,11 @@ Abyss uses the marginal-cost principle as a design rule. Its estimates come from
 
 ## 5. Estimators
 
-Abyss estimates each term of section 2 with two rollouts of a per-replica twin, a copy of the engine model of [design.md](design.md) that the router keeps synchronized with the observed token streams. All quantities below are evaluated at decision time $t$.
+Abyss estimates each term of section 2 with two rollouts [8, 9] of a per-replica twin, a copy of the engine model of [design.md](design.md) that the router keeps synchronized with the observed token streams. All quantities below are evaluated at decision time $t$. Unless a reference is given, the estimators in this section are modeling choices of this work.
 
 ### 5.1 Miss probability
 
-Predictions are converted to probabilities with a lognormal error model. For a predicted latency $x$, objective $s$ and the twin's measured log-error spread $\sigma$,
+Predictions are converted to probabilities by assuming that the ratio of actual to predicted latency is lognormal with log-standard deviation $\sigma$, measured online (section 5.7). For a predicted latency $x$ and objective $s$,
 
 ```math
 \hat P(x;\, s, \sigma) = \Phi\!\left(\frac{\ln x - \ln s}{\sqrt{\sigma^2 + \sigma_0^2}}\right), \qquad \sigma_0 = 0.12 .
@@ -119,7 +119,7 @@ Fork the twin of replica $r$, inject $q$, and step the fork until $q$ emits its 
 \widehat{\mathrm{ttft}} = (t_H - t) + u_q\, c_p\, \kappa_p .
 ```
 
-The fork then runs up to $W = 24$ further steps. Let $k \le W$ be the number of steps run and $\bar\tau_W$ their mean duration. A long-run step time uses the decode step model $d(n, \bar c)$ for $n$ sequences at mean context $\bar c$, the decode scale $\kappa_d$ and the twin's recent prefill duty cycle $\rho$:
+The fork then runs up to $W = 24$ further steps. Let $k \le W$ be the number of steps run and $\bar\tau_W$ their mean duration. A long-run step time uses the decode step model $d(n, \bar c)$ of [design.md](design.md) for $n$ sequences at mean context $\bar c$, the decode scale $\kappa_d$ and the twin's recent prefill duty cycle $\rho$:
 
 ```math
 \tau_\infty = \frac{\kappa_d\, d(n + 1, \bar c)}{1 - \min(\rho, 0.85)} .
@@ -132,7 +132,7 @@ With $\hat o_q$ the expected output length, the two are blended by the share of 
 \widehat{\mathrm{tpot}} = \omega\,\bar\tau_W + (1 - \omega)\,\max\!\big(\tau_\infty,\, \tfrac12 \bar\tau_W\big),
 ```
 
-with $\widehat{\mathrm{tpot}} = \tau_\infty$ when $k = 0$. The own term is
+with $\widehat{\mathrm{tpot}} = \tau_\infty$ when $k = 0$. Treating the two misses as independent, the own term is
 
 ```math
 \mathrm{own}_r(q) = w_q \Big[1 - \big(1 - \hat P(\widehat{\mathrm{ttft}};\, T_q, \sigma_T)\big)\big(1 - \hat P(\widehat{\mathrm{tpot}};\, P_q, \sigma_P)\big)\Big].
@@ -140,7 +140,7 @@ with $\widehat{\mathrm{tpot}} = \tau_\infty$ when $k = 0$. The own term is
 
 ### 5.3 Externality
 
-A second fork without $q$ is stepped to $\hat f_q$, the time at which the first fork produced $q$'s first token. Let $k_0$ be its step count and $\ell = (\hat f_q - t)/k_0$ its mean step time. The extra decode cost per step that $q$ adds once it decodes, with $n$ running requests at mean context $\bar c$, is
+This term estimates the sum in the marginal-cost rule of section 2. A second fork without $q$ is stepped to $\hat f_q$, the time at which the first fork produced $q$'s first token. Let $k_0$ be its step count and $\ell = (\hat f_q - t)/k_0$ its mean step time. The extra decode cost per step that $q$ adds once it decodes, with $n$ running requests at mean context $\bar c$, is
 
 ```math
 \Delta d = \kappa_d \max\!\left(0,\; d\!\left(n + 1, \frac{n\bar c + I_q}{n + 1}\right) - d(n, \bar c)\right).
@@ -170,7 +170,7 @@ The externality is $\mathrm{ext}_r(q) = \max\big(0, \sum_j \Delta_j\big)$. A req
 
 ### 5.4 Cache
 
-With block size $b$ tokens, page size $p$ tokens, $B_q$ prompt blocks of which $h$ are cached on $r$, the pages $q$ needs are
+KV memory is managed in fixed-size pages and full prompt blocks are cached and evicted in LRU order, as in vLLM [12]. With block size $b$ tokens, page size $p$ tokens, $B_q$ prompt blocks of which $h$ are cached on $r$, the pages $q$ needs are
 
 ```math
 \pi_q = \left\lceil \frac{b\,(B_q - h) + (I_q - b B_q) + \hat o_q}{p} \right\rceil .
@@ -206,7 +206,7 @@ and $q$ is dispatched to $\arg\min_r \mathrm{price}_r(q)$.
 
 ### 5.6 Output length
 
-Output lengths are unknown at dispatch. Abyss uses the empirical mean residual life over the last 4096 completed responses $o_1, \dots, o_m$:
+Output lengths are unknown at dispatch. Abyss uses the mean residual life $\mathbb{E}[O - g \mid O > g]$ of the output length distribution [14], estimated empirically over the last 4096 completed responses $o_1, \dots, o_m$:
 
 ```math
 \hat m(g) = \frac{\sum_{i:\, o_i > g} o_i}{\big|\{i : o_i > g\}\big|} - g ,
@@ -218,7 +218,7 @@ capped at $\texttt{max\_tokens} - g$ and floored at 1, with $\hat o_q = \hat m(0
 
 Each twin learns two speed scales and two error spreads from the streams it relays.
 
-**Error spreads.** When a first token or a completion is observed with predicted value $\hat x$ and actual value $x$,
+**Error spreads.** The spreads are exponentially weighted moving estimates, the same construction TCP uses to track round-trip time and its variation [13]. When a first token or a completion is observed with predicted value $\hat x$ and actual value $x$,
 
 ```math
 \sigma^2 \leftarrow 0.95\,\sigma^2 + 0.05 \left(\ln \frac{x}{\hat x}\right)^2, \qquad \sigma_{\text{init}} = 0.3 .
@@ -262,28 +262,63 @@ so Abyss selects replica 1. With a 200 ms decode objective the externality on re
 
 ## 7. Relation to size-based assignment
 
-For an M/G/1 queue with arrival rate $\lambda$, service time $S$ and load $\rho = \lambda\,\mathbb{E}[S]$, the Pollaczek-Khinchine formula gives the mean wait
+For an M/G/1 queue with arrival rate $\lambda$, service time $S$ and load $\rho = \lambda\,\mathbb{E}[S]$, the Pollaczek-Khinchine formula gives the mean wait [15, 17]
 
 ```math
 W_q = \frac{\lambda\, \mathbb{E}[S^2]}{2(1 - \rho)} .
 ```
 
-The wait depends on the second moment of the job size, so a few very large jobs raise the wait of every job. Size-interval task assignment sends jobs above a cutoff $\theta$ to a dedicated pool, which lowers $\mathbb{E}[S^2]$ in the pool that serves short jobs; under high-variability job sizes it can outperform dynamic least-work-remaining assignment (Harchol-Balter, Crovella and Murta, 1999). Prompt lengths in the Mooncake conversation trace have a mean of 13,403 and a 99th percentile of 94,764 tokens.
+The wait depends on the second moment of the job size, so a few very large jobs raise the wait of every job. Size-interval task assignment sends jobs above a cutoff $\theta$ to a dedicated pool, which lowers $\mathbb{E}[S^2]$ in the pool that serves short jobs; under high-variability job sizes it can outperform dynamic least-work-remaining assignment [16]. Prompt lengths in the Mooncake conversation trace have a mean of 13,403 and a 99th percentile of 94,764 tokens.
 
-The size-interval baseline in this repository places the $k$ replicas with the slowest prefill in the long pool $\mathcal{L}$, routes $q$ to $\mathcal{L}$ if $I_q > \theta$ and to its complement otherwise, and inside the pool chooses
+The size-interval baseline in this repository follows [16]. It places the $k$ replicas with the slowest prefill in the long pool $\mathcal{L}$, routes $q$ to $\mathcal{L}$ if $I_q > \theta$ and to its complement otherwise, and inside the pool chooses
 
 ```math
 r^{\mathrm{SITA}}(q) = \arg\min_{r \in \mathrm{pool}(q)} \; c_r \Big( \sum_{j \in r,\ \text{waiting}} I_j + 64\,\big|\{ j \in r : \text{decoding} \}\big| + \max\big(I_q - b\, h_r(q),\, 1\big) \Big),
 ```
 
-where $c_r$ is the replica's prefill time per token and $h_r(q)$ its cached blocks of $q$'s prompt. Least work is the same rule without pools.
+where $c_r$ is the replica's prefill time per token and $h_r(q)$ its cached blocks of $q$'s prompt. Least work is the same rule without pools. The work estimate inside the brackets is a choice of this work.
 
 The externality term of section 5.3 often produces the same split, because a long prefill next to running decodes is expensive, but it is not tied to a cutoff: when a replica has room, a long prompt costs little there. The cutoff rule is strong near capacity, where giving up on long prompts costs little in request count, and weaker with spare capacity, when there is room for long prompts that it does not use. The evaluation compares the two directly.
 
+## 8. Sources of the equations
+
+| Equation | Section | Source |
+|---|---|---|
+| TTFT and TPOT objectives, attainment, goodput | 1 | DistServe [10] |
+| Marginal-cost (externality) placement rule | 2 | Pigou [1], Beckmann et al. [3], Naor [4] |
+| One-step lookahead and rollout estimation | 2, 5 | Bertsekas et al. [8, 9] |
+| Pigou's two-link example, Wardrop equilibrium | 3 | Pigou [1], Wardrop [2] |
+| Price of anarchy, $4/3$ bound, polynomial bound | 3 | Koutsoupias and Papadimitriou [5], Roughgarden and Tardos [6], Roughgarden [7] |
+| Marginal-cost tolls $x\,\ell'(x)$ | 3 | Beckmann et al. [3] |
+| Chunked-prefill stall $\Delta_{\mathrm{agg}}$ | 3 | Derived here from the scheduling of Sarathi-Serve [11] |
+| Lognormal miss probability $\hat P$ | 5.1 | Modeling choice of this work |
+| TTFT horizon, TPOT blend, independence of the two misses | 5.2 | Modeling choices of this work |
+| Externality estimator $\Delta_j$, $\delta_j$, $\Delta d$ | 5.3 | This work, instantiating the rule of section 2 |
+| Page accounting and LRU eviction | 5.4 | vLLM and PagedAttention [12] |
+| Reuse probability $\hat p(h)$ | 5.4 | Modeling choice of this work |
+| Tie-breaker $D_r$ and weight $\epsilon$ | 5.5 | Modeling choice of this work |
+| Mean residual life $\hat m(g)$ | 5.6 | Guess and Proschan [14] |
+| Moving estimate of the error spread | 5.7 | Jacobson [13] |
+| Decode and prefill scale updates, duty cycle | 5.7 | Modeling choices of this work |
+| Pollaczek-Khinchine mean wait | 7 | Kleinrock [15], Harchol-Balter [17] |
+| Size-interval task assignment | 7 | Harchol-Balter, Crovella and Murta [16] |
+
 ## References
 
-- A. C. Pigou. *The Economics of Welfare*. Macmillan, 1920.
-- M. Beckmann, C. B. McGuire, C. B. Winsten. *Studies in the Economics of Transportation*. Yale University Press, 1956.
-- T. Roughgarden, É. Tardos. How Bad is Selfish Routing? *Journal of the ACM* 49(2), 2002.
-- T. Roughgarden. The Price of Anarchy is Independent of the Network Topology. *Journal of Computer and System Sciences* 67(2), 2003.
-- M. Harchol-Balter, M. E. Crovella, C. D. Murta. On Choosing a Task Assignment Policy for a Distributed Server System. *Journal of Parallel and Distributed Computing* 59(2), 1999.
+1. A. C. Pigou. *The Economics of Welfare*. Macmillan, 1920.
+2. J. G. Wardrop. Some Theoretical Aspects of Road Traffic Research. *Proceedings of the Institution of Civil Engineers*, Part II, 1(3):325-378, 1952.
+3. M. Beckmann, C. B. McGuire, C. B. Winsten. *Studies in the Economics of Transportation*. Yale University Press, 1956.
+4. P. Naor. The Regulation of Queue Size by Levying Tolls. *Econometrica* 37(1):15-24, 1969.
+5. E. Koutsoupias, C. Papadimitriou. Worst-case Equilibria. *STACS 1999*, LNCS 1563, 404-413, 1999.
+6. T. Roughgarden, É. Tardos. How Bad is Selfish Routing? *Journal of the ACM* 49(2), 2002.
+7. T. Roughgarden. The Price of Anarchy is Independent of the Network Topology. *Journal of Computer and System Sciences* 67(2), 2003.
+8. D. P. Bertsekas, J. N. Tsitsiklis, C. Wu. Rollout Algorithms for Combinatorial Optimization. *Journal of Heuristics* 3(3):245-262, 1997.
+9. D. P. Bertsekas, D. A. Castañon. Rollout Algorithms for Stochastic Scheduling Problems. *Journal of Heuristics* 5(1):89-108, 1999.
+10. Y. Zhong et al. DistServe: Disaggregating Prefill and Decoding for Goodput-optimized Large Language Model Serving. *OSDI 2024*.
+11. A. Agrawal et al. Taming Throughput-Latency Tradeoff in LLM Inference with Sarathi-Serve. *OSDI 2024*.
+12. W. Kwon et al. Efficient Memory Management for Large Language Model Serving with PagedAttention. *SOSP 2023*.
+13. V. Jacobson. Congestion Avoidance and Control. *SIGCOMM 1988*.
+14. F. Guess, F. Proschan. Mean Residual Life: Theory and Applications. In *Handbook of Statistics*, vol. 7, North-Holland, 215-224, 1988.
+15. L. Kleinrock. *Queueing Systems, Volume 1: Theory*. Wiley, 1975.
+16. M. Harchol-Balter, M. E. Crovella, C. D. Murta. On Choosing a Task Assignment Policy for a Distributed Server System. *Journal of Parallel and Distributed Computing* 59(2), 1999.
+17. M. Harchol-Balter. *Performance Modeling and Design of Computer Systems: Queueing Theory in Action*. Cambridge University Press, 2013.
