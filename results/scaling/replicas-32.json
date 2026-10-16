@@ -1,0 +1,3096 @@
+{
+ "preset": {
+  "name": "agent-8b",
+  "title": "Coding agent sessions, Llama 3.1 8B",
+  "description": "Synthetic coding agent sessions with long shared tool prompts and growing context on eight H100 replicas.",
+  "workload": {
+   "kind": "mixed",
+   "rate": 76.8,
+   "duration": 300,
+   "seed": 1
+  },
+  "cluster": {
+   "replicas": [
+    {
+     "model": "llama-3.1-8b",
+     "hardware": "h100",
+     "tp": 1,
+     "count": 32
+    }
+   ],
+   "engine": {
+    "max_num_seqs": 256,
+    "max_batched_tokens": 8192,
+    "page_tokens": 16,
+    "block_tokens": 512,
+    "prefix_caching": true,
+    "max_model_len": 131072,
+    "host_gb_per_gpu": 0
+   },
+   "slo": {
+    "ttft_base_s": 0.4,
+    "ttft_per_ktok_s": 0.03,
+    "tpot_s": 0.03
+   },
+   "noise": {
+    "bias_spread": 0.12,
+    "jitter": 0.06
+   },
+   "seed": 2,
+   "retry_interval_s": 0,
+   "precise_prefix_index": true,
+   "drain_s": 0,
+   "client_timeout": {
+    "ttft_slo_factor": 0,
+    "floor_s": 0
+   }
+  },
+  "scales": [
+   0.25,
+   0.5,
+   0.75,
+   1
+  ]
+ },
+ "workload": {
+  "requests": 17076,
+  "duration_s": 299.93158889927264,
+  "rate_rps": 56.9329828267429,
+  "mean_input": 11115.820039821972,
+  "p50_input": 4034,
+  "p99_input": 65742,
+  "mean_output": 262.8400679315999,
+  "reuse_ratio": 0.8693126503490319,
+  "sessions": 8123,
+  "block_tokens": 64
+ },
+ "fleet": [
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1",
+  "H100 SXM x1"
+ ],
+ "policies": [
+  "abyss",
+  "abyss-k8",
+  "llm-d",
+  "dynamo",
+  "preble",
+  "sita"
+ ],
+ "seeds": 1,
+ "points": [
+  {
+   "policy": "abyss",
+   "scale": 1,
+   "rate": 56.9329828267429,
+   "n": 1,
+   "attainment": 0.9946123213867416,
+   "attainment_sd": 0,
+   "token_weighted_attainment": 0.9859912250926952,
+   "goodput": 56.62624621277825,
+   "ttft_p50": 0.060551836244023605,
+   "ttft_p99": 0.8448680675315217,
+   "tpot_p50": 0.013691868109860573,
+   "tpot_p99": 0.02679172342913128,
+   "hit_rate": 0.8215076397286998,
+   "timed_out": 0,
+   "usd_per_m_good_tokens": 1.4831181616185363,
+   "decision_us": 1854.3540817521698,
+   "pred_error_p50": 0.11379792481429037
+  },
+  {
+   "policy": "abyss-k8",
+   "scale": 1,
+   "rate": 56.9329828267429,
+   "n": 1,
+   "attainment": 0.9480557507613024,
+   "attainment_sd": 0,
+   "token_weighted_attainment": 0.805219388145146,
+   "goodput": 53.975641776888075,
+   "ttft_p50": 0.060553754765756196,
+   "ttft_p99": 4.096094831595959,
+   "tpot_p50": 0.012609546851409349,
+   "tpot_p99": 0.06995664230992814,
+   "hit_rate": 0.8059883541567509,
+   "timed_out": 0.0007027406886858749,
+   "usd_per_m_good_tokens": 1.5499095604312865,
+   "decision_us": 652.0210060904191,
+   "pred_error_p50": 0.10947777172284662
+  },
+  {
+   "policy": "llm-d",
+   "scale": 1,
+   "rate": 56.9329828267429,
+   "n": 1,
+   "attainment": 0.8554696650269384,
+   "attainment_sd": 0,
+   "token_weighted_attainment": 0.6308303292875901,
+   "goodput": 48.70443974777818,
+   "ttft_p50": 0.05693761834530875,
+   "ttft_p99": 1.5129831432516418,
+   "tpot_p50": 0.012188813160905063,
+   "tpot_p99": 0.08133206265190829,
+   "hit_rate": 0.8446815149733389,
+   "timed_out": 0,
+   "usd_per_m_good_tokens": 1.690699473625287,
+   "decision_us": 23.773354415553992,
+   "pred_error_p50": 0
+  },
+  {
+   "policy": "dynamo",
+   "scale": 1,
+   "rate": 56.9329828267429,
+   "n": 1,
+   "attainment": 0.5355469665026938,
+   "attainment_sd": 0,
+   "token_weighted_attainment": 0.44566658168686973,
+   "goodput": 30.490286246812122,
+   "ttft_p50": 0.12813068334673972,
+   "ttft_p99": 5.356192416235771,
+   "tpot_p50": 0.022883119444810317,
+   "tpot_p99": 0.11036176947100385,
+   "hit_rate": 0.6144138467360606,
+   "timed_out": 0,
+   "usd_per_m_good_tokens": 2.7939226042873355,
+   "decision_us": 136.98869758725695,
+   "pred_error_p50": 0
+  },
+  {
+   "policy": "preble",
+   "scale": 1,
+   "rate": 56.9329828267429,
+   "n": 1,
+   "attainment": 0.7473061606933709,
+   "attainment_sd": 0,
+   "token_weighted_attainment": 0.4197874966303151,
+   "goodput": 42.54636881307485,
+   "ttft_p50": 0.05283659460863532,
+   "ttft_p99": 29.816801945491584,
+   "tpot_p50": 0.010826059083329922,
+   "tpot_p99": 0.2571573194334259,
+   "hit_rate": 0.7730608068107087,
+   "timed_out": 0.12333099086437105,
+   "usd_per_m_good_tokens": 1.9320771872970426,
+   "decision_us": 55.811642070742586,
+   "pred_error_p50": 0
+  },
+  {
+   "policy": "sita",
+   "scale": 1,
+   "rate": 56.9329828267429,
+   "n": 1,
+   "attainment": 0.7935699226985242,
+   "attainment_sd": 0,
+   "token_weighted_attainment": 0.3194307959039615,
+   "goodput": 45.18030278081477,
+   "ttft_p50": 0.025246076884940294,
+   "ttft_p99": 29.77959637078664,
+   "tpot_p50": 0.009237298393562701,
+   "tpot_p99": 0.28292782666532473,
+   "hit_rate": 0.6725757577107544,
+   "timed_out": 0.14687280393534785,
+   "usd_per_m_good_tokens": 1.8095651975871416,
+   "decision_us": 26.320315062075423,
+   "pred_error_p50": 0
+  }
+ ],
+ "runs": [
+  {
+   "policy": "abyss",
+   "scale": 1,
+   "seed": 0,
+   "result": {
+    "summary": {
+     "policy": "abyss",
+     "requests": 17076,
+     "completed": 17076,
+     "rejected": 0,
+     "timed_out": 0,
+     "good": 16984,
+     "duration_s": 299.93158889927264,
+     "slo_attainment": 0.9946123213867416,
+     "ttft_attainment": 0.9986530803466854,
+     "tpot_attainment": 0.995900679315999,
+     "token_weighted_attainment": 0.9859912250926952,
+     "goodput_rps": 56.62624621277825,
+     "output_tok_s": 14964.269073729714,
+     "ttft": {
+      "mean": 0.10026647895845103,
+      "p50": 0.060551836244023605,
+      "p90": 0.1964900701212855,
+      "p99": 0.8448680675315217,
+      "max": 7.999444651951876
+     },
+     "tpot": {
+      "mean": 0.014118018539982473,
+      "p50": 0.013691868109860573,
+      "p90": 0.01958986929444287,
+      "p99": 0.02679172342913128,
+      "max": 0.048697550285759575
+     },
+     "e2e": {
+      "mean": 3.7574275759800395,
+      "p50": 2.755975644779298,
+      "p90": 7.63755775174625,
+      "p99": 17.392320080412063,
+      "max": 41.19350429233771
+     },
+     "hit_rate": 0.8215076397286998,
+     "preemptions": 0,
+     "prefill_tokens": 33880303,
+     "cost_per_hour": 79.68,
+     "usd_per_m_good_tokens": 1.4831181616185363,
+     "decision_us": {
+      "mean": 1854.3540817521698,
+      "p50": 0,
+      "p90": 6615.299999999999,
+      "p99": 13137.475000000002,
+      "max": 24241.2
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.17426387832914383,
+      "p50": 0.11379792481429037,
+      "p90": 0.38897244017370636,
+      "p99": 0.9791367989764894,
+      "max": 3.8138121888562044
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x1",
+       "requests": 323,
+       "busy": 0.9993469092802842,
+       "hit_rate": 0.8269170747457354,
+       "preemptions": 0,
+       "evictions": 10887,
+       "mean_batch_tokens": 47.90586865594412,
+       "prefill_tokens": 1029248,
+       "decode_tokens": 81737
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 791,
+       "busy": 0.9614012587764974,
+       "hit_rate": 0.6144299508679872,
+       "preemptions": 0,
+       "evictions": 10553,
+       "mean_batch_tokens": 42.49928772186502,
+       "prefill_tokens": 880583,
+       "decode_tokens": 223251
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 437,
+       "busy": 0.9979452127217701,
+       "hit_rate": 0.8652462209199998,
+       "preemptions": 0,
+       "evictions": 11986,
+       "mean_batch_tokens": 55.4534138237634,
+       "prefill_tokens": 1083365,
+       "decode_tokens": 101619
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 551,
+       "busy": 1.0146347467256693,
+       "hit_rate": 0.8612097279127311,
+       "preemptions": 0,
+       "evictions": 8282,
+       "mean_batch_tokens": 38.60562180579216,
+       "prefill_tokens": 797783,
+       "decode_tokens": 154000
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 401,
+       "busy": 1.0065296809160726,
+       "hit_rate": 0.8667972325113342,
+       "preemptions": 0,
+       "evictions": 12106,
+       "mean_batch_tokens": 52.10962379702537,
+       "prefill_tokens": 1092426,
+       "decode_tokens": 98800
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 378,
+       "busy": 0.9691592097191761,
+       "hit_rate": 0.8371114344453019,
+       "preemptions": 0,
+       "evictions": 12191,
+       "mean_batch_tokens": 53.59592019726519,
+       "prefill_tokens": 1106072,
+       "decode_tokens": 89385
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 589,
+       "busy": 1.0023785675183279,
+       "hit_rate": 0.7832122130961879,
+       "preemptions": 0,
+       "evictions": 11561,
+       "mean_batch_tokens": 45.49626032815131,
+       "prefill_tokens": 992505,
+       "decode_tokens": 169333
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 383,
+       "busy": 1.011143713361309,
+       "hit_rate": 0.89217793970344,
+       "preemptions": 0,
+       "evictions": 9555,
+       "mean_batch_tokens": 47.806622639754444,
+       "prefill_tokens": 933052,
+       "decode_tokens": 94886
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 435,
+       "busy": 0.9949126194213478,
+       "hit_rate": 0.8613644522443142,
+       "preemptions": 0,
+       "evictions": 13238,
+       "mean_batch_tokens": 54.42154627199587,
+       "prefill_tokens": 1165506,
+       "decode_tokens": 99414
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 412,
+       "busy": 1.0156286665908894,
+       "hit_rate": 0.8876080964678815,
+       "preemptions": 0,
+       "evictions": 10761,
+       "mean_batch_tokens": 47.799463621420536,
+       "prefill_tokens": 996471,
+       "decode_tokens": 108557
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 811,
+       "busy": 1.0084113864141073,
+       "hit_rate": 0.8519980551988787,
+       "preemptions": 0,
+       "evictions": 12338,
+       "mean_batch_tokens": 50.21638993036958,
+       "prefill_tokens": 986882,
+       "decode_tokens": 231920
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 360,
+       "busy": 0.9995561293586597,
+       "hit_rate": 0.8745001204881575,
+       "preemptions": 0,
+       "evictions": 11045,
+       "mean_batch_tokens": 52.06863427537241,
+       "prefill_tokens": 1029096,
+       "decode_tokens": 92931
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 294,
+       "busy": 0.9937329031808475,
+       "hit_rate": 0.8822647324868504,
+       "preemptions": 0,
+       "evictions": 8392,
+       "mean_batch_tokens": 47.618551015292056,
+       "prefill_tokens": 878570,
+       "decode_tokens": 71182
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 332,
+       "busy": 0.9781223959038898,
+       "hit_rate": 0.8601140682140961,
+       "preemptions": 0,
+       "evictions": 9049,
+       "mean_batch_tokens": 43.689737050391344,
+       "prefill_tokens": 913939,
+       "decode_tokens": 79653
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 398,
+       "busy": 0.9917508337689315,
+       "hit_rate": 0.8415732025742145,
+       "preemptions": 0,
+       "evictions": 13167,
+       "mean_batch_tokens": 56.986694424330196,
+       "prefill_tokens": 1162709,
+       "decode_tokens": 96469
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 322,
+       "busy": 0.9977954761866247,
+       "hit_rate": 0.8896931579801626,
+       "preemptions": 0,
+       "evictions": 10095,
+       "mean_batch_tokens": 53.747833578269905,
+       "prefill_tokens": 988833,
+       "decode_tokens": 71773
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 343,
+       "busy": 1.0003356924753655,
+       "hit_rate": 0.8263385543563243,
+       "preemptions": 0,
+       "evictions": 10046,
+       "mean_batch_tokens": 45.093242379023664,
+       "prefill_tokens": 978212,
+       "decode_tokens": 79450
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 827,
+       "busy": 1.004025370523937,
+       "hit_rate": 0.778295742107395,
+       "preemptions": 0,
+       "evictions": 11445,
+       "mean_batch_tokens": 45.955916656782506,
+       "prefill_tokens": 942522,
+       "decode_tokens": 219841
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 639,
+       "busy": 1.0101826010447272,
+       "hit_rate": 0.7818989619105542,
+       "preemptions": 0,
+       "evictions": 15695,
+       "mean_batch_tokens": 50.8483467985906,
+       "prefill_tokens": 1266957,
+       "decode_tokens": 161729
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 785,
+       "busy": 0.9657551233382448,
+       "hit_rate": 0.557313963475123,
+       "preemptions": 0,
+       "evictions": 13333,
+       "mean_batch_tokens": 50.37884267631103,
+       "prefill_tokens": 1063856,
+       "decode_tokens": 217681
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 1019,
+       "busy": 0.9847240691639905,
+       "hit_rate": 0.5242374382159646,
+       "preemptions": 0,
+       "evictions": 20226,
+       "mean_batch_tokens": 64.87130904588602,
+       "prefill_tokens": 1451239,
+       "decode_tokens": 277776
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 608,
+       "busy": 0.9659270731532437,
+       "hit_rate": 0.7453874299025306,
+       "preemptions": 0,
+       "evictions": 13099,
+       "mean_batch_tokens": 51.53122064769061,
+       "prefill_tokens": 1097398,
+       "decode_tokens": 164447
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 641,
+       "busy": 0.9163247876550782,
+       "hit_rate": 0.7359886006059455,
+       "preemptions": 0,
+       "evictions": 18034,
+       "mean_batch_tokens": 61.39411261471457,
+       "prefill_tokens": 1422217,
+       "decode_tokens": 156594
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 503,
+       "busy": 0.8276142853083394,
+       "hit_rate": 0.7594243150798714,
+       "preemptions": 0,
+       "evictions": 13268,
+       "mean_batch_tokens": 55.17669810090826,
+       "prefill_tokens": 1144062,
+       "decode_tokens": 125609
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 907,
+       "busy": 0.8839074153280778,
+       "hit_rate": 0.5149648027607269,
+       "preemptions": 0,
+       "evictions": 18216,
+       "mean_batch_tokens": 69.55375642030121,
+       "prefill_tokens": 1339188,
+       "decode_tokens": 258740
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 549,
+       "busy": 0.8263951555783305,
+       "hit_rate": 0.7933175069479659,
+       "preemptions": 0,
+       "evictions": 13094,
+       "mean_batch_tokens": 59.59971611071682,
+       "prefill_tokens": 1115966,
+       "decode_tokens": 143674
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 389,
+       "busy": 0.8176367463989352,
+       "hit_rate": 0.8416313697751843,
+       "preemptions": 0,
+       "evictions": 12752,
+       "mean_batch_tokens": 66.2607550010755,
+       "prefill_tokens": 1139188,
+       "decode_tokens": 92997
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 903,
+       "busy": 0.7448930518822514,
+       "hit_rate": 0.5986043672349608,
+       "preemptions": 0,
+       "evictions": 14114,
+       "mean_batch_tokens": 72.67780014143503,
+       "prefill_tokens": 1076403,
+       "decode_tokens": 259633
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 656,
+       "busy": 0.7664525950655761,
+       "hit_rate": 0.8352098366206465,
+       "preemptions": 0,
+       "evictions": 8161,
+       "mean_batch_tokens": 55.76088747645951,
+       "prefill_tokens": 762155,
+       "decode_tokens": 185334
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 308,
+       "busy": 0.730001600011125,
+       "hit_rate": 0.8680405736944573,
+       "preemptions": 0,
+       "evictions": 10422,
+       "mean_batch_tokens": 76.56767290249434,
+       "prefill_tokens": 1009305,
+       "decode_tokens": 71218
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 345,
+       "busy": 0.7401910184391354,
+       "hit_rate": 0.8496642630457218,
+       "preemptions": 0,
+       "evictions": 11294,
+       "mean_batch_tokens": 75.15800251007332,
+       "prefill_tokens": 1056936,
+       "decode_tokens": 80881
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 437,
+       "busy": 0.7381243214562653,
+       "hit_rate": 0.7668507312303628,
+       "preemptions": 0,
+       "evictions": 10479,
+       "mean_batch_tokens": 61.84724668977667,
+       "prefill_tokens": 977659,
+       "decode_tokens": 110667
+      }
+     ],
+     "class_attainment": [
+      0.998139782088759,
+      0.9860606060606061,
+      0.9980434782608696
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 8813,
+       "attainment": 0.9986383751276523
+      },
+      {
+       "label": "4k-16k",
+       "requests": 4377,
+       "attainment": 0.9956591272561115
+      },
+      {
+       "label": "16k-64k",
+       "requests": 3710,
+       "attainment": 0.984366576819407
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 176,
+       "attainment": 0.9829545454545454
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1"
+    ],
+    "wall_s": 33.9290132
+   }
+  },
+  {
+   "policy": "abyss-k8",
+   "scale": 1,
+   "seed": 0,
+   "result": {
+    "summary": {
+     "policy": "abyss-k8",
+     "requests": 17076,
+     "completed": 17064,
+     "rejected": 0,
+     "timed_out": 12,
+     "good": 16189,
+     "duration_s": 299.93158889927264,
+     "slo_attainment": 0.9480557507613024,
+     "ttft_attainment": 0.9826071679550246,
+     "tpot_attainment": 0.9502810962754743,
+     "token_weighted_attainment": 0.805219388145146,
+     "goodput_rps": 53.975641776888075,
+     "output_tok_s": 14955.867157781986,
+     "ttft": {
+      "mean": 0.22456784846934688,
+      "p50": 0.060553754765756196,
+      "p90": 0.2309175001338034,
+      "p99": 4.096094831595959,
+      "max": 29.846035567305137
+     },
+     "tpot": {
+      "mean": 0.016150768668074078,
+      "p50": 0.012609546851409349,
+      "p90": 0.024935042201692244,
+      "p99": 0.06995664230992814,
+      "max": 0.16915716127051927
+     },
+     "e2e": {
+      "mean": 4.37183677918934,
+      "p50": 2.825799263184747,
+      "p90": 9.098006330390104,
+      "p99": 25.858400894849954,
+      "max": 90.18230090693714
+     },
+     "hit_rate": 0.8059883541567509,
+     "preemptions": 63,
+     "prefill_tokens": 36926584,
+     "cost_per_hour": 79.68,
+     "usd_per_m_good_tokens": 1.5499095604312865,
+     "decision_us": {
+      "mean": 652.0210060904191,
+      "p50": 0,
+      "p90": 2008.45,
+      "p99": 9457.75,
+      "max": 12822.2
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.20074987286220863,
+      "p50": 0.10947777172284662,
+      "p90": 0.38922016171227725,
+      "p99": 1.072811351825043,
+      "max": 79.27080497024882
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x1",
+       "requests": 399,
+       "busy": 1.126359788894672,
+       "hit_rate": 0.7924638906143505,
+       "preemptions": 17,
+       "evictions": 22123,
+       "mean_batch_tokens": 112.64094601051123,
+       "prefill_tokens": 1746838,
+       "decode_tokens": 89420
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 758,
+       "busy": 0.9321369882078271,
+       "hit_rate": 0.7852879492257449,
+       "preemptions": 0,
+       "evictions": 6715,
+       "mean_batch_tokens": 35.36927201484842,
+       "prefill_tokens": 624706,
+       "decode_tokens": 232822
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 469,
+       "busy": 1.0210109315618348,
+       "hit_rate": 0.8765797822037088,
+       "preemptions": 0,
+       "evictions": 13498,
+       "mean_batch_tokens": 68.67744699079032,
+       "prefill_tokens": 1170642,
+       "decode_tokens": 111978
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 565,
+       "busy": 0.9525350216263468,
+       "hit_rate": 0.8434175786910625,
+       "preemptions": 3,
+       "evictions": 14221,
+       "mean_batch_tokens": 82.39626594368106,
+       "prefill_tokens": 1183023,
+       "decode_tokens": 154186
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 406,
+       "busy": 1.017857627253287,
+       "hit_rate": 0.8276882060314456,
+       "preemptions": 4,
+       "evictions": 21330,
+       "mean_batch_tokens": 109.89502524319666,
+       "prefill_tokens": 1697536,
+       "decode_tokens": 87379
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 291,
+       "busy": 1.065132812144853,
+       "hit_rate": 0.8545100922653637,
+       "preemptions": 7,
+       "evictions": 16038,
+       "mean_batch_tokens": 99.21596759799547,
+       "prefill_tokens": 1371891,
+       "decode_tokens": 73388
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 874,
+       "busy": 1.0088879723934308,
+       "hit_rate": 0.5551035866172916,
+       "preemptions": 0,
+       "evictions": 16587,
+       "mean_batch_tokens": 51.6046801009298,
+       "prefill_tokens": 1259314,
+       "decode_tokens": 233661
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 427,
+       "busy": 1.032093499261909,
+       "hit_rate": 0.8937339640054283,
+       "preemptions": 0,
+       "evictions": 12645,
+       "mean_batch_tokens": 67.94758399291526,
+       "prefill_tokens": 1120951,
+       "decode_tokens": 106658
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 395,
+       "busy": 1.0654901590886254,
+       "hit_rate": 0.8254721569346425,
+       "preemptions": 12,
+       "evictions": 20227,
+       "mean_batch_tokens": 93.88799474462145,
+       "prefill_tokens": 1624492,
+       "decode_tokens": 90560
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 511,
+       "busy": 1.031243586787514,
+       "hit_rate": 0.8288504329308266,
+       "preemptions": 8,
+       "evictions": 20283,
+       "mean_batch_tokens": 93.07046274847815,
+       "prefill_tokens": 1596808,
+       "decode_tokens": 130859
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 627,
+       "busy": 1.0254374037576208,
+       "hit_rate": 0.8721899803471211,
+       "preemptions": 3,
+       "evictions": 14454,
+       "mean_batch_tokens": 69.05318060953161,
+       "prefill_tokens": 1185927,
+       "decode_tokens": 164477
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 796,
+       "busy": 1.0178275932225849,
+       "hit_rate": 0.8654112418640686,
+       "preemptions": 0,
+       "evictions": 14250,
+       "mean_batch_tokens": 57.01901399464035,
+       "prefill_tokens": 1123795,
+       "decode_tokens": 216665
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 562,
+       "busy": 0.9450091875605343,
+       "hit_rate": 0.8677448635469188,
+       "preemptions": 0,
+       "evictions": 8497,
+       "mean_batch_tokens": 45.88914231408886,
+       "prefill_tokens": 798456,
+       "decode_tokens": 167281
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 416,
+       "busy": 0.9837590981974448,
+       "hit_rate": 0.8900886779847363,
+       "preemptions": 0,
+       "evictions": 10196,
+       "mean_batch_tokens": 59.60967993754879,
+       "prefill_tokens": 962911,
+       "decode_tokens": 106129
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 784,
+       "busy": 1.006194536345768,
+       "hit_rate": 0.7899950409430596,
+       "preemptions": 0,
+       "evictions": 17731,
+       "mean_batch_tokens": 65.8409588810246,
+       "prefill_tokens": 1361904,
+       "decode_tokens": 200897
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 753,
+       "busy": 1.020966068860116,
+       "hit_rate": 0.43413103187591795,
+       "preemptions": 0,
+       "evictions": 17608,
+       "mean_batch_tokens": 48.89671981633487,
+       "prefill_tokens": 1348833,
+       "decode_tokens": 205936
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 537,
+       "busy": 0.997382848843132,
+       "hit_rate": 0.3964036669251058,
+       "preemptions": 0,
+       "evictions": 15911,
+       "mean_batch_tokens": 50.001146948422075,
+       "prefill_tokens": 1313355,
+       "decode_tokens": 125278
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 398,
+       "busy": 0.9497945219348781,
+       "hit_rate": 0.38692121025094334,
+       "preemptions": 0,
+       "evictions": 10627,
+       "mean_batch_tokens": 39.51936867139923,
+       "prefill_tokens": 1005261,
+       "decode_tokens": 91441
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 490,
+       "busy": 0.9975031190526906,
+       "hit_rate": 0.8558609743256694,
+       "preemptions": 0,
+       "evictions": 17206,
+       "mean_batch_tokens": 80.33585124927367,
+       "prefill_tokens": 1404223,
+       "decode_tokens": 116615
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 316,
+       "busy": 0.8947077468798368,
+       "hit_rate": 0.41200626176917665,
+       "preemptions": 0,
+       "evictions": 6046,
+       "mean_batch_tokens": 30.199977356781645,
+       "prefill_tokens": 725676,
+       "decode_tokens": 74563
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 598,
+       "busy": 1.0154549435348696,
+       "hit_rate": 0.4364993194990289,
+       "preemptions": 0,
+       "evictions": 13262,
+       "mean_batch_tokens": 41.45311481819367,
+       "prefill_tokens": 1105470,
+       "decode_tokens": 166809
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 533,
+       "busy": 0.9304844426537575,
+       "hit_rate": 0.39946189558350753,
+       "preemptions": 0,
+       "evictions": 16033,
+       "mean_batch_tokens": 54.38528626743356,
+       "prefill_tokens": 1318249,
+       "decode_tokens": 128454
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 591,
+       "busy": 0.9721516884233845,
+       "hit_rate": 0.840562173676369,
+       "preemptions": 0,
+       "evictions": 18058,
+       "mean_batch_tokens": 77.0869098188565,
+       "prefill_tokens": 1429914,
+       "decode_tokens": 148903
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 632,
+       "busy": 0.9544253019442323,
+       "hit_rate": 0.8308721264251723,
+       "preemptions": 9,
+       "evictions": 18632,
+       "mean_batch_tokens": 96.97785226864599,
+       "prefill_tokens": 1453020,
+       "decode_tokens": 167092
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 381,
+       "busy": 0.8701369153034003,
+       "hit_rate": 0.36743480721041144,
+       "preemptions": 0,
+       "evictions": 10303,
+       "mean_batch_tokens": 41.14033610228534,
+       "prefill_tokens": 978183,
+       "decode_tokens": 96526
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 609,
+       "busy": 0.8881333469913427,
+       "hit_rate": 0.6080835250336223,
+       "preemptions": 0,
+       "evictions": 23729,
+       "mean_batch_tokens": 83.53286021505376,
+       "prefill_tokens": 1791596,
+       "decode_tokens": 150543
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 707,
+       "busy": 0.7832023688940345,
+       "hit_rate": 0.8593804007001029,
+       "preemptions": 0,
+       "evictions": 13932,
+       "mean_batch_tokens": 81.82054624456859,
+       "prefill_tokens": 1123265,
+       "decode_tokens": 194864
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 542,
+       "busy": 0.6941488535587781,
+       "hit_rate": 0.5836006870072082,
+       "preemptions": 0,
+       "evictions": 5649,
+       "mean_batch_tokens": 38.75222816399287,
+       "prefill_tokens": 627926,
+       "decode_tokens": 154714
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 342,
+       "busy": 0.6298947551185683,
+       "hit_rate": 0.8027366873705681,
+       "preemptions": 0,
+       "evictions": 2908,
+       "mean_batch_tokens": 36.654993594045514,
+       "prefill_tokens": 506182,
+       "decode_tokens": 94630
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 465,
+       "busy": 0.5586813542985717,
+       "hit_rate": 0.7856549177747052,
+       "preemptions": 0,
+       "evictions": 9148,
+       "mean_batch_tokens": 77.9822094468614,
+       "prefill_tokens": 876824,
+       "decode_tokens": 126963
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 524,
+       "busy": 0.4917921198672925,
+       "hit_rate": 0.77249136241942,
+       "preemptions": 0,
+       "evictions": 6263,
+       "mean_batch_tokens": 65.31389242520687,
+       "prefill_tokens": 669284,
+       "decode_tokens": 151581
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 378,
+       "busy": 0.3619599614124595,
+       "hit_rate": 0.661422475450593,
+       "preemptions": 0,
+       "evictions": 1744,
+       "mean_batch_tokens": 52.94359694901646,
+       "prefill_tokens": 420129,
+       "decode_tokens": 107401
+      }
+     ],
+     "class_attainment": [
+      0.9905660377358491,
+      0.835959595959596,
+      0.9991304347826087
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 8813,
+       "attainment": 0.992964938159537
+      },
+      {
+       "label": "4k-16k",
+       "requests": 4377,
+       "attainment": 0.9862919808087731
+      },
+      {
+       "label": "16k-64k",
+       "requests": 3710,
+       "attainment": 0.8210242587601078
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 176,
+       "attainment": 0.42613636363636365
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1"
+    ],
+    "wall_s": 13.751786599999999
+   }
+  },
+  {
+   "policy": "llm-d",
+   "scale": 1,
+   "seed": 0,
+   "result": {
+    "summary": {
+     "policy": "llm-d",
+     "requests": 17076,
+     "completed": 17076,
+     "rejected": 0,
+     "timed_out": 0,
+     "good": 14608,
+     "duration_s": 299.93158889927264,
+     "slo_attainment": 0.8554696650269384,
+     "ttft_attainment": 0.9849496369173109,
+     "tpot_attainment": 0.8636097446708831,
+     "token_weighted_attainment": 0.6308303292875901,
+     "goodput_rps": 48.70443974777818,
+     "output_tok_s": 14964.269073729714,
+     "ttft": {
+      "mean": 0.13600902385256997,
+      "p50": 0.05693761834530875,
+      "p90": 0.25771914824601083,
+      "p99": 1.5129831432516418,
+      "max": 7.30401646090354
+     },
+     "tpot": {
+      "mean": 0.017857861062423,
+      "p50": 0.012188813160905063,
+      "p90": 0.03433994696322867,
+      "p99": 0.08133206265190829,
+      "max": 0.19616287651425607
+     },
+     "e2e": {
+      "mean": 4.53687852240359,
+      "p50": 2.932252705400657,
+      "p90": 9.821893655971778,
+      "p99": 24.94934144038985,
+      "max": 75.48838761686616
+     },
+     "hit_rate": 0.8446815149733389,
+     "preemptions": 3,
+     "prefill_tokens": 29481644,
+     "cost_per_hour": 79.68,
+     "usd_per_m_good_tokens": 1.690699473625287,
+     "decision_us": {
+      "mean": 23.773354415553992,
+      "p50": 0,
+      "p90": 0,
+      "p99": 512.45,
+      "max": 10046.8
+     },
+     "pred_abs_rel_error": {
+      "mean": 0,
+      "p50": 0,
+      "p90": 0,
+      "p99": 0,
+      "max": 0
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x1",
+       "requests": 730,
+       "busy": 1.0076330206923811,
+       "hit_rate": 0.846184265703771,
+       "preemptions": 0,
+       "evictions": 2656,
+       "mean_batch_tokens": 18.977751644789116,
+       "prefill_tokens": 386237,
+       "decode_tokens": 210860
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 306,
+       "busy": 0.8574864278147548,
+       "hit_rate": 0.885518427895538,
+       "preemptions": 1,
+       "evictions": 4524,
+       "mean_batch_tokens": 41.76465033933314,
+       "prefill_tokens": 632099,
+       "decode_tokens": 75603
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 214,
+       "busy": 0.513819940974764,
+       "hit_rate": 0.9028731042770417,
+       "preemptions": 0,
+       "evictions": 4150,
+       "mean_batch_tokens": 100.9323880597015,
+       "prefill_tokens": 626870,
+       "decode_tokens": 49377
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 978,
+       "busy": 1.0349285355472841,
+       "hit_rate": 0.34441248991071255,
+       "preemptions": 0,
+       "evictions": 38433,
+       "mean_batch_tokens": 117.14294386660731,
+       "prefill_tokens": 2665746,
+       "decode_tokens": 228739
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 282,
+       "busy": 0.6623694802582984,
+       "hit_rate": 0.8975774727679159,
+       "preemptions": 0,
+       "evictions": 10764,
+       "mean_batch_tokens": 169.20254328175272,
+       "prefill_tokens": 1047146,
+       "decode_tokens": 57239
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 161,
+       "busy": 0.43449190067521604,
+       "hit_rate": 0.9061278078054353,
+       "preemptions": 0,
+       "evictions": 2657,
+       "mean_batch_tokens": 127.27639956092206,
+       "prefill_tokens": 541821,
+       "decode_tokens": 37923
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 262,
+       "busy": 0.683617168245404,
+       "hit_rate": 0.9128712860311036,
+       "preemptions": 0,
+       "evictions": 6743,
+       "mean_batch_tokens": 127.08950292836762,
+       "prefill_tokens": 785945,
+       "decode_tokens": 60344
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 462,
+       "busy": 0.8163777238238206,
+       "hit_rate": 0.7850947624906253,
+       "preemptions": 0,
+       "evictions": 0,
+       "mean_batch_tokens": 11.30088670600257,
+       "prefill_tokens": 196859,
+       "decode_tokens": 145976
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 362,
+       "busy": 0.554474531618527,
+       "hit_rate": 0.2802677391089204,
+       "preemptions": 0,
+       "evictions": 11759,
+       "mean_batch_tokens": 66.68978310502283,
+       "prefill_tokens": 1085059,
+       "decode_tokens": 83346
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 179,
+       "busy": 0.48620777238059176,
+       "hit_rate": 0.8966089758120734,
+       "preemptions": 0,
+       "evictions": 3825,
+       "mean_batch_tokens": 111.53905053598776,
+       "prefill_tokens": 606161,
+       "decode_tokens": 49354
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 280,
+       "busy": 0.6689175966030277,
+       "hit_rate": 0.9186655552437928,
+       "preemptions": 0,
+       "evictions": 6936,
+       "mean_batch_tokens": 127.79288796310072,
+       "prefill_tokens": 794252,
+       "decode_tokens": 64644
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 525,
+       "busy": 1.0003858155878103,
+       "hit_rate": 0.865948795202385,
+       "preemptions": 0,
+       "evictions": 4523,
+       "mean_batch_tokens": 22.94270951073793,
+       "prefill_tokens": 559182,
+       "decode_tokens": 151239
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 351,
+       "busy": 0.9963104684340782,
+       "hit_rate": 0.918286642891609,
+       "preemptions": 1,
+       "evictions": 8573,
+       "mean_batch_tokens": 68.9220101508328,
+       "prefill_tokens": 879005,
+       "decode_tokens": 85145
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 1292,
+       "busy": 1.0428230901000415,
+       "hit_rate": 0.9251525001331745,
+       "preemptions": 0,
+       "evictions": 3860,
+       "mean_batch_tokens": 22.507028961926455,
+       "prefill_tokens": 304899,
+       "decode_tokens": 386742
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 336,
+       "busy": 0.7827389628901446,
+       "hit_rate": 0.9098234661065868,
+       "preemptions": 0,
+       "evictions": 10595,
+       "mean_batch_tokens": 160.11662315056572,
+       "prefill_tokens": 1025118,
+       "decode_tokens": 78726
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 544,
+       "busy": 1.0084050017210167,
+       "hit_rate": 0.4091247869813188,
+       "preemptions": 0,
+       "evictions": 22916,
+       "mean_batch_tokens": 66.06336820742503,
+       "prefill_tokens": 1759988,
+       "decode_tokens": 128037
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 1456,
+       "busy": 1.0238622592193054,
+       "hit_rate": 0.8916830719316858,
+       "preemptions": 0,
+       "evictions": 5812,
+       "mean_batch_tokens": 28.574994777522456,
+       "prefill_tokens": 385205,
+       "decode_tokens": 435526
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 342,
+       "busy": 0.9745134485625652,
+       "hit_rate": 0.9304706028970686,
+       "preemptions": 0,
+       "evictions": 6084,
+       "mean_batch_tokens": 58.355502427008624,
+       "prefill_tokens": 725839,
+       "decode_tokens": 79642
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 348,
+       "busy": 0.885630736438659,
+       "hit_rate": 0.8917793531551717,
+       "preemptions": 0,
+       "evictions": 2947,
+       "mean_batch_tokens": 22.81560364034591,
+       "prefill_tokens": 504466,
+       "decode_tokens": 99714
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 377,
+       "busy": 0.9120272192944784,
+       "hit_rate": 0.8640793678140369,
+       "preemptions": 0,
+       "evictions": 1499,
+       "mean_batch_tokens": 20.931165024831067,
+       "prefill_tokens": 418134,
+       "decode_tokens": 96061
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 1477,
+       "busy": 1.0177507317784837,
+       "hit_rate": 0.8977947850003511,
+       "preemptions": 0,
+       "evictions": 5605,
+       "mean_batch_tokens": 27.663007045625555,
+       "prefill_tokens": 373979,
+       "decode_tokens": 434832
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 1196,
+       "busy": 1.0170129805411232,
+       "hit_rate": 0.42603261022273753,
+       "preemptions": 0,
+       "evictions": 43022,
+       "mean_batch_tokens": 155.705340610077,
+       "prefill_tokens": 2921071,
+       "decode_tokens": 274314
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 514,
+       "busy": 1.0131516245791106,
+       "hit_rate": 0.8200903143442244,
+       "preemptions": 0,
+       "evictions": 4194,
+       "mean_batch_tokens": 19.635294789110212,
+       "prefill_tokens": 530719,
+       "decode_tokens": 157341
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 271,
+       "busy": 0.6557748197599144,
+       "hit_rate": 0.920515068181027,
+       "preemptions": 0,
+       "evictions": 5080,
+       "mean_batch_tokens": 66.72881815715706,
+       "prefill_tokens": 678159,
+       "decode_tokens": 59795
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 457,
+       "busy": 1.011863747128036,
+       "hit_rate": 0.9146063789065892,
+       "preemptions": 1,
+       "evictions": 12736,
+       "mean_batch_tokens": 131.67667825903678,
+       "prefill_tokens": 1140981,
+       "decode_tokens": 108499
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 573,
+       "busy": 0.9548065177135167,
+       "hit_rate": 0.8801418424424843,
+       "preemptions": 0,
+       "evictions": 16284,
+       "mean_batch_tokens": 84.24302399171509,
+       "prefill_tokens": 1334168,
+       "decode_tokens": 130060
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 1069,
+       "busy": 1.006641901569264,
+       "hit_rate": 0.30593090716573673,
+       "preemptions": 0,
+       "evictions": 44378,
+       "mean_batch_tokens": 119.9258405590312,
+       "prefill_tokens": 3025772,
+       "decode_tokens": 252161
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 363,
+       "busy": 0.9672493320979049,
+       "hit_rate": 0.863053301447576,
+       "preemptions": 0,
+       "evictions": 3568,
+       "mean_batch_tokens": 25.03205103271228,
+       "prefill_tokens": 541675,
+       "decode_tokens": 101874
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 409,
+       "busy": 0.9146953999463409,
+       "hit_rate": 0.8358838757414766,
+       "preemptions": 0,
+       "evictions": 695,
+       "mean_batch_tokens": 16.704382470119523,
+       "prefill_tokens": 331369,
+       "decode_tokens": 129839
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 396,
+       "busy": 0.5582958732393624,
+       "hit_rate": 0.27278960143242287,
+       "preemptions": 0,
+       "evictions": 13241,
+       "mean_batch_tokens": 71.91397849462365,
+       "prefill_tokens": 1174159,
+       "decode_tokens": 89873
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 282,
+       "busy": 0.7985842807842713,
+       "hit_rate": 0.9152343014286819,
+       "preemptions": 0,
+       "evictions": 6757,
+       "mean_batch_tokens": 64.11542545123616,
+       "prefill_tokens": 778606,
+       "decode_tokens": 66820
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 282,
+       "busy": 0.5786497093654422,
+       "hit_rate": 0.8999331133945181,
+       "preemptions": 0,
+       "evictions": 5750,
+       "mean_batch_tokens": 108.51352100956872,
+       "prefill_tokens": 720955,
+       "decode_tokens": 61536
+      }
+     ],
+     "class_attainment": [
+      0.9701036407121977,
+      0.5490909090909091,
+      0.9976086956521739
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 8813,
+       "attainment": 0.9771927833881766
+      },
+      {
+       "label": "4k-16k",
+       "requests": 4377,
+       "attainment": 0.9111263422435458
+      },
+      {
+       "label": "16k-64k",
+       "requests": 3710,
+       "attainment": 0.5097035040431267
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 176,
+       "attainment": 0.6647727272727273
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1"
+    ],
+    "wall_s": 2.2353817
+   }
+  },
+  {
+   "policy": "dynamo",
+   "scale": 1,
+   "seed": 0,
+   "result": {
+    "summary": {
+     "policy": "dynamo",
+     "requests": 17076,
+     "completed": 17076,
+     "rejected": 0,
+     "timed_out": 0,
+     "good": 9145,
+     "duration_s": 299.93158889927264,
+     "slo_attainment": 0.5355469665026938,
+     "ttft_attainment": 0.8404193019442492,
+     "tpot_attainment": 0.5724408526587023,
+     "token_weighted_attainment": 0.44566658168686973,
+     "goodput_rps": 30.490286246812122,
+     "output_tok_s": 14964.269073729714,
+     "ttft": {
+      "mean": 0.5226966071148748,
+      "p50": 0.12813068334673972,
+      "p90": 1.431724391583046,
+      "p99": 5.356192416235771,
+      "max": 14.711321645677856
+     },
+     "tpot": {
+      "mean": 0.03404858632756635,
+      "p50": 0.022883119444810317,
+      "p90": 0.07578969885743976,
+      "p99": 0.11036176947100385,
+      "max": 0.24777179082194323
+     },
+     "e2e": {
+      "mean": 9.15578351396932,
+      "p50": 5.183765870628591,
+      "p90": 21.728745005251312,
+      "p99": 52.560935570630186,
+      "max": 110.18308832189217
+     },
+     "hit_rate": 0.6144138467360606,
+     "preemptions": 245,
+     "prefill_tokens": 73256093,
+     "cost_per_hour": 79.68,
+     "usd_per_m_good_tokens": 2.7939226042873355,
+     "decision_us": {
+      "mean": 136.98869758725695,
+      "p50": 0,
+      "p90": 0,
+      "p99": 2490.975,
+      "max": 17118.2
+     },
+     "pred_abs_rel_error": {
+      "mean": 0,
+      "p50": 0,
+      "p90": 0,
+      "p99": 0,
+      "max": 0
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x1",
+       "requests": 487,
+       "busy": 1.0470767300528654,
+       "hit_rate": 0.6148514289152358,
+       "preemptions": 3,
+       "evictions": 30084,
+       "mean_batch_tokens": 126.23435397944358,
+       "prefill_tokens": 2222382,
+       "decode_tokens": 123431
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 542,
+       "busy": 1.0613926293568292,
+       "hit_rate": 0.5975589534391799,
+       "preemptions": 0,
+       "evictions": 27422,
+       "mean_batch_tokens": 124.81247134342046,
+       "prefill_tokens": 2033830,
+       "decode_tokens": 143898
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 476,
+       "busy": 1.0817747690742314,
+       "hit_rate": 0.6451111355602583,
+       "preemptions": 8,
+       "evictions": 28684,
+       "mean_batch_tokens": 112.63576456492437,
+       "prefill_tokens": 2134196,
+       "decode_tokens": 122011
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 649,
+       "busy": 1.0599453091957303,
+       "hit_rate": 0.5791383583430896,
+       "preemptions": 12,
+       "evictions": 31942,
+       "mean_batch_tokens": 121.89639350732647,
+       "prefill_tokens": 2288859,
+       "decode_tokens": 181859
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 504,
+       "busy": 1.0786268560565542,
+       "hit_rate": 0.623749648154337,
+       "preemptions": 9,
+       "evictions": 32535,
+       "mean_batch_tokens": 124.22693204943664,
+       "prefill_tokens": 2370665,
+       "decode_tokens": 132135
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 531,
+       "busy": 1.045710612715691,
+       "hit_rate": 0.6346481173657161,
+       "preemptions": 6,
+       "evictions": 31186,
+       "mean_batch_tokens": 127.70270984100154,
+       "prefill_tokens": 2286729,
+       "decode_tokens": 130811
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 436,
+       "busy": 1.0457490708904167,
+       "hit_rate": 0.6083999914284718,
+       "preemptions": 8,
+       "evictions": 28798,
+       "mean_batch_tokens": 120.3163520340335,
+       "prefill_tokens": 2145834,
+       "decode_tokens": 116715
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 460,
+       "busy": 1.0400479126738176,
+       "hit_rate": 0.5912408156066694,
+       "preemptions": 3,
+       "evictions": 33001,
+       "mean_batch_tokens": 131.13476279262483,
+       "prefill_tokens": 2414820,
+       "decode_tokens": 117130
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 719,
+       "busy": 1.0425435854532654,
+       "hit_rate": 0.6512163377403374,
+       "preemptions": 15,
+       "evictions": 31242,
+       "mean_batch_tokens": 109.8485670373384,
+       "prefill_tokens": 2239558,
+       "decode_tokens": 190512
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 522,
+       "busy": 1.079426421903453,
+       "hit_rate": 0.6285265199548407,
+       "preemptions": 12,
+       "evictions": 34774,
+       "mean_batch_tokens": 129.12543299019367,
+       "prefill_tokens": 2495166,
+       "decode_tokens": 151518
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 457,
+       "busy": 1.0592590550237229,
+       "hit_rate": 0.6186474432980431,
+       "preemptions": 8,
+       "evictions": 33153,
+       "mean_batch_tokens": 135.29146263572494,
+       "prefill_tokens": 2431241,
+       "decode_tokens": 110615
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 594,
+       "busy": 1.0367654697538822,
+       "hit_rate": 0.5974733838838697,
+       "preemptions": 7,
+       "evictions": 33746,
+       "mean_batch_tokens": 125.74506178845967,
+       "prefill_tokens": 2434178,
+       "decode_tokens": 150386
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 469,
+       "busy": 1.0818268979793138,
+       "hit_rate": 0.6103496143026137,
+       "preemptions": 10,
+       "evictions": 32265,
+       "mean_batch_tokens": 137.390535161433,
+       "prefill_tokens": 2360955,
+       "decode_tokens": 124165
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 678,
+       "busy": 1.0798244330910536,
+       "hit_rate": 0.587528969389347,
+       "preemptions": 8,
+       "evictions": 33060,
+       "mean_batch_tokens": 124.07929536915044,
+       "prefill_tokens": 2370877,
+       "decode_tokens": 171880
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 526,
+       "busy": 1.058185532593955,
+       "hit_rate": 0.602351979923546,
+       "preemptions": 10,
+       "evictions": 34642,
+       "mean_batch_tokens": 141.2707318378928,
+       "prefill_tokens": 2502682,
+       "decode_tokens": 136114
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 439,
+       "busy": 1.0407769803386027,
+       "hit_rate": 0.661914566745925,
+       "preemptions": 2,
+       "evictions": 28183,
+       "mean_batch_tokens": 116.44040012569394,
+       "prefill_tokens": 2105644,
+       "decode_tokens": 117669
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 410,
+       "busy": 1.0784542979990321,
+       "hit_rate": 0.6291873156110155,
+       "preemptions": 7,
+       "evictions": 28486,
+       "mean_batch_tokens": 126.70869835528175,
+       "prefill_tokens": 2138980,
+       "decode_tokens": 102877
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 492,
+       "busy": 1.075907851797058,
+       "hit_rate": 0.64658685755793,
+       "preemptions": 5,
+       "evictions": 26007,
+       "mean_batch_tokens": 114.75505939287285,
+       "prefill_tokens": 1949101,
+       "decode_tokens": 137605
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 602,
+       "busy": 1.0686258007907485,
+       "hit_rate": 0.5941211445488869,
+       "preemptions": 3,
+       "evictions": 35027,
+       "mean_batch_tokens": 127.79278286289356,
+       "prefill_tokens": 2510740,
+       "decode_tokens": 155912
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 441,
+       "busy": 1.0738002348836904,
+       "hit_rate": 0.6577625610627227,
+       "preemptions": 4,
+       "evictions": 27430,
+       "mean_batch_tokens": 135.59738236210657,
+       "prefill_tokens": 2067166,
+       "decode_tokens": 108494
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 572,
+       "busy": 1.0738515796127057,
+       "hit_rate": 0.5813066664939721,
+       "preemptions": 13,
+       "evictions": 29977,
+       "mean_batch_tokens": 121.558466486823,
+       "prefill_tokens": 2196178,
+       "decode_tokens": 146983
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 466,
+       "busy": 1.0436569190467029,
+       "hit_rate": 0.6545496731713867,
+       "preemptions": 14,
+       "evictions": 27960,
+       "mean_batch_tokens": 128.82402657962228,
+       "prefill_tokens": 2095496,
+       "decode_tokens": 114609
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 577,
+       "busy": 1.06925024124765,
+       "hit_rate": 0.6511870235375039,
+       "preemptions": 2,
+       "evictions": 33116,
+       "mean_batch_tokens": 119.12074535324687,
+       "prefill_tokens": 2396389,
+       "decode_tokens": 147911
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 499,
+       "busy": 1.0443054441191877,
+       "hit_rate": 0.6250769774843805,
+       "preemptions": 7,
+       "evictions": 31362,
+       "mean_batch_tokens": 113.67825028100413,
+       "prefill_tokens": 2293596,
+       "decode_tokens": 133662
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 410,
+       "busy": 1.0649902419655677,
+       "hit_rate": 0.6246487926654866,
+       "preemptions": 11,
+       "evictions": 28881,
+       "mean_batch_tokens": 129.80270161982713,
+       "prefill_tokens": 2157014,
+       "decode_tokens": 110769
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 1011,
+       "busy": 1.0730950728930035,
+       "hit_rate": 0.5249995334800185,
+       "preemptions": 11,
+       "evictions": 39065,
+       "mean_batch_tokens": 124.21773136600008,
+       "prefill_tokens": 2648584,
+       "decode_tokens": 289538
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 498,
+       "busy": 1.0530413342022793,
+       "hit_rate": 0.6577509513638385,
+       "preemptions": 13,
+       "evictions": 34220,
+       "mean_batch_tokens": 129.57040785948197,
+       "prefill_tokens": 2480006,
+       "decode_tokens": 131356
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 444,
+       "busy": 1.06346652092807,
+       "hit_rate": 0.6311700962188436,
+       "preemptions": 8,
+       "evictions": 29873,
+       "mean_batch_tokens": 137.5385432025951,
+       "prefill_tokens": 2223136,
+       "decode_tokens": 108830
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 492,
+       "busy": 1.055915421485104,
+       "hit_rate": 0.6367687575759609,
+       "preemptions": 1,
+       "evictions": 27322,
+       "mean_batch_tokens": 119.51200440528635,
+       "prefill_tokens": 2047107,
+       "decode_tokens": 123231
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 613,
+       "busy": 1.054733294167764,
+       "hit_rate": 0.5856154802958876,
+       "preemptions": 8,
+       "evictions": 36666,
+       "mean_batch_tokens": 129.97604762351176,
+       "prefill_tokens": 2606449,
+       "decode_tokens": 166460
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 580,
+       "busy": 1.0543462520475686,
+       "hit_rate": 0.6089924915235555,
+       "preemptions": 12,
+       "evictions": 32399,
+       "mean_batch_tokens": 114.37097734035248,
+       "prefill_tokens": 2347817,
+       "decode_tokens": 150617
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 480,
+       "busy": 1.0378754507869883,
+       "hit_rate": 0.5826099230204085,
+       "preemptions": 5,
+       "evictions": 30648,
+       "mean_batch_tokens": 127.66136120042873,
+       "prefill_tokens": 2260718,
+       "decode_tokens": 121443
+      }
+     ],
+     "class_attainment": [
+      0.5204623970236514,
+      0.4864646464646465,
+      0.6130434782608696
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 8813,
+       "attainment": 0.5582661976625439
+      },
+      {
+       "label": "4k-16k",
+       "requests": 4377,
+       "attainment": 0.5631711217729038
+      },
+      {
+       "label": "16k-64k",
+       "requests": 3710,
+       "attainment": 0.4660377358490566
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 176,
+       "attainment": 0.17613636363636365
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1"
+    ],
+    "wall_s": 3.9757277
+   }
+  },
+  {
+   "policy": "preble",
+   "scale": 1,
+   "seed": 0,
+   "result": {
+    "summary": {
+     "policy": "preble",
+     "requests": 17076,
+     "completed": 14970,
+     "rejected": 0,
+     "timed_out": 2106,
+     "good": 12761,
+     "duration_s": 299.93158889927264,
+     "slo_attainment": 0.7473061606933709,
+     "ttft_attainment": 0.808093230264699,
+     "tpot_attainment": 0.7541578824080581,
+     "token_weighted_attainment": 0.4197874966303151,
+     "goodput_rps": 42.54636881307485,
+     "output_tok_s": 13317.77027774645,
+     "ttft": {
+      "mean": 1.5296165540678852,
+      "p50": 0.05283659460863532,
+      "p90": 0.4124968904744068,
+      "p99": 29.816801945491584,
+      "max": 29.999968941031227
+     },
+     "tpot": {
+      "mean": 0.024676957308632962,
+      "p50": 0.010826059083329922,
+      "p90": 0.05621710932250947,
+      "p99": 0.2571573194334259,
+      "max": 0.568067111448087
+     },
+     "e2e": {
+      "mean": 7.909104094524837,
+      "p50": 2.6605847399701616,
+      "p90": 14.40514780403009,
+      "p99": 106.746838902923,
+      "max": 250.48963192908155
+     },
+     "hit_rate": 0.7730608068107087,
+     "preemptions": 201,
+     "prefill_tokens": 31982294,
+     "cost_per_hour": 79.68,
+     "usd_per_m_good_tokens": 1.9320771872970426,
+     "decision_us": {
+      "mean": 55.811642070742586,
+      "p50": 0,
+      "p90": 0,
+      "p99": 2008.3249999999998,
+      "max": 10297.5
+     },
+     "pred_abs_rel_error": {
+      "mean": 0,
+      "p50": 0,
+      "p90": 0,
+      "p99": 0,
+      "max": 0
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x1",
+       "requests": 628,
+       "busy": 0.9262753217712892,
+       "hit_rate": 0.5469311589563953,
+       "preemptions": 0,
+       "evictions": 6240,
+       "mean_batch_tokens": 26.916228141853242,
+       "prefill_tokens": 640493,
+       "decode_tokens": 183009
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 1084,
+       "busy": 1.092442441074159,
+       "hit_rate": 0.708585058752224,
+       "preemptions": 16,
+       "evictions": 13953,
+       "mean_batch_tokens": 146.48355321020227,
+       "prefill_tokens": 1186928,
+       "decode_tokens": 135454
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 365,
+       "busy": 0.9080515752376068,
+       "hit_rate": 0.7958003420735839,
+       "preemptions": 8,
+       "evictions": 10460,
+       "mean_batch_tokens": 47.97581321445911,
+       "prefill_tokens": 1001352,
+       "decode_tokens": 85636
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 794,
+       "busy": 0.9960008148282102,
+       "hit_rate": 0.7102905150451938,
+       "preemptions": 0,
+       "evictions": 15520,
+       "mean_batch_tokens": 56.92221777421938,
+       "prefill_tokens": 1190759,
+       "decode_tokens": 231158
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 1873,
+       "busy": 0.9273043943288864,
+       "hit_rate": 0.8203486774000386,
+       "preemptions": 0,
+       "evictions": 13865,
+       "mean_batch_tokens": 49.98462621323257,
+       "prefill_tokens": 801945,
+       "decode_tokens": 547340
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 516,
+       "busy": 1.091648391987073,
+       "hit_rate": 0.7264590053891488,
+       "preemptions": 31,
+       "evictions": 23604,
+       "mean_batch_tokens": 155.20536921393162,
+       "prefill_tokens": 1844885,
+       "decode_tokens": 95778
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 688,
+       "busy": 1.106033235858562,
+       "hit_rate": 0.6466074935215341,
+       "preemptions": 36,
+       "evictions": 27466,
+       "mean_batch_tokens": 259.6726682887267,
+       "prefill_tokens": 2095980,
+       "decode_tokens": 93104
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 1145,
+       "busy": 1.135301191882384,
+       "hit_rate": 0.6345438686943756,
+       "preemptions": 51,
+       "evictions": 33796,
+       "mean_batch_tokens": 252.0861811722913,
+       "prefill_tokens": 2398516,
+       "decode_tokens": 208305
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 266,
+       "busy": 0.904081417638095,
+       "hit_rate": 0.7664326816221795,
+       "preemptions": 0,
+       "evictions": 3435,
+       "mean_batch_tokens": 19.911965731204134,
+       "prefill_tokens": 559699,
+       "decode_tokens": 72486
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 1117,
+       "busy": 1.006519839324021,
+       "hit_rate": 0.8646879299473292,
+       "preemptions": 0,
+       "evictions": 4895,
+       "mean_batch_tokens": 21.383079766813594,
+       "prefill_tokens": 418673,
+       "decode_tokens": 333263
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 384,
+       "busy": 0.9277349763780971,
+       "hit_rate": 0.709659252387128,
+       "preemptions": 0,
+       "evictions": 2023,
+       "mean_batch_tokens": 16.69160879806663,
+       "prefill_tokens": 444397,
+       "decode_tokens": 101235
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 1279,
+       "busy": 1.0388227325185955,
+       "hit_rate": 0.9284130008527679,
+       "preemptions": 0,
+       "evictions": 3568,
+       "mean_batch_tokens": 20.165342765504633,
+       "prefill_tokens": 289448,
+       "decode_tokens": 383288
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 287,
+       "busy": 0.8857511736794238,
+       "hit_rate": 0.5276084938506929,
+       "preemptions": 0,
+       "evictions": 8562,
+       "mean_batch_tokens": 36.2775659657997,
+       "prefill_tokens": 896147,
+       "decode_tokens": 64882
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 192,
+       "busy": 0.807749744019682,
+       "hit_rate": 0.7373077244541107,
+       "preemptions": 0,
+       "evictions": 3228,
+       "mean_batch_tokens": 24.07683298196299,
+       "prefill_tokens": 575165,
+       "decode_tokens": 41539
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 372,
+       "busy": 0.938304632279495,
+       "hit_rate": 0.6677041325024392,
+       "preemptions": 0,
+       "evictions": 3333,
+       "mean_batch_tokens": 19.234736906435252,
+       "prefill_tokens": 528915,
+       "decode_tokens": 100561
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 834,
+       "busy": 1.133019692351167,
+       "hit_rate": 0.5973031161908642,
+       "preemptions": 31,
+       "evictions": 33580,
+       "mean_batch_tokens": 783.5780346820809,
+       "prefill_tokens": 2495372,
+       "decode_tokens": 74925
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 633,
+       "busy": 1.0267710907958227,
+       "hit_rate": 0.7786701607484859,
+       "preemptions": 0,
+       "evictions": 13346,
+       "mean_batch_tokens": 50.72457442164993,
+       "prefill_tokens": 1110804,
+       "decode_tokens": 167506
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 332,
+       "busy": 0.9392109329511248,
+       "hit_rate": 0.6650548894309918,
+       "preemptions": 0,
+       "evictions": 12110,
+       "mean_batch_tokens": 50.70582466314173,
+       "prefill_tokens": 1106386,
+       "decode_tokens": 82767
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 308,
+       "busy": 0.9676606057494894,
+       "hit_rate": 0.9095696900621179,
+       "preemptions": 0,
+       "evictions": 7143,
+       "mean_batch_tokens": 42.01436698486163,
+       "prefill_tokens": 793898,
+       "decode_tokens": 77564
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 613,
+       "busy": 1.0308189521567106,
+       "hit_rate": 0.4925420091803067,
+       "preemptions": 0,
+       "evictions": 16508,
+       "mean_batch_tokens": 55.40547217127671,
+       "prefill_tokens": 1321005,
+       "decode_tokens": 159263
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 219,
+       "busy": 0.7878412454554276,
+       "hit_rate": 0.4678746831565518,
+       "preemptions": 0,
+       "evictions": 4197,
+       "mean_batch_tokens": 26.659748106878016,
+       "prefill_tokens": 632316,
+       "decode_tokens": 47161
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 268,
+       "busy": 0.8644731921546367,
+       "hit_rate": 0.5979232646019674,
+       "preemptions": 0,
+       "evictions": 7087,
+       "mean_batch_tokens": 33.374050803685,
+       "prefill_tokens": 801739,
+       "decode_tokens": 64084
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 179,
+       "busy": 0.7163126334787855,
+       "hit_rate": 0.7195402379066449,
+       "preemptions": 0,
+       "evictions": 3005,
+       "mean_batch_tokens": 23.938091827802975,
+       "prefill_tokens": 562625,
+       "decode_tokens": 39035
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 187,
+       "busy": 0.8394684481198066,
+       "hit_rate": 0.7849469030717621,
+       "preemptions": 0,
+       "evictions": 5147,
+       "mean_batch_tokens": 26.884037404941235,
+       "prefill_tokens": 693880,
+       "decode_tokens": 44974
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 600,
+       "busy": 1.1476787612423056,
+       "hit_rate": 0.6833085833322945,
+       "preemptions": 28,
+       "evictions": 29302,
+       "mean_batch_tokens": 335.4781984200267,
+       "prefill_tokens": 2218402,
+       "decode_tokens": 81258
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 205,
+       "busy": 0.7345703398059044,
+       "hit_rate": 0.7291080806408806,
+       "preemptions": 0,
+       "evictions": 3469,
+       "mean_batch_tokens": 25.288558407291916,
+       "prefill_tokens": 585878,
+       "decode_tokens": 46690
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 216,
+       "busy": 0.7826227356982991,
+       "hit_rate": 0.7711585459303485,
+       "preemptions": 0,
+       "evictions": 5268,
+       "mean_batch_tokens": 28.599174027761844,
+       "prefill_tokens": 694329,
+       "decode_tokens": 53568
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 334,
+       "busy": 0.9821760216819341,
+       "hit_rate": 0.800334875833459,
+       "preemptions": 0,
+       "evictions": 11087,
+       "mean_batch_tokens": 48.6530612244898,
+       "prefill_tokens": 1043652,
+       "decode_tokens": 81596
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 386,
+       "busy": 0.8860674736431363,
+       "hit_rate": 0.3518826639348626,
+       "preemptions": 0,
+       "evictions": 13083,
+       "mean_batch_tokens": 48.671418029284965,
+       "prefill_tokens": 1156509,
+       "decode_tokens": 96634
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 223,
+       "busy": 0.7369790176669077,
+       "hit_rate": 0.384446205628339,
+       "preemptions": 0,
+       "evictions": 4333,
+       "mean_batch_tokens": 24.81449839587614,
+       "prefill_tokens": 635334,
+       "decode_tokens": 53045
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 198,
+       "busy": 0.7089698871203834,
+       "hit_rate": 0.5034642399246303,
+       "preemptions": 0,
+       "evictions": 4038,
+       "mean_batch_tokens": 26.33794217285118,
+       "prefill_tokens": 625070,
+       "decode_tokens": 43545
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 351,
+       "busy": 0.9132144948303255,
+       "hit_rate": 0.6880048434352637,
+       "preemptions": 0,
+       "evictions": 4781,
+       "mean_batch_tokens": 24.688354404358105,
+       "prefill_tokens": 631793,
+       "decode_tokens": 88786
+      }
+     ],
+     "class_attainment": [
+      0.9190805208610151,
+      0.2925252525252525,
+      0.9556521739130435
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 8813,
+       "attainment": 0.924656757063429
+      },
+      {
+       "label": "4k-16k",
+       "requests": 4377,
+       "attainment": 0.8252227553118574
+      },
+      {
+       "label": "16k-64k",
+       "requests": 3710,
+       "attainment": 0.24285714285714285
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 176,
+       "attainment": 0.5625
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1"
+    ],
+    "wall_s": 2.7094204
+   }
+  },
+  {
+   "policy": "sita",
+   "scale": 1,
+   "seed": 0,
+   "result": {
+    "summary": {
+     "policy": "sita",
+     "requests": 17076,
+     "completed": 14568,
+     "rejected": 0,
+     "timed_out": 2508,
+     "good": 13551,
+     "duration_s": 299.93158889927264,
+     "slo_attainment": 0.7935699226985242,
+     "ttft_attainment": 0.8103771375029281,
+     "tpot_attainment": 0.79386273131881,
+     "token_weighted_attainment": 0.3194307959039615,
+     "goodput_rps": 45.18030278081477,
+     "output_tok_s": 13027.850832051776,
+     "ttft": {
+      "mean": 1.0064622157296768,
+      "p50": 0.025246076884940294,
+      "p90": 0.11750000359657241,
+      "p99": 29.77959637078664,
+      "max": 29.999853560620636
+     },
+     "tpot": {
+      "mean": 0.019195344948789612,
+      "p50": 0.009237298393562701,
+      "p90": 0.012457323294960963,
+      "p99": 0.28292782666532473,
+      "max": 0.4440865407448786
+     },
+     "e2e": {
+      "mean": 5.712597171978786,
+      "p50": 2.050440710357659,
+      "p90": 7.7395355666798755,
+      "p99": 90.19769642444061,
+      "max": 205.9253364741418
+     },
+     "hit_rate": 0.6725757577107544,
+     "preemptions": 267,
+     "prefill_tokens": 37812502,
+     "cost_per_hour": 79.68,
+     "usd_per_m_good_tokens": 1.8095651975871416,
+     "decision_us": {
+      "mean": 26.320315062075423,
+      "p50": 0,
+      "p90": 0,
+      "p99": 1005.9,
+      "max": 10242.1
+     },
+     "pred_abs_rel_error": {
+      "mean": 0,
+      "p50": 0,
+      "p90": 0,
+      "p99": 0,
+      "max": 0
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x1",
+       "requests": 548,
+       "busy": 1.01058646724752,
+       "hit_rate": 0.35720154930651965,
+       "preemptions": 0,
+       "evictions": 16192,
+       "mean_batch_tokens": 46.76278039857514,
+       "prefill_tokens": 1322849,
+       "decode_tokens": 134326
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 597,
+       "busy": 1.023782088839328,
+       "hit_rate": 0.39180909245916584,
+       "preemptions": 0,
+       "evictions": 17777,
+       "mean_batch_tokens": 57.96304686919706,
+       "prefill_tokens": 1419638,
+       "decode_tokens": 141075
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 627,
+       "busy": 1.0218457451003449,
+       "hit_rate": 0.4396857827512105,
+       "preemptions": 0,
+       "evictions": 21589,
+       "mean_batch_tokens": 60.63616513823104,
+       "prefill_tokens": 1662733,
+       "decode_tokens": 142345
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 1013,
+       "busy": 1.0118700320584775,
+       "hit_rate": 0.8891747389457426,
+       "preemptions": 0,
+       "evictions": 2244,
+       "mean_batch_tokens": 17.7281244259384,
+       "prefill_tokens": 276390,
+       "decode_tokens": 302646
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 668,
+       "busy": 1.0127365211142991,
+       "hit_rate": 0.39549966176872786,
+       "preemptions": 0,
+       "evictions": 22329,
+       "mean_batch_tokens": 57.64821089936892,
+       "prefill_tokens": 1704133,
+       "decode_tokens": 150237
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 495,
+       "busy": 0.9790076299986138,
+       "hit_rate": 0.6024399398122477,
+       "preemptions": 0,
+       "evictions": 6398,
+       "mean_batch_tokens": 25.01662141779789,
+       "prefill_tokens": 701222,
+       "decode_tokens": 128079
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 472,
+       "busy": 1.013871866860176,
+       "hit_rate": 0.8139324230830949,
+       "preemptions": 0,
+       "evictions": 2231,
+       "mean_batch_tokens": 17.16264139406909,
+       "prefill_tokens": 424390,
+       "decode_tokens": 137000
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 1022,
+       "busy": 1.0174414463057635,
+       "hit_rate": 0.8889530722188037,
+       "preemptions": 0,
+       "evictions": 2414,
+       "mean_batch_tokens": 16.86146542355431,
+       "prefill_tokens": 282976,
+       "decode_tokens": 306602
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 522,
+       "busy": 0.9786896563680128,
+       "hit_rate": 0.8749430075685949,
+       "preemptions": 0,
+       "evictions": 0,
+       "mean_batch_tokens": 8.441548516312654,
+       "prefill_tokens": 156342,
+       "decode_tokens": 163981
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 581,
+       "busy": 1.0293474936947413,
+       "hit_rate": 0.9196652777139391,
+       "preemptions": 0,
+       "evictions": 0,
+       "mean_batch_tokens": 8.255996555305083,
+       "prefill_tokens": 152057,
+       "decode_tokens": 173898
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 388,
+       "busy": 0.9839700588729599,
+       "hit_rate": 0.8502457886583477,
+       "preemptions": 0,
+       "evictions": 0,
+       "mean_batch_tokens": 5.624721130351642,
+       "prefill_tokens": 98216,
+       "decode_tokens": 113566
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 482,
+       "busy": 0.9908986669647111,
+       "hit_rate": 0.44480876254957336,
+       "preemptions": 0,
+       "evictions": 10559,
+       "mean_batch_tokens": 31.64772891548848,
+       "prefill_tokens": 970567,
+       "decode_tokens": 124033
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 432,
+       "busy": 0.9971646025388546,
+       "hit_rate": 0.9113263275514588,
+       "preemptions": 0,
+       "evictions": 2833,
+       "mean_batch_tokens": 22.309118722483397,
+       "prefill_tokens": 502812,
+       "decode_tokens": 95117
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 402,
+       "busy": 0.9794821469187378,
+       "hit_rate": 0.45411415896131097,
+       "preemptions": 0,
+       "evictions": 6802,
+       "mean_batch_tokens": 25.880854685267924,
+       "prefill_tokens": 746411,
+       "decode_tokens": 105095
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 457,
+       "busy": 0.9860830138107888,
+       "hit_rate": 0.7131325063988975,
+       "preemptions": 0,
+       "evictions": 496,
+       "mean_batch_tokens": 12.558692256192813,
+       "prefill_tokens": 326368,
+       "decode_tokens": 123836
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 603,
+       "busy": 0.9938019991445697,
+       "hit_rate": 0.37222043284790907,
+       "preemptions": 0,
+       "evictions": 20625,
+       "mean_batch_tokens": 57.625359468482465,
+       "prefill_tokens": 1606056,
+       "decode_tokens": 137284
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 518,
+       "busy": 1.0173460695146714,
+       "hit_rate": 0.35373711667094826,
+       "preemptions": 0,
+       "evictions": 17297,
+       "mean_batch_tokens": 52.56903794504511,
+       "prefill_tokens": 1401233,
+       "decode_tokens": 125477
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 438,
+       "busy": 0.9852201623999131,
+       "hit_rate": 0.8893259507877803,
+       "preemptions": 0,
+       "evictions": 0,
+       "mean_batch_tokens": 9.26533614789228,
+       "prefill_tokens": 155310,
+       "decode_tokens": 134380
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 470,
+       "busy": 1.0050267409182307,
+       "hit_rate": 0.47966525773542595,
+       "preemptions": 0,
+       "evictions": 8384,
+       "mean_batch_tokens": 26.359557382929992,
+       "prefill_tokens": 819995,
+       "decode_tokens": 135249
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 349,
+       "busy": 0.9335504743026181,
+       "hit_rate": 0.8433151322989405,
+       "preemptions": 0,
+       "evictions": 0,
+       "mean_batch_tokens": 14.934229111585962,
+       "prefill_tokens": 323137,
+       "decode_tokens": 89212
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 377,
+       "busy": 0.9134682027675276,
+       "hit_rate": 0.8741257858893784,
+       "preemptions": 0,
+       "evictions": 0,
+       "mean_batch_tokens": 6.911502759658806,
+       "prefill_tokens": 109735,
+       "decode_tokens": 110659
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 370,
+       "busy": 0.9427116400500642,
+       "hit_rate": 0.8968600893299772,
+       "preemptions": 0,
+       "evictions": 0,
+       "mean_batch_tokens": 14.192254981199705,
+       "prefill_tokens": 301049,
+       "decode_tokens": 102820
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 415,
+       "busy": 0.9559657661111784,
+       "hit_rate": 0.9298866743640034,
+       "preemptions": 0,
+       "evictions": 0,
+       "mean_batch_tokens": 9.224682281871544,
+       "prefill_tokens": 208591,
+       "decode_tokens": 115140
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 944,
+       "busy": 0.8719084314217258,
+       "hit_rate": 0.8858111819700136,
+       "preemptions": 0,
+       "evictions": 1592,
+       "mean_batch_tokens": 16.71115065243179,
+       "prefill_tokens": 257141,
+       "decode_tokens": 278184
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 490,
+       "busy": 1.0482442884935437,
+       "hit_rate": 0.4601632115888443,
+       "preemptions": 25,
+       "evictions": 34085,
+       "mean_batch_tokens": 593.1008710311885,
+       "prefill_tokens": 2551083,
+       "decode_tokens": 39854
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 491,
+       "busy": 1.001392644628707,
+       "hit_rate": 0.48021188132006615,
+       "preemptions": 44,
+       "evictions": 41577,
+       "mean_batch_tokens": 615.1353005167256,
+       "prefill_tokens": 3027577,
+       "decode_tokens": 46512
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 475,
+       "busy": 0.9671881662634171,
+       "hit_rate": 0.44005637435106165,
+       "preemptions": 35,
+       "evictions": 41943,
+       "mean_batch_tokens": 791.6610612244898,
+       "prefill_tokens": 3057591,
+       "decode_tokens": 38188
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 466,
+       "busy": 1.0004113628936901,
+       "hit_rate": 0.4553767005747183,
+       "preemptions": 24,
+       "evictions": 28809,
+       "mean_batch_tokens": 630.1417112299465,
+       "prefill_tokens": 2218135,
+       "decode_tokens": 34796
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 504,
+       "busy": 1.0162360604568064,
+       "hit_rate": 0.5138462835591961,
+       "preemptions": 34,
+       "evictions": 32988,
+       "mean_batch_tokens": 682.7246524245506,
+       "prefill_tokens": 2480151,
+       "decode_tokens": 42115
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 500,
+       "busy": 1.010558041927857,
+       "hit_rate": 0.4657963590674684,
+       "preemptions": 44,
+       "evictions": 43295,
+       "mean_batch_tokens": 671.2119457780288,
+       "prefill_tokens": 3136019,
+       "decode_tokens": 48645
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 497,
+       "busy": 0.9393802701403066,
+       "hit_rate": 0.44035897897355897,
+       "preemptions": 23,
+       "evictions": 39825,
+       "mean_batch_tokens": 833.7113870911318,
+       "prefill_tokens": 2924168,
+       "decode_tokens": 37104
+      },
+      {
+       "name": "H100 SXM x1",
+       "requests": 463,
+       "busy": 0.8847901122161286,
+       "hit_rate": 0.4633895272608407,
+       "preemptions": 38,
+       "evictions": 33018,
+       "mean_batch_tokens": 916.2420382165606,
+       "prefill_tokens": 2488427,
+       "decode_tokens": 35439
+      }
+     ],
+     "class_attainment": [
+      1,
+      0.2878787878787879,
+      1
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 8813,
+       "attainment": 1
+      },
+      {
+       "label": "4k-16k",
+       "requests": 4377,
+       "attainment": 1
+      },
+      {
+       "label": "16k-64k",
+       "requests": 3710,
+       "attainment": 0.09730458221024259
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 176,
+       "attainment": 0
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1",
+     "H100 SXM x1"
+    ],
+    "wall_s": 1.5564498
+   }
+  }
+ ]
+}
