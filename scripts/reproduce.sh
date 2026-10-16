@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+set -e
+sh scripts/run-benchmarks.sh
+sh scripts/run-ablations.sh
+sh scripts/run-tuning.sh
+sh scripts/run-robustness.sh
+sh scripts/run-sensitivity.sh
+sh scripts/run-scaling.sh
+sh scripts/run-microbench.sh
+python scripts/plot.py
