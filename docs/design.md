@@ -1,6 +1,6 @@
 # Design
 
-This document describes how Abyss models a replica, how it prices a placement, and how the gateway keeps its models consistent with real servers. Section 6 lists what each policy is allowed to observe, which matters as much as the algorithms when comparing them. The derivations behind the scoring rule are in [theory.md](theory.md).
+This document describes how Abyss models a replica, how it prices a placement, and how the gateway keeps its models consistent with real servers. Section 6 lists what each policy is allowed to observe, which matters as much as the algorithms when comparing them. The derivations behind the scoring rule and their sources are in [theory.md](theory.md). Bracketed numbers refer to the references at the end of this document.
 
 ## 1. The problem
 
@@ -10,11 +10,11 @@ The production routers compared in this repository score candidates from the req
 
 None of these scores includes the cost a placement imposes on the requests already on a replica. Three effects dominate in LLM serving:
 
-- **Prefill interference.** With chunked prefill, a step that carries a prefill chunk takes as long as the chunk's compute, and every decode stream in that batch waits for it. A 60k-token prompt on a 70B model at an 8192-token budget occupies about eight consecutive steps of roughly 0.6 s.
+- **Prefill interference.** With chunked prefill [3], a step that carries a prefill chunk takes as long as the chunk's compute, and every decode stream in that batch waits for it. A 60k-token prompt on a 70B model at an 8192-token budget occupies about eight consecutive steps of roughly 0.6 s.
 - **Memory pressure.** New KV blocks evict the least recently used cached prefixes, and when the pool is exhausted the scheduler preempts running requests and recomputes them later.
 - **Queueing.** Requests that arrive later wait for the new request's service time.
 
-Routing that ignores these costs is the setting of Pigou's 1920 example and of the price of anarchy literature. The standard remedy is a Pigouvian toll that charges each user the marginal cost it imposes on others. Abyss computes that toll per request and per candidate replica, using a model of each replica.
+Routing that ignores these costs is the setting of Pigou's 1920 example [1] and of the price of anarchy literature. The standard remedy is a Pigouvian toll that charges each user the marginal cost it imposes on others. Abyss computes that toll per request and per candidate replica, using a model of each replica.
 
 ```mermaid
 flowchart LR
@@ -35,7 +35,7 @@ flowchart LR
 
 ## 2. Engine model
 
-`internal/engine` is a step-level model of a vLLM V1 style engine. It is used in three ways: as the ground-truth replica in the simulator, as the router-side twin of each replica, and as a cheap fork for what-if rollouts.
+`internal/engine` is a step-level model of a vLLM V1 style engine [2]. It is used in three ways: as the ground-truth replica in the simulator, as the router-side twin of each replica, and as a cheap fork for what-if rollouts.
 
 ### Scheduling
 
@@ -51,7 +51,7 @@ Blocks evicted from HBM can move to a host DRAM tier with its own LRU. A request
 
 ### Memory accounting
 
-Memory is tracked in 16-token pages. A request owns pages for its private tokens, and cached blocks own their pages until evicted. For a model with $L$ layers, $H_{kv}$ KV heads of dimension $d_h$ and $b_{kv}$ bytes per element, deployed with tensor parallelism $\mathrm{TP}$ on accelerators with $M$ bytes of memory at utilization $u$, weights $W$ and reserve $R$:
+Memory is tracked in 16-token pages, following PagedAttention [2]. A request owns pages for its private tokens, and cached blocks own their pages until evicted. Each token stores one key and one value vector per layer and KV head [7], so for a model with $L$ layers, $H_{kv}$ KV heads of dimension $d_h$ and $b_{kv}$ bytes per element, deployed with tensor parallelism $\mathrm{TP}$ on accelerators with $M$ bytes of memory at utilization $u$, weights $W$ and reserve $R$:
 
 ```math
 \mathrm{KV}_{\mathrm{tokens}} = \left\lfloor \frac{M u - W/\mathrm{TP} - R}{2 L \left\lceil H_{kv}/\mathrm{TP} \right\rceil d_h\, b_{kv}} \right\rfloor .
@@ -65,7 +65,7 @@ This gives about 412k tokens for Llama 3.1 70B on four H100s.
 
 ## 3. Performance model
 
-`internal/perf` predicts the duration of one engine step from its composition. A batch has $N$ scheduled tokens, $S$ sampled tokens, $Q$ sequences, attention pairs $A$ and KV reads $K$ over chunks of $q_i$ new tokens on context $c_i$:
+`internal/perf` predicts the duration of one engine step from its composition with a roofline model [4]: a step takes the longer of its compute time and its memory traffic time, plus communication and fixed overheads. A batch has $N$ scheduled tokens, $S$ sampled tokens, $Q$ sequences, attention pairs $A$ and KV reads $K$ over chunks of $q_i$ new tokens on context $c_i$:
 
 ```math
 A = \sum_i q_i \left(c_i + \frac{q_i + 1}{2}\right), \qquad K = \sum_i (c_i + q_i).
@@ -90,7 +90,14 @@ t_{\mathrm{comm}} = 2L \left( \frac{2(\mathrm{TP} - 1)}{\mathrm{TP}} \cdot \frac
 t_{\mathrm{step}} = \max(t_{\mathrm{compute}},\, t_{\mathrm{memory}}) + t_{\mathrm{comm}} + t_{\mathrm{host}} + t_0 + t_{\mathrm{seq}}\, Q ,
 ```
 
-where weights and KV bytes $\kappa_{\mathrm{tok}}$ are per GPU, and the MoE term counts the experts a batch of $N$ tokens is expected to touch when each token activates $k$ of $E$ experts. Default efficiencies are $e_g = 0.62$, $e_{\mathrm{attn}} = 0.42$, $e_{\mathrm{bw}} = 0.80$ and $t_0 = 1.8$ ms. They give about 0.59 s to prefill 8k tokens of Llama 3.1 70B on four H100s and about 21 ms for a 32-sequence decode step of Llama 3.1 8B at 8k context.
+where weights and KV bytes $\kappa_{\mathrm{tok}}$ are per GPU. The terms come from the following sources:
+
+- $2 P_{\mathrm{act}}$ FLOPs per token for the linear layers follows the forward-pass estimate of Kaplan et al. [5], and $4 L H d_h$ FLOPs per query-key pair for attention (logits and value reduction) follows the accounting of Hoffmann et al. [6, Appendix F].
+- The memory term, in which a decode step reads all weights once plus the KV cache of every sequence, follows the inference analysis of Pope et al. [7].
+- The communication term counts two all-reduces per layer under tensor parallelism [8], each moving $2(\mathrm{TP} - 1)/\mathrm{TP}$ times the message size with a ring all-reduce [9].
+- The MoE term is the expected fraction of experts touched by $N$ tokens when each token activates $k$ of $E$ experts [10], assuming uniform and independent routing. This assumption, the saturating GEMM efficiency $e_{\mathrm{gemm}}(N)$ and the per-step and per-sequence overheads are modeling choices of this work.
+
+Default efficiencies are $e_g = 0.62$, $e_{\mathrm{attn}} = 0.42$, $e_{\mathrm{bw}} = 0.80$ and $t_0 = 1.8$ ms. They give about 0.59 s to prefill 8k tokens of Llama 3.1 70B on four H100s and about 21 ms for a 32-sequence decode step of Llama 3.1 8B at 8k context.
 
 The catalog covers Llama 3.1 8B and 70B (BF16 and FP8), Qwen3 32B, Qwen3 30B A3B and Mixtral 8x7B on H100, H200, B200, A100, L40S and MI300X.
 
@@ -117,7 +124,7 @@ Real replicas are faster or slower than any nominal model, and not necessarily b
 \hat t_{\mathrm{step}} = \kappa_d\, t_{\mathrm{decode\ only}} + \kappa_p \left(t_{\mathrm{step}} - t_{\mathrm{decode\ only}}\right).
 ```
 
-$\kappa_d$ is fitted to the inter-token gaps observed across decoding streams, and $\kappa_p$ to the time from dispatch to first token compared with the twin's own simulation. Section 5.7 of [theory.md](theory.md) gives the update rules. The live view and the `abyss_twin_speed_scale` and `abyss_twin_prefill_scale` metrics show both scales.
+$\kappa_d$ is fitted to the inter-token gaps observed across decoding streams, and $\kappa_p$ to the time from dispatch to first token compared with the twin's own simulation. This split and the update rules in section 5.7 of [theory.md](theory.md) are modeling choices of this work. The live view and the `abyss_twin_speed_scale` and `abyss_twin_prefill_scale` metrics show both scales.
 
 ### Uncertainty
 
@@ -200,10 +207,24 @@ The ablation tables in the evaluation document give the numbers.
 
 ## 9. Calibration against a real server
 
-`abyss calibrate` fits the performance model to a running server. It sends unique prompts of six lengths with `max_tokens` set to one and records the time to first token, then runs four batch sizes of concurrent streams and records the steady-state gap between tokens. It also learns the server's characters per token from the reported prompt token counts. The GEMM, attention and memory-bandwidth efficiencies, the per-step overhead and a network overhead are fitted by Nelder-Mead on the squared log error
+`abyss calibrate` fits the performance model to a running server. It sends unique prompts of six lengths with `max_tokens` set to one and records the time to first token, then runs four batch sizes of concurrent streams and records the steady-state gap between tokens. It also learns the server's characters per token from the reported prompt token counts. The GEMM, attention and memory-bandwidth efficiencies, the per-step overhead and a network overhead are fitted with the Nelder-Mead simplex method [11] on the squared log error
 
 ```math
 \min_{\theta} \sum_{i} \left( \ln \hat t_i(\theta) - \ln t_i \right)^2 .
 ```
 
 The result can be passed to the gateway as a backend's `efficiency` field and to the simulator with `--calibration`. Different parameter combinations can reproduce the same timings, so the fitted values describe a model that matches the measurements, not physical efficiencies. Against an emulated server configured 30% slower than its model, the fitted model reproduces the measured timings to within a few percent; the evaluation document lists the numbers.
+
+## References
+
+1. A. C. Pigou. *The Economics of Welfare*. Macmillan, 1920.
+2. W. Kwon et al. Efficient Memory Management for Large Language Model Serving with PagedAttention. *SOSP 2023*.
+3. A. Agrawal et al. Taming Throughput-Latency Tradeoff in LLM Inference with Sarathi-Serve. *OSDI 2024*.
+4. S. Williams, A. Waterman, D. Patterson. Roofline: An Insightful Visual Performance Model for Multicore Architectures. *Communications of the ACM* 52(4):65-76, 2009.
+5. J. Kaplan et al. Scaling Laws for Neural Language Models. arXiv:2001.08361, 2020.
+6. J. Hoffmann et al. Training Compute-Optimal Large Language Models. *NeurIPS 2022*.
+7. R. Pope et al. Efficiently Scaling Transformer Inference. *MLSys 2023*.
+8. M. Shoeybi et al. Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism. arXiv:1909.08053, 2019.
+9. P. Patarasuk, X. Yuan. Bandwidth Optimal All-reduce Algorithms for Clusters of Workstations. *Journal of Parallel and Distributed Computing* 69(2):117-124, 2009.
+10. N. Shazeer et al. Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer. *ICLR 2017*.
+11. J. A. Nelder, R. Mead. A Simplex Method for Function Minimization. *The Computer Journal* 7(4):308-313, 1965.

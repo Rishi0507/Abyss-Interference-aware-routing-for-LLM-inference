@@ -54,7 +54,7 @@ where $s_r \oplus q$ is replica $r$'s state with $q$ added and $K_r(q)$ is the e
 \hat P(x;\, s, \sigma) = \Phi\!\left(\frac{\ln x - \ln s}{\sqrt{\sigma^2 + \sigma_0^2}}\right).
 ```
 
-The middle term is the marginal-cost toll of congestion pricing (Pigou, 1920; Beckmann, McGuire and Winsten, 1956), applied per request and per replica. Placing $q$ on $r$ changes only replica $r$'s expected misses, so minimizing the sum is the one-step greedy policy for the fleet objective. [docs/theory.md](docs/theory.md) gives the derivation and every estimator, and [docs/design.md](docs/design.md) describes the engine, performance and gateway models.
+The middle term is the marginal-cost toll of congestion pricing (Pigou, 1920; Beckmann, McGuire and Winsten, 1956), which Naor (1969) applied to queues, here computed per request and per replica. Placing $q$ on $r$ changes only replica $r$'s expected misses, so minimizing the sum is the one-step lookahead policy for the fleet objective, and estimating it by simulating each candidate forward is a rollout in the sense of Bertsekas, Tsitsiklis and Wu (1997). The lognormal error model is a modeling choice of this work. [docs/theory.md](docs/theory.md) gives the derivation, every estimator and the source of each equation, and [docs/design.md](docs/design.md) describes the engine, performance and gateway models with their references.
 
 ## Results
 
