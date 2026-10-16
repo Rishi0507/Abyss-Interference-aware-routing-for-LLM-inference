@@ -1,0 +1,8 @@
+/abyss
+/abyss.exe
+*.exe
+/traces/*.jsonl
+web/node_modules/
+*.prof
+.DS_Store
+__pycache__/
