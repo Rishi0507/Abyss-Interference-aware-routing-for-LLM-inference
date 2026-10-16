@@ -1,0 +1,6106 @@
+{
+ "preset": {
+  "name": "conversation-70b",
+  "title": "Mooncake conversation trace, Llama 3.1 70B",
+  "description": "Production multi-turn chat trace from Kimi (FAST 2025 release) replayed on four H100 TP4 replicas.",
+  "workload": {
+   "trace": "conversation_trace.jsonl",
+   "duration": 1200
+  },
+  "cluster": {
+   "replicas": [
+    {
+     "model": "llama-3.1-70b",
+     "hardware": "h100",
+     "tp": 4,
+     "count": 4
+    }
+   ],
+   "engine": {
+    "max_num_seqs": 256,
+    "max_batched_tokens": 8192,
+    "page_tokens": 16,
+    "block_tokens": 512,
+    "prefix_caching": true,
+    "max_model_len": 131072,
+    "host_gb_per_gpu": 96
+   },
+   "slo": {
+    "ttft_base_s": 1,
+    "ttft_per_ktok_s": 0.15,
+    "tpot_s": 0.08
+   },
+   "noise": {
+    "bias_spread": 0.12,
+    "jitter": 0.06
+   },
+   "seed": 1,
+   "retry_interval_s": 0,
+   "precise_prefix_index": true,
+   "drain_s": 0,
+   "client_timeout": {
+    "ttft_slo_factor": 0,
+    "floor_s": 0
+   }
+  },
+  "scales": [
+   0.25,
+   0.5,
+   0.75,
+   1,
+   1.25
+  ]
+ },
+ "workload": {
+  "requests": 3658,
+  "duration_s": 1199.999,
+  "rate_rps": 3.0483358736132278,
+  "mean_input": 13403.119190814652,
+  "p50_input": 7889,
+  "p99_input": 94764,
+  "mean_output": 348.49945325314377,
+  "reuse_ratio": 0.3234369483450581,
+  "sessions": 2470,
+  "block_tokens": 512
+ },
+ "fleet": [
+  "H100 SXM x4",
+  "H100 SXM x4",
+  "H100 SXM x4",
+  "H100 SXM x4"
+ ],
+ "policies": [
+  "abyss",
+  "abyss-selfish",
+  "abyss-no-interference",
+  "abyss-no-cache",
+  "abyss-late-binding",
+  "abyss-oracle",
+  "abyss-shed"
+ ],
+ "seeds": 3,
+ "points": [
+  {
+   "policy": "abyss",
+   "scale": 0.75,
+   "rate": 2.286251905209921,
+   "n": 3,
+   "attainment": 0.7657550837939925,
+   "attainment_sd": 0.029319484395713774,
+   "token_weighted_attainment": 0.702255984499588,
+   "goodput": 1.9552136452487063,
+   "ttft_p50": 1.1815159854093054,
+   "ttft_p99": 25.89059576035343,
+   "tpot_p50": 0.03508939631621666,
+   "tpot_p99": 0.5290285480152165,
+   "hit_rate": 0.19870599986043358,
+   "timed_out": 0.0103504066723847,
+   "usd_per_m_good_tokens": 15.840671900016853,
+   "decision_us": 174.49712481844233,
+   "pred_error_p50": 0.12748293373268452
+  },
+  {
+   "policy": "abyss-selfish",
+   "scale": 0.75,
+   "rate": 2.286251905209921,
+   "n": 3,
+   "attainment": 0.6789394516158507,
+   "attainment_sd": 0.05182131785728037,
+   "token_weighted_attainment": 0.7125661478767382,
+   "goodput": 1.7303522233232183,
+   "ttft_p50": 1.271297343605416,
+   "ttft_p99": 15.790342081691,
+   "tpot_p50": 0.04371545925699712,
+   "tpot_p99": 0.6459820392213912,
+   "hit_rate": 0.1778659798305231,
+   "timed_out": 0,
+   "usd_per_m_good_tokens": 17.60108460429611,
+   "decision_us": 83.23262509306672,
+   "pred_error_p50": 0.13360981001909536
+  },
+  {
+   "policy": "abyss-no-interference",
+   "scale": 0.75,
+   "rate": 2.286251905209921,
+   "n": 3,
+   "attainment": 0.6953563109386973,
+   "attainment_sd": 0.05054593590096513,
+   "token_weighted_attainment": 0.7114351548710118,
+   "goodput": 1.7737131184731325,
+   "ttft_p50": 1.2387509834391583,
+   "ttft_p99": 14.39688487279511,
+   "tpot_p50": 0.04307545419487968,
+   "tpot_p99": 0.6098334134630968,
+   "hit_rate": 0.18406213060737767,
+   "timed_out": 0.00015924239191087447,
+   "usd_per_m_good_tokens": 17.20072921704375,
+   "decision_us": 88.58243261890043,
+   "pred_error_p50": 0.12749230202968084
+  },
+  {
+   "policy": "abyss-no-cache",
+   "scale": 0.75,
+   "rate": 2.286251905209921,
+   "n": 3,
+   "attainment": 0.7641581510519021,
+   "attainment_sd": 0.022487819767803147,
+   "token_weighted_attainment": 0.695906221402249,
+   "goodput": 1.9522145454740736,
+   "ttft_p50": 1.1878283960475453,
+   "ttft_p99": 25.6016566607338,
+   "tpot_p50": 0.03501873884682812,
+   "tpot_p99": 0.5315928620818948,
+   "hit_rate": 0.19328667376652042,
+   "timed_out": 0.011085109951161487,
+   "usd_per_m_good_tokens": 15.923580072531289,
+   "decision_us": 167.53626596962613,
+   "pred_error_p50": 0.12969574047199425
+  },
+  {
+   "policy": "abyss-late-binding",
+   "scale": 0.75,
+   "rate": 2.286251905209921,
+   "n": 3,
+   "attainment": 0.7717426558336699,
+   "attainment_sd": 0.01941797333692808,
+   "token_weighted_attainment": 0.7326745575459205,
+   "goodput": 1.973276539684629,
+   "ttft_p50": 1.1804349606635658,
+   "ttft_p99": 20.184563052052926,
+   "tpot_p50": 0.0375019576435723,
+   "tpot_p99": 0.575495275772313,
+   "hit_rate": 0.1985511528321269,
+   "timed_out": 0.0007957174770284338,
+   "usd_per_m_good_tokens": 15.571321156729665,
+   "decision_us": 273.98798445580974,
+   "pred_error_p50": 0.1300921218239328
+  },
+  {
+   "policy": "abyss-oracle",
+   "scale": 0.75,
+   "rate": 2.286251905209921,
+   "n": 3,
+   "attainment": 0.7573443726955507,
+   "attainment_sd": 0.028934666542416283,
+   "token_weighted_attainment": 0.6992584808861807,
+   "goodput": 1.9337008573879952,
+   "ttft_p50": 1.1872373484358836,
+   "ttft_p99": 22.95840280972696,
+   "tpot_p50": 0.035890355691405085,
+   "tpot_p99": 0.5830675608611763,
+   "hit_rate": 0.19641864427877653,
+   "timed_out": 0.00749123453606946,
+   "usd_per_m_good_tokens": 16.109749346749954,
+   "decision_us": 144.0627658106015,
+   "pred_error_p50": 0.12879611936348742
+  },
+  {
+   "policy": "abyss-shed",
+   "scale": 0.75,
+   "rate": 2.286251905209921,
+   "n": 3,
+   "attainment": 0.7956398214353535,
+   "attainment_sd": 0.021227012405658833,
+   "token_weighted_attainment": 0.7460065268717546,
+   "goodput": 2.0336692495235185,
+   "ttft_p50": 1.0890823689196243,
+   "ttft_p99": 12.727686080506919,
+   "tpot_p50": 0.03350322201847957,
+   "tpot_p99": 0.4867138042986026,
+   "hit_rate": 0.20175149873027368,
+   "timed_out": 0,
+   "usd_per_m_good_tokens": 15.243964388000913,
+   "decision_us": 155.92410758021143,
+   "pred_error_p50": 0.12045123990010138
+  },
+  {
+   "policy": "abyss",
+   "scale": 1,
+   "rate": 3.0483358736132278,
+   "n": 3,
+   "attainment": 0.7723640492017463,
+   "attainment_sd": 0.013776504155469028,
+   "token_weighted_attainment": 0.585597830993532,
+   "goodput": 2.6324430249581923,
+   "ttft_p50": 1.0561718390471622,
+   "ttft_p99": 39.861738358943775,
+   "tpot_p50": 0.038688028043925536,
+   "tpot_p99": 0.35218065302401863,
+   "hit_rate": 0.23243469853994925,
+   "timed_out": 0.0823922866682953,
+   "usd_per_m_good_tokens": 11.987317146756988,
+   "decision_us": 185.56940566337252,
+   "pred_error_p50": 0.13025486810190773
+  },
+  {
+   "policy": "abyss-selfish",
+   "scale": 1,
+   "rate": 3.0483358736132278,
+   "n": 3,
+   "attainment": 0.17685421386475808,
+   "attainment_sd": 0.027191641487090072,
+   "token_weighted_attainment": 0.16765396997151405,
+   "goodput": 0.5985820062595302,
+   "ttft_p50": 2.279543211750092,
+   "ttft_p99": 29.685047704074574,
+   "tpot_p50": 0.09386114776749166,
+   "tpot_p99": 0.6706005927447781,
+   "hit_rate": 0.14020103529653907,
+   "timed_out": 0.0632866378179817,
+   "usd_per_m_good_tokens": 65.22445428644119,
+   "decision_us": 234.38962456898898,
+   "pred_error_p50": 0.1532483137241026
+  },
+  {
+   "policy": "abyss-no-interference",
+   "scale": 1,
+   "rate": 3.0483358736132278,
+   "n": 3,
+   "attainment": 0.17371034179719236,
+   "attainment_sd": 0.046803022967592235,
+   "token_weighted_attainment": 0.16660648592953256,
+   "goodput": 0.5895870688192805,
+   "ttft_p50": 2.4220302431868483,
+   "ttft_p99": 29.48209279911516,
+   "tpot_p50": 0.09412781809204089,
+   "tpot_p99": 0.6864697093374635,
+   "hit_rate": 0.14610136681500877,
+   "timed_out": 0.06453365865304816,
+   "usd_per_m_good_tokens": 69.79957146745586,
+   "decision_us": 241.29888353607998,
+   "pred_error_p50": 0.17107460177563616
+  },
+  {
+   "policy": "abyss-no-cache",
+   "scale": 1,
+   "rate": 3.0483358736132278,
+   "n": 3,
+   "attainment": 0.7614174211751591,
+   "attainment_sd": 0.014205384799029839,
+   "token_weighted_attainment": 0.585044192228548,
+   "goodput": 2.5950153282117356,
+   "ttft_p50": 1.092429405227885,
+   "ttft_p99": 39.54659623892682,
+   "tpot_p50": 0.03968355668371349,
+   "tpot_p99": 0.32234176735327424,
+   "hit_rate": 0.2238232686037855,
+   "timed_out": 0.08283974352543787,
+   "usd_per_m_good_tokens": 12.153394973647513,
+   "decision_us": 179.14900047906576,
+   "pred_error_p50": 0.1271902940791546
+  },
+  {
+   "policy": "abyss-late-binding",
+   "scale": 1,
+   "rate": 3.0483358736132278,
+   "n": 3,
+   "attainment": 0.733154956129323,
+   "attainment_sd": 0.029239011539516194,
+   "token_weighted_attainment": 0.5438445096295024,
+   "goodput": 2.4954462748840394,
+   "ttft_p50": 1.1892799649347314,
+   "ttft_p99": 38.288199473833096,
+   "tpot_p50": 0.04694275868374489,
+   "tpot_p99": 0.4768635954457152,
+   "hit_rate": 0.22831917050148823,
+   "timed_out": 0.041392043997933385,
+   "usd_per_m_good_tokens": 12.335962036526318,
+   "decision_us": 490.0502806870829,
+   "pred_error_p50": 0.15656029846856848
+  },
+  {
+   "policy": "abyss-oracle",
+   "scale": 1,
+   "rate": 3.0483358736132278,
+   "n": 3,
+   "attainment": 0.7584515561619954,
+   "attainment_sd": 0.007765967629871398,
+   "token_weighted_attainment": 0.5803035119786065,
+   "goodput": 2.5863369829430245,
+   "ttft_p50": 1.0844882505375466,
+   "ttft_p99": 39.65331347018698,
+   "tpot_p50": 0.03954754753053624,
+   "tpot_p99": 0.3666451066571192,
+   "hit_rate": 0.22322092718100506,
+   "timed_out": 0.0835895207225029,
+   "usd_per_m_good_tokens": 12.251222438017932,
+   "decision_us": 191.31768468933208,
+   "pred_error_p50": 0.13543499213364316
+  },
+  {
+   "policy": "abyss-shed",
+   "scale": 1,
+   "rate": 3.0483358736132278,
+   "n": 3,
+   "attainment": 0.7138438498830669,
+   "attainment_sd": 0.031949990041967156,
+   "token_weighted_attainment": 0.614984280787575,
+   "goodput": 2.42944494433763,
+   "ttft_p50": 1.0937895719772162,
+   "ttft_p99": 12.576048953887701,
+   "tpot_p50": 0.04277022465498981,
+   "tpot_p99": 0.4167291433217046,
+   "hit_rate": 0.21638172606557746,
+   "timed_out": 0.00015899515064790525,
+   "usd_per_m_good_tokens": 12.942018999459455,
+   "decision_us": 199.15403018693937,
+   "pred_error_p50": 0.11167325513743454
+  }
+ ],
+ "runs": [
+  {
+   "policy": "abyss",
+   "scale": 0.75,
+   "seed": 0,
+   "result": {
+    "summary": {
+     "policy": "abyss",
+     "requests": 3658,
+     "completed": 3630,
+     "rejected": 0,
+     "timed_out": 28,
+     "good": 2924,
+     "duration_s": 1599.9986666666666,
+     "slo_attainment": 0.7993439037725533,
+     "ttft_attainment": 0.8619464188080919,
+     "tpot_attainment": 0.9133406232914161,
+     "token_weighted_attainment": 0.7329000557021706,
+     "goodput_rps": 1.8275015229179359,
+     "output_tok_s": 790.101908418257,
+     "ttft": {
+      "mean": 2.2884620865724536,
+      "p50": 1.1287896413456338,
+      "p90": 3.7987562938564814,
+      "p99": 23.552060714200852,
+      "max": 61.916252231505155
+     },
+     "tpot": {
+      "mean": 0.04950918145745306,
+      "p50": 0.0325055320587353,
+      "p90": 0.06897740889152223,
+      "p99": 0.5931638645019622,
+      "max": 1.217266234138999
+     },
+     "e2e": {
+      "mean": 15.770070212926774,
+      "p50": 13.53518933968752,
+      "p90": 30.128244129215453,
+      "p99": 79.18908662328016,
+      "max": 183.08628112903602
+     },
+     "hit_rate": 0.19683269794681155,
+     "preemptions": 35,
+     "prefill_tokens": 38874929,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 16.64044845711818,
+     "decision_us": {
+      "mean": 163.0840896664844,
+      "p50": 0,
+      "p90": 0,
+      "p99": 3089.6529999999575,
+      "max": 10230.1
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.23618196698018493,
+      "p50": 0.1145617593392331,
+      "p90": 0.7162958442489157,
+      "p99": 0.9330307087759304,
+      "max": 2.877848329324811
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1122,
+       "busy": 1.004168640355145,
+       "hit_rate": 0.23568650227150922,
+       "preemptions": 0,
+       "evictions": 18670,
+       "mean_batch_tokens": 197.21929595827902,
+       "prefill_tokens": 8692075,
+       "decode_tokens": 383957
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 821,
+       "busy": 1.013482585301653,
+       "hit_rate": 0.18181343463716138,
+       "preemptions": 11,
+       "evictions": 21437,
+       "mean_batch_tokens": 274.68213951554213,
+       "prefill_tokens": 10276189,
+       "decode_tokens": 290372
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 874,
+       "busy": 1.0045837913404752,
+       "hit_rate": 0.17173959158213584,
+       "preemptions": 5,
+       "evictions": 23384,
+       "mean_batch_tokens": 280.8176003966287,
+       "prefill_tokens": 11008265,
+       "decode_tokens": 303543
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 841,
+       "busy": 1.0210883240790016,
+       "hit_rate": 0.23120181269464035,
+       "preemptions": 19,
+       "evictions": 19292,
+       "mean_batch_tokens": 247.059829289242,
+       "prefill_tokens": 8898400,
+       "decode_tokens": 282657
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1131,
+       "attainment": 0.7736516357206012
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1567,
+       "attainment": 0.8334396936821953
+      },
+      {
+       "label": "16k-64k",
+       "requests": 846,
+       "attainment": 0.8226950354609929
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 114,
+       "attainment": 0.41228070175438597
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.9076295
+   }
+  },
+  {
+   "policy": "abyss",
+   "scale": 0.75,
+   "seed": 1,
+   "result": {
+    "summary": {
+     "policy": "abyss",
+     "requests": 4193,
+     "completed": 4128,
+     "rejected": 0,
+     "timed_out": 65,
+     "good": 3125,
+     "duration_s": 1592,
+     "slo_attainment": 0.7452897686620558,
+     "ttft_attainment": 0.8075363701407107,
+     "tpot_attainment": 0.8821845933699022,
+     "token_weighted_attainment": 0.6713385016390518,
+     "goodput_rps": 1.9629396984924623,
+     "output_tok_s": 894.9811557788945,
+     "ttft": {
+      "mean": 2.6119005240106423,
+      "p50": 1.2417567457890755,
+      "p90": 4.0114788424522,
+      "p99": 28.13753704294314,
+      "max": 70.18821072272573
+     },
+     "tpot": {
+      "mean": 0.05414173434742138,
+      "p50": 0.036026326426180096,
+      "p90": 0.08321604286650319,
+      "p99": 0.5345600717214534,
+      "max": 1.1260442289416133
+     },
+     "e2e": {
+      "mean": 17.53306037767116,
+      "p50": 14.518127000862023,
+      "p90": 32.72805946502893,
+      "p99": 87.86758248150232,
+      "max": 244.60981930808043
+     },
+     "hit_rate": 0.20106758739289665,
+     "preemptions": 103,
+     "prefill_tokens": 37835246,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 15.539602695580568,
+     "decision_us": {
+      "mean": 173.71919866444074,
+      "p50": 0,
+      "p90": 0,
+      "p99": 3640.255999999998,
+      "max": 10565.4
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.35058032475856316,
+      "p50": 0.1314934608228027,
+      "p90": 0.7403414546641625,
+      "p99": 0.9376946001024276,
+      "max": 376.80353966704473
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1287,
+       "busy": 1.0079726319478168,
+       "hit_rate": 0.24442796719172416,
+       "preemptions": 0,
+       "evictions": 19154,
+       "mean_batch_tokens": 224.3057136575714,
+       "prefill_tokens": 8738013,
+       "decode_tokens": 444390
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1178,
+       "busy": 1.0103165302096393,
+       "hit_rate": 0.23000315110711458,
+       "preemptions": 0,
+       "evictions": 16829,
+       "mean_batch_tokens": 209.9526293458457,
+       "prefill_tokens": 8014928,
+       "decode_tokens": 397244
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 919,
+       "busy": 1.0076892369442971,
+       "hit_rate": 0.209576102798492,
+       "preemptions": 30,
+       "evictions": 20093,
+       "mean_batch_tokens": 307.3262222222222,
+       "prefill_tokens": 9653001,
+       "decode_tokens": 309187
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 809,
+       "busy": 1.0235501458147418,
+       "hit_rate": 0.24139367236350737,
+       "preemptions": 73,
+       "evictions": 23843,
+       "mean_batch_tokens": 415.14300854942417,
+       "prefill_tokens": 11429304,
+       "decode_tokens": 269861
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1451,
+       "attainment": 0.7257064093728464
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1855,
+       "attainment": 0.7897574123989218
+      },
+      {
+       "label": "16k-64k",
+       "requests": 808,
+       "attainment": 0.719059405940594
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 79,
+       "attainment": 0.3291139240506329
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.9981368
+   }
+  },
+  {
+   "policy": "abyss",
+   "scale": 0.75,
+   "seed": 2,
+   "result": {
+    "summary": {
+     "policy": "abyss",
+     "requests": 4180,
+     "completed": 4147,
+     "rejected": 0,
+     "timed_out": 33,
+     "good": 3146,
+     "duration_s": 1515.9986666666664,
+     "slo_attainment": 0.7526315789473684,
+     "ttft_attainment": 0.8217703349282297,
+     "tpot_attainment": 0.899043062200957,
+     "token_weighted_attainment": 0.7025293961575415,
+     "goodput_rps": 2.075199714335721,
+     "output_tok_s": 913.876133576195,
+     "ttft": {
+      "mean": 2.3527134996320753,
+      "p50": 1.1740015690932069,
+      "p90": 4.04627383457129,
+      "p99": 25.982189523916304,
+      "max": 40.52598357060117
+     },
+     "tpot": {
+      "mean": 0.05311996946367175,
+      "p50": 0.03673633046373459,
+      "p90": 0.07841803188289763,
+      "p99": 0.45936170782223384,
+      "max": 1.1102341140258305
+     },
+     "e2e": {
+      "mean": 16.961580305575623,
+      "p50": 14.342680183082393,
+      "p90": 32.9917766290916,
+      "p99": 82.66039885144977,
+      "max": 167.44408911610628
+     },
+     "hit_rate": 0.1982177142415925,
+     "preemptions": 78,
+     "prefill_tokens": 37354219,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 15.341964547351818,
+     "decision_us": {
+      "mean": 186.6880861244018,
+      "p50": 0,
+      "p90": 0,
+      "p99": 4032.9430000000016,
+      "max": 10985
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.25668692697937884,
+      "p50": 0.13639358103601776,
+      "p90": 0.7345934029287773,
+      "p99": 0.93615326149691,
+      "max": 3.9313146720792864
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1008,
+       "busy": 1.0080141533425961,
+       "hit_rate": 0.23127162018324401,
+       "preemptions": 7,
+       "evictions": 17879,
+       "mean_batch_tokens": 247.07532983810566,
+       "prefill_tokens": 8234807,
+       "decode_tokens": 333985
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 917,
+       "busy": 1.0191637521880221,
+       "hit_rate": 0.19790569256331608,
+       "preemptions": 48,
+       "evictions": 23363,
+       "mean_batch_tokens": 362.87220961029135,
+       "prefill_tokens": 11176684,
+       "decode_tokens": 323986
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1168,
+       "busy": 1.017901662057441,
+       "hit_rate": 0.2447489000635696,
+       "preemptions": 7,
+       "evictions": 17186,
+       "mean_batch_tokens": 215.90423853732963,
+       "prefill_tokens": 7965474,
+       "decode_tokens": 374317
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1087,
+       "busy": 1.0079496520602407,
+       "hit_rate": 0.20749464966788023,
+       "preemptions": 16,
+       "evictions": 20902,
+       "mean_batch_tokens": 288.03332870048644,
+       "prefill_tokens": 9977254,
+       "decode_tokens": 348998
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1520,
+       "attainment": 0.756578947368421
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1775,
+       "attainment": 0.7605633802816901
+      },
+      {
+       "label": "16k-64k",
+       "requests": 824,
+       "attainment": 0.7512135922330098
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 61,
+       "attainment": 0.4426229508196721
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 1.1117491
+   }
+  },
+  {
+   "policy": "abyss-selfish",
+   "scale": 0.75,
+   "seed": 0,
+   "result": {
+    "summary": {
+     "policy": "abyss-selfish",
+     "requests": 3658,
+     "completed": 3658,
+     "rejected": 0,
+     "timed_out": 0,
+     "good": 2692,
+     "duration_s": 1599.9986666666666,
+     "slo_attainment": 0.7359212684527064,
+     "ttft_attainment": 0.8422635319846911,
+     "tpot_attainment": 0.8633132859486058,
+     "token_weighted_attainment": 0.7793008204801237,
+     "goodput_rps": 1.6825014020845017,
+     "output_tok_s": 796.7575389646158,
+     "ttft": {
+      "mean": 2.026897847503708,
+      "p50": 1.206775720309622,
+      "p90": 4.318338329780659,
+      "p99": 13.32944709047262,
+      "max": 21.135878680659346
+     },
+     "tpot": {
+      "mean": 0.061822658965547075,
+      "p50": 0.03880007937632775,
+      "p90": 0.09450275137666773,
+      "p99": 0.6291882005522187,
+      "max": 1.2428564456350273
+     },
+     "e2e": {
+      "mean": 18.405730362995406,
+      "p50": 15.064667473338524,
+      "p90": 38.393893893593344,
+      "p99": 66.44986827262878,
+      "max": 130.9954700054443
+     },
+     "hit_rate": 0.17833309979622103,
+     "preemptions": 3,
+     "prefill_tokens": 40286238,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 17.692904524295734,
+     "decision_us": {
+      "mean": 76.05322580645161,
+      "p50": 0,
+      "p90": 0,
+      "p99": 2011.3199999999993,
+      "max": 9230.5
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.24084902646487866,
+      "p50": 0.11766209528267108,
+      "p90": 0.7407333255623053,
+      "p99": 0.9306959915935997,
+      "max": 3.7786669730120805
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1013,
+       "busy": 1.0142407244978948,
+       "hit_rate": 0.2208222894067899,
+       "preemptions": 0,
+       "evictions": 20754,
+       "mean_batch_tokens": 244.41062144095073,
+       "prefill_tokens": 9531656,
+       "decode_tokens": 340089
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 790,
+       "busy": 1.0011003542329895,
+       "hit_rate": 0.15109817919970733,
+       "preemptions": 0,
+       "evictions": 21976,
+       "mean_batch_tokens": 310.7379808383923,
+       "prefill_tokens": 10525206,
+       "decode_tokens": 275114
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 750,
+       "busy": 1.0193400203043923,
+       "hit_rate": 0.11570048906813139,
+       "preemptions": 2,
+       "evictions": 23862,
+       "mean_batch_tokens": 361.62762070204866,
+       "prefill_tokens": 11794442,
+       "decode_tokens": 279581
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1105,
+       "busy": 1.0009891582157928,
+       "hit_rate": 0.23933966905542722,
+       "preemptions": 1,
+       "evictions": 18469,
+       "mean_batch_tokens": 196.69399736589503,
+       "prefill_tokens": 8434934,
+       "decode_tokens": 376367
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1131,
+       "attainment": 0.667550839964633
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1567,
+       "attainment": 0.7421825143586471
+      },
+      {
+       "label": "16k-64k",
+       "requests": 846,
+       "attainment": 0.8156028368794326
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 114,
+       "attainment": 0.7368421052631579
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.5286008
+   }
+  },
+  {
+   "policy": "abyss-selfish",
+   "scale": 0.75,
+   "seed": 1,
+   "result": {
+    "summary": {
+     "policy": "abyss-selfish",
+     "requests": 4193,
+     "completed": 4193,
+     "rejected": 0,
+     "timed_out": 0,
+     "good": 2661,
+     "duration_s": 1592,
+     "slo_attainment": 0.6346291438111138,
+     "ttft_attainment": 0.7760553303124255,
+     "tpot_attainment": 0.8015740519914143,
+     "token_weighted_attainment": 0.6632379003409533,
+     "goodput_rps": 1.6714824120603016,
+     "output_tok_s": 910.8618090452261,
+     "ttft": {
+      "mean": 2.383302484294247,
+      "p50": 1.3366069459591472,
+      "p90": 4.994154738972422,
+      "p99": 18.44056050037894,
+      "max": 29.912206561598083
+     },
+     "tpot": {
+      "mean": 0.06969772328982583,
+      "p50": 0.0475622150502807,
+      "p90": 0.10864125046338072,
+      "p99": 0.6313326557125136,
+      "max": 1.2287895089453038
+     },
+     "e2e": {
+      "mean": 21.2880574945332,
+      "p50": 18.158263473152147,
+      "p90": 42.95964615902972,
+      "p99": 75.67463212163378,
+      "max": 159.47050682243793
+     },
+     "hit_rate": 0.175454042997892,
+     "preemptions": 14,
+     "prefill_tokens": 40030992,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 18.030453749681044,
+     "decision_us": {
+      "mean": 86.24347722394472,
+      "p50": 0,
+      "p90": 0,
+      "p99": 2013.216,
+      "max": 10494.2
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.265830719673305,
+      "p50": 0.14179113970085555,
+      "p90": 0.7737450783111254,
+      "p99": 0.9291708439887069,
+      "max": 5.835970116294984
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1085,
+       "busy": 1.0178417214700577,
+       "hit_rate": 0.2127187171767379,
+       "preemptions": 9,
+       "evictions": 20066,
+       "mean_batch_tokens": 285.50271564562286,
+       "prefill_tokens": 9405808,
+       "decode_tokens": 371518
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1181,
+       "busy": 1.0114968202606485,
+       "hit_rate": 0.20672660372900045,
+       "preemptions": 1,
+       "evictions": 19139,
+       "mean_batch_tokens": 271.2204356846473,
+       "prefill_tokens": 9021002,
+       "decode_tokens": 391432
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1116,
+       "busy": 1.0075172155738301,
+       "hit_rate": 0.17271435308474475,
+       "preemptions": 0,
+       "evictions": 19738,
+       "mean_batch_tokens": 304.2181358359487,
+       "prefill_tokens": 9593915,
+       "decode_tokens": 390220
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 811,
+       "busy": 1.0090958422963707,
+       "hit_rate": 0.12826213064119935,
+       "preemptions": 4,
+       "evictions": 24139,
+       "mean_batch_tokens": 449.6873058225812,
+       "prefill_tokens": 12010267,
+       "decode_tokens": 292728
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1451,
+       "attainment": 0.5727084769124742
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1855,
+       "attainment": 0.6566037735849056
+      },
+      {
+       "label": "16k-64k",
+       "requests": 808,
+       "attainment": 0.7004950495049505
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 79,
+       "attainment": 0.5822784810126582
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.5968052
+   }
+  },
+  {
+   "policy": "abyss-selfish",
+   "scale": 0.75,
+   "seed": 2,
+   "result": {
+    "summary": {
+     "policy": "abyss-selfish",
+     "requests": 4180,
+     "completed": 4180,
+     "rejected": 0,
+     "timed_out": 0,
+     "good": 2785,
+     "duration_s": 1515.9986666666664,
+     "slo_attainment": 0.666267942583732,
+     "ttft_attainment": 0.779665071770335,
+     "tpot_attainment": 0.8299043062200957,
+     "token_weighted_attainment": 0.695159722809138,
+     "goodput_rps": 1.8370728558248515,
+     "output_tok_s": 921.6004147760906,
+     "ttft": {
+      "mean": 2.1607789067401684,
+      "p50": 1.270509364547479,
+      "p90": 4.629478823859447,
+      "p99": 15.601018654221434,
+      "max": 32.13415935023272
+     },
+     "tpot": {
+      "mean": 0.06766676590159812,
+      "p50": 0.0447840833443829,
+      "p90": 0.10144426664523343,
+      "p99": 0.6774252613994414,
+      "max": 1.0552094254002764
+     },
+     "e2e": {
+      "mean": 19.519958222371987,
+      "p50": 16.01834851284093,
+      "p90": 38.79501398087581,
+      "p99": 69.00047734004875,
+      "max": 163.8470404924076
+     },
+     "hit_rate": 0.17981079669745625,
+     "preemptions": 17,
+     "prefill_tokens": 38738274,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 17.079895538911547,
+     "decision_us": {
+      "mean": 87.40117224880383,
+      "p50": 0,
+      "p90": 0,
+      "p99": 2065.942,
+      "max": 10249.4
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.2686735986000049,
+      "p50": 0.14137619507375948,
+      "p90": 0.771438087030789,
+      "p99": 0.9344436138752864,
+      "max": 5.477185003095196
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1146,
+       "busy": 1.0206293585869484,
+       "hit_rate": 0.25561513871179803,
+       "preemptions": 14,
+       "evictions": 18786,
+       "mean_batch_tokens": 258.42789264528017,
+       "prefill_tokens": 8586651,
+       "decode_tokens": 387516
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 874,
+       "busy": 1.0076766615159274,
+       "hit_rate": 0.12439064857903594,
+       "preemptions": 1,
+       "evictions": 23386,
+       "mean_batch_tokens": 399.1540153643101,
+       "prefill_tokens": 11500250,
+       "decode_tokens": 294352
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1322,
+       "busy": 1.0127236877059802,
+       "hit_rate": 0.22598778020737997,
+       "preemptions": 0,
+       "evictions": 17653,
+       "mean_batch_tokens": 234.1119648737651,
+       "prefill_tokens": 8324383,
+       "decode_tokens": 419933
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 838,
+       "busy": 1.0102719818951718,
+       "hit_rate": 0.1483639862516792,
+       "preemptions": 2,
+       "evictions": 21254,
+       "mean_batch_tokens": 351.51302678187176,
+       "prefill_tokens": 10326990,
+       "decode_tokens": 291164
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1520,
+       "attainment": 0.6105263157894737
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1775,
+       "attainment": 0.6771830985915493
+      },
+      {
+       "label": "16k-64k",
+       "requests": 824,
+       "attainment": 0.7548543689320388
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 61,
+       "attainment": 0.5409836065573771
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.624717
+   }
+  },
+  {
+   "policy": "abyss-no-interference",
+   "scale": 0.75,
+   "seed": 0,
+   "result": {
+    "summary": {
+     "policy": "abyss-no-interference",
+     "requests": 3658,
+     "completed": 3658,
+     "rejected": 0,
+     "timed_out": 0,
+     "good": 2727,
+     "duration_s": 1599.9986666666666,
+     "slo_attainment": 0.7454893384363039,
+     "ttft_attainment": 0.8542919628212138,
+     "tpot_attainment": 0.8635866593767085,
+     "token_weighted_attainment": 0.7539705082399848,
+     "goodput_rps": 1.7043764203136837,
+     "output_tok_s": 796.7575389646158,
+     "ttft": {
+      "mean": 1.9694704962514713,
+      "p50": 1.1793291676335045,
+      "p90": 4.018763169105694,
+      "p99": 13.369729134729283,
+      "max": 29.772426407139335
+     },
+     "tpot": {
+      "mean": 0.05917916969677506,
+      "p50": 0.038105882188131164,
+      "p90": 0.09393283013546937,
+      "p99": 0.5818748609801273,
+      "max": 1.0998426133519343
+     },
+     "e2e": {
+      "mean": 17.720024549083725,
+      "p50": 14.953556688047513,
+      "p90": 37.21222704446017,
+      "p99": 62.48308728365339,
+      "max": 129.75797647793888
+     },
+     "hit_rate": 0.18952786954392548,
+     "preemptions": 2,
+     "prefill_tokens": 39737228,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 17.469675759434388,
+     "decision_us": {
+      "mean": 89.75399125205031,
+      "p50": 0,
+      "p90": 0,
+      "p99": 2017.3719999999998,
+      "max": 10614.1
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.2403085888247169,
+      "p50": 0.1140663668405539,
+      "p90": 0.7373025000785223,
+      "p99": 0.9316605987435851,
+      "max": 7.077674792517333
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1119,
+       "busy": 1.0142181453774282,
+       "hit_rate": 0.24477182400836087,
+       "preemptions": 0,
+       "evictions": 18509,
+       "mean_batch_tokens": 193.76457762138122,
+       "prefill_tokens": 8590648,
+       "decode_tokens": 384721
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 790,
+       "busy": 1.0151371391692037,
+       "hit_rate": 0.1609244048825165,
+       "preemptions": 0,
+       "evictions": 22510,
+       "mean_batch_tokens": 303.45538589672407,
+       "prefill_tokens": 10646437,
+       "decode_tokens": 284026
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 755,
+       "busy": 0.9990656434467815,
+       "hit_rate": 0.1333666121960753,
+       "preemptions": 2,
+       "evictions": 24008,
+       "mean_batch_tokens": 366.54787169166974,
+       "prefill_tokens": 11777728,
+       "decode_tokens": 243576
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 994,
+       "busy": 1.001032910502518,
+       "hit_rate": 0.23419975618824865,
+       "preemptions": 0,
+       "evictions": 19470,
+       "mean_batch_tokens": 223.20862725820328,
+       "prefill_tokens": 8722415,
+       "decode_tokens": 358828
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1131,
+       "attainment": 0.7082228116710876
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1567,
+       "attainment": 0.7485641352903637
+      },
+      {
+       "label": "16k-64k",
+       "requests": 846,
+       "attainment": 0.8037825059101655
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 114,
+       "attainment": 0.6403508771929824
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.5892624
+   }
+  },
+  {
+   "policy": "abyss-no-interference",
+   "scale": 0.75,
+   "seed": 1,
+   "result": {
+    "summary": {
+     "policy": "abyss-no-interference",
+     "requests": 4193,
+     "completed": 4192,
+     "rejected": 0,
+     "timed_out": 1,
+     "good": 2702,
+     "duration_s": 1592,
+     "slo_attainment": 0.6444073455759599,
+     "ttft_attainment": 0.7896494156928213,
+     "tpot_attainment": 0.7984736465537801,
+     "token_weighted_attainment": 0.6594959635014588,
+     "goodput_rps": 1.6972361809045227,
+     "output_tok_s": 910.5188442211055,
+     "ttft": {
+      "mean": 2.222992285652046,
+      "p50": 1.3008617739873785,
+      "p90": 4.410548994213211,
+      "p99": 17.46331481865502,
+      "max": 35.45591280284327
+     },
+     "tpot": {
+      "mean": 0.06963502046886014,
+      "p50": 0.04739619705264185,
+      "p90": 0.10897248272699477,
+      "p99": 0.629122368101263,
+      "max": 1.1477335181323594
+     },
+     "e2e": {
+      "mean": 20.983740948826075,
+      "p50": 17.94764689695063,
+      "p90": 42.99602770409637,
+      "p99": 72.7494449245297,
+      "max": 169.3511049026507
+     },
+     "hit_rate": 0.1758291348157459,
+     "preemptions": 7,
+     "prefill_tokens": 40006635,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 17.783143118328304,
+     "decision_us": {
+      "mean": 81.83679942761746,
+      "p50": 0,
+      "p90": 0,
+      "p99": 2012.216,
+      "max": 9205.7
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.2592807213583689,
+      "p50": 0.13448447625878246,
+      "p90": 0.7727289832484271,
+      "p99": 0.9325956038390911,
+      "max": 4.22338269154659
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1015,
+       "busy": 1.0165205748877961,
+       "hit_rate": 0.1988451790202985,
+       "preemptions": 3,
+       "evictions": 20354,
+       "mean_batch_tokens": 302.4692056117615,
+       "prefill_tokens": 9559282,
+       "decode_tokens": 336603
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1276,
+       "busy": 1.0109573333313786,
+       "hit_rate": 0.23789518266812865,
+       "preemptions": 1,
+       "evictions": 19661,
+       "mean_batch_tokens": 274.1662034624515,
+       "prefill_tokens": 9026477,
+       "decode_tokens": 443772
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1063,
+       "busy": 1.007527804604984,
+       "hit_rate": 0.1624935047608497,
+       "preemptions": 0,
+       "evictions": 19952,
+       "mean_batch_tokens": 314.6082642590824,
+       "prefill_tokens": 9843079,
+       "decode_tokens": 366903
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 839,
+       "busy": 1.0095489073253672,
+       "hit_rate": 0.11868529281805514,
+       "preemptions": 3,
+       "evictions": 22944,
+       "mean_batch_tokens": 403.02280517188717,
+       "prefill_tokens": 11577797,
+       "decode_tokens": 298076
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1451,
+       "attainment": 0.5906271536871124
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1855,
+       "attainment": 0.6684636118598383
+      },
+      {
+       "label": "16k-64k",
+       "requests": 808,
+       "attainment": 0.6967821782178217
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 79,
+       "attainment": 0.5316455696202531
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.645442
+   }
+  },
+  {
+   "policy": "abyss-no-interference",
+   "scale": 0.75,
+   "seed": 2,
+   "result": {
+    "summary": {
+     "policy": "abyss-no-interference",
+     "requests": 4180,
+     "completed": 4179,
+     "rejected": 0,
+     "timed_out": 1,
+     "good": 2910,
+     "duration_s": 1515.9986666666664,
+     "slo_attainment": 0.6961722488038278,
+     "ttft_attainment": 0.8035885167464115,
+     "tpot_attainment": 0.85,
+     "token_weighted_attainment": 0.7208389928715918,
+     "goodput_rps": 1.9195267542011913,
+     "output_tok_s": 921.2785147568293,
+     "ttft": {
+      "mean": 1.9811046734696083,
+      "p50": 1.2360620086965923,
+      "p90": 4.218804962726427,
+      "p99": 12.357610665001028,
+      "max": 31.435175497053024
+     },
+     "tpot": {
+      "mean": 0.06381903897876576,
+      "p50": 0.043724283343866036,
+      "p90": 0.09420202136267555,
+      "p99": 0.6185030113079002,
+      "max": 1.1625492530251147
+     },
+     "e2e": {
+      "mean": 18.744776299662885,
+      "p50": 15.586007782957267,
+      "p90": 38.25528388230998,
+      "p99": 66.23262399306492,
+      "max": 131.54517849795116
+     },
+     "hit_rate": 0.1868293874624616,
+     "preemptions": 4,
+     "prefill_tokens": 38399756,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 16.34936877336856,
+     "decision_us": {
+      "mean": 94.15650717703352,
+      "p50": 0,
+      "p90": 0,
+      "p99": 2065.2760000000003,
+      "max": 10138.2
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.2524246083082269,
+      "p50": 0.13392606298970616,
+      "p90": 0.742364838229023,
+      "p99": 0.9265420877740282,
+      "max": 1.5811090535360097
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1229,
+       "busy": 1.0110062004130942,
+       "hit_rate": 0.23284803359260578,
+       "preemptions": 0,
+       "evictions": 17727,
+       "mean_batch_tokens": 234.95599803343165,
+       "prefill_tokens": 8196448,
+       "decode_tokens": 405761
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 799,
+       "busy": 1.0216637579522991,
+       "hit_rate": 0.12120143072913427,
+       "preemptions": 2,
+       "evictions": 22905,
+       "mean_batch_tokens": 377.4504722376548,
+       "prefill_tokens": 11289325,
+       "decode_tokens": 260282
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1214,
+       "busy": 1.0084269162326467,
+       "hit_rate": 0.23142764682981018,
+       "preemptions": 2,
+       "evictions": 17996,
+       "mean_batch_tokens": 240.55331562080582,
+       "prefill_tokens": 8374246,
+       "decode_tokens": 408115
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 938,
+       "busy": 1.0080384816170331,
+       "hit_rate": 0.17771529437005684,
+       "preemptions": 0,
+       "evictions": 22455,
+       "mean_batch_tokens": 347.6468158678321,
+       "prefill_tokens": 10539737,
+       "decode_tokens": 318316
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1520,
+       "attainment": 0.6585526315789474
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1775,
+       "attainment": 0.6963380281690141
+      },
+      {
+       "label": "16k-64k",
+       "requests": 824,
+       "attainment": 0.7706310679611651
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 61,
+       "attainment": 0.6229508196721312
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.6380112
+   }
+  },
+  {
+   "policy": "abyss-no-cache",
+   "scale": 0.75,
+   "seed": 0,
+   "result": {
+    "summary": {
+     "policy": "abyss-no-cache",
+     "requests": 3658,
+     "completed": 3642,
+     "rejected": 0,
+     "timed_out": 16,
+     "good": 2889,
+     "duration_s": 1599.9986666666666,
+     "slo_attainment": 0.7897758337889557,
+     "ttft_attainment": 0.8578458173865501,
+     "tpot_attainment": 0.9081465281574631,
+     "token_weighted_attainment": 0.7232261530563481,
+     "goodput_rps": 1.8056265046887539,
+     "output_tok_s": 792.0375350312792,
+     "ttft": {
+      "mean": 2.398828310175444,
+      "p50": 1.1597591868833206,
+      "p90": 3.9445295744585565,
+      "p99": 23.702376503490378,
+      "max": 49.158621089530754
+     },
+     "tpot": {
+      "mean": 0.050213634984709724,
+      "p50": 0.03321991717831073,
+      "p90": 0.0740000960553983,
+      "p99": 0.5606925774219119,
+      "max": 1.1563746220152282
+     },
+     "e2e": {
+      "mean": 16.144510647713172,
+      "p50": 13.760085037134445,
+      "p90": 30.82217896986668,
+      "p99": 78.2089824006534,
+      "max": 125.14358724148065
+     },
+     "hit_rate": 0.1875086041022378,
+     "preemptions": 36,
+     "prefill_tokens": 39578099,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 16.87945723009317,
+     "decision_us": {
+      "mean": 148.85456533624932,
+      "p50": 0,
+      "p90": 0,
+      "p99": 3652.0549999999803,
+      "max": 10614.1
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.23373805898956523,
+      "p50": 0.11545635675393368,
+      "p90": 0.6857610302947081,
+      "p99": 0.930546898554232,
+      "max": 4.07432800836838
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 875,
+       "busy": 1.0038439319050836,
+       "hit_rate": 0.2028384370451115,
+       "preemptions": 11,
+       "evictions": 19443,
+       "mean_batch_tokens": 250.76195575521717,
+       "prefill_tokens": 9311215,
+       "decode_tokens": 289708
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 843,
+       "busy": 1.0054595139992661,
+       "hit_rate": 0.21502662995949104,
+       "preemptions": 9,
+       "evictions": 21831,
+       "mean_batch_tokens": 280.1994220426511,
+       "prefill_tokens": 10165851,
+       "decode_tokens": 299402
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1029,
+       "busy": 1.0168621151475064,
+       "hit_rate": 0.1813255295237037,
+       "preemptions": 0,
+       "evictions": 23549,
+       "mean_batch_tokens": 255.02533904354033,
+       "prefill_tokens": 11065873,
+       "decode_tokens": 367423
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 911,
+       "busy": 1.015494084124157,
+       "hit_rate": 0.19303480443376816,
+       "preemptions": 16,
+       "evictions": 18737,
+       "mean_batch_tokens": 245.270263192353,
+       "prefill_tokens": 9035160,
+       "decode_tokens": 307081
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1131,
+       "attainment": 0.7612732095490716
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1567,
+       "attainment": 0.8302488832163369
+      },
+      {
+       "label": "16k-64k",
+       "requests": 846,
+       "attainment": 0.8014184397163121
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 114,
+       "attainment": 0.4298245614035088
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.7918596
+   }
+  },
+  {
+   "policy": "abyss-no-cache",
+   "scale": 0.75,
+   "seed": 1,
+   "result": {
+    "summary": {
+     "policy": "abyss-no-cache",
+     "requests": 4193,
+     "completed": 4104,
+     "rejected": 0,
+     "timed_out": 89,
+     "good": 3135,
+     "duration_s": 1592,
+     "slo_attainment": 0.7476746959217744,
+     "ttft_attainment": 0.8072978774147388,
+     "tpot_attainment": 0.8793226806582399,
+     "token_weighted_attainment": 0.6750350151236082,
+     "goodput_rps": 1.9692211055276383,
+     "output_tok_s": 888.2895728643216,
+     "ttft": {
+      "mean": 2.5970940619337477,
+      "p50": 1.2236650810156107,
+      "p90": 3.8373748119578877,
+      "p99": 28.345942727083937,
+      "max": 63.60911278757982
+     },
+     "tpot": {
+      "mean": 0.05327240761485328,
+      "p50": 0.03582265908440831,
+      "p90": 0.08157741492409606,
+      "p99": 0.49461440807386226,
+      "max": 1.2155263038977078
+     },
+     "e2e": {
+      "mean": 17.519057138858138,
+      "p50": 14.43178724994732,
+      "p90": 31.867358548727836,
+      "p99": 90.85844283127194,
+      "max": 333.49749173600253
+     },
+     "hit_rate": 0.1882279854286182,
+     "preemptions": 114,
+     "prefill_tokens": 37872420,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 15.608824911323566,
+     "decision_us": {
+      "mean": 182.83906510851426,
+      "p50": 0,
+      "p90": 0,
+      "p99": 3611.1719999999955,
+      "max": 11226.5
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.25332345688284846,
+      "p50": 0.13190794441173753,
+      "p90": 0.7262150276009902,
+      "p99": 0.92842014957481,
+      "max": 5.19945755482193
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1121,
+       "busy": 1.0094306129057464,
+       "hit_rate": 0.23565423399432972,
+       "preemptions": 32,
+       "evictions": 18683,
+       "mean_batch_tokens": 257.53003129677506,
+       "prefill_tokens": 9035556,
+       "decode_tokens": 373645
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1267,
+       "busy": 1.0117404284141136,
+       "hit_rate": 0.2344164100474458,
+       "preemptions": 0,
+       "evictions": 17053,
+       "mean_batch_tokens": 199.0369535615345,
+       "prefill_tokens": 8041357,
+       "decode_tokens": 436423
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 681,
+       "busy": 1.028137716717512,
+       "hit_rate": 0.24066461846104403,
+       "preemptions": 82,
+       "evictions": 19951,
+       "mean_batch_tokens": 416.5916680241082,
+       "prefill_tokens": 9937733,
+       "decode_tokens": 217012
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1124,
+       "busy": 1.0065935846197949,
+       "hit_rate": 0.19140879656515103,
+       "preemptions": 0,
+       "evictions": 23052,
+       "mean_batch_tokens": 287.94367026999333,
+       "prefill_tokens": 10857774,
+       "decode_tokens": 382971
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1451,
+       "attainment": 0.7250172294968987
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1855,
+       "attainment": 0.7929919137466307
+      },
+      {
+       "label": "16k-64k",
+       "requests": 808,
+       "attainment": 0.7264851485148515
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 79,
+       "attainment": 0.31645569620253167
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 1.0068335
+   }
+  },
+  {
+   "policy": "abyss-no-cache",
+   "scale": 0.75,
+   "seed": 2,
+   "result": {
+    "summary": {
+     "policy": "abyss-no-cache",
+     "requests": 4180,
+     "completed": 4148,
+     "rejected": 0,
+     "timed_out": 32,
+     "good": 3156,
+     "duration_s": 1515.9986666666664,
+     "slo_attainment": 0.755023923444976,
+     "ttft_attainment": 0.8119617224880383,
+     "tpot_attainment": 0.9050239234449761,
+     "token_weighted_attainment": 0.6894574960267907,
+     "goodput_rps": 2.0817960262058284,
+     "output_tok_s": 914.057532152623,
+     "ttft": {
+      "mean": 2.4504094661870655,
+      "p50": 1.1800609202437045,
+      "p90": 3.978708153599907,
+      "p99": 24.75665075162708,
+      "max": 39.81725505999839
+     },
+     "tpot": {
+      "mean": 0.0524181087846311,
+      "p50": 0.03601364027776533,
+      "p90": 0.07411154770746561,
+      "p99": 0.5394716007499103,
+      "max": 1.0670645294947885
+     },
+     "e2e": {
+      "mean": 16.494637069978708,
+      "p50": 14.204401149839505,
+      "p90": 31.012129844109076,
+      "p99": 75.08596548069724,
+      "max": 235.9040706638309
+     },
+     "hit_rate": 0.20412343176870526,
+     "preemptions": 98,
+     "prefill_tokens": 37028029,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 15.282458076177136,
+     "decision_us": {
+      "mean": 170.91516746411477,
+      "p50": 0,
+      "p90": 0,
+      "p99": 3704.2030000000186,
+      "max": 10429.4
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.2586454163616816,
+      "p50": 0.14172292025031158,
+      "p90": 0.7334309087064221,
+      "p99": 0.9310540268588424,
+      "max": 2.722349192464223
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1125,
+       "busy": 1.0076189104310729,
+       "hit_rate": 0.25149132411670017,
+       "preemptions": 1,
+       "evictions": 18261,
+       "mean_batch_tokens": 227.04887258030206,
+       "prefill_tokens": 8162430,
+       "decode_tokens": 376424
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 855,
+       "busy": 1.0209151164193386,
+       "hit_rate": 0.2273293155688424,
+       "preemptions": 71,
+       "evictions": 23638,
+       "mean_batch_tokens": 378.12454795793104,
+       "prefill_tokens": 11089324,
+       "decode_tokens": 288987
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1225,
+       "busy": 1.009157336197103,
+       "hit_rate": 0.23330198949309722,
+       "preemptions": 0,
+       "evictions": 16386,
+       "mean_batch_tokens": 204.47603207308293,
+       "prefill_tokens": 7825367,
+       "decode_tokens": 395180
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 975,
+       "busy": 1.013402052921988,
+       "hit_rate": 0.2165034709067505,
+       "preemptions": 26,
+       "evictions": 20546,
+       "mean_batch_tokens": 303.15893961708394,
+       "prefill_tokens": 9950908,
+       "decode_tokens": 320970
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1520,
+       "attainment": 0.7552631578947369
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1775,
+       "attainment": 0.7712676056338028
+      },
+      {
+       "label": "16k-64k",
+       "requests": 824,
+       "attainment": 0.7536407766990292
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 61,
+       "attainment": 0.29508196721311475
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.9565722
+   }
+  },
+  {
+   "policy": "abyss-late-binding",
+   "scale": 0.75,
+   "seed": 0,
+   "result": {
+    "summary": {
+     "policy": "abyss-late-binding",
+     "requests": 3658,
+     "completed": 3658,
+     "rejected": 0,
+     "timed_out": 0,
+     "good": 2883,
+     "duration_s": 1599.9986666666666,
+     "slo_attainment": 0.788135593220339,
+     "ttft_attainment": 0.8720612356478951,
+     "tpot_attainment": 0.895297977036632,
+     "token_weighted_attainment": 0.7808852015180524,
+     "goodput_rps": 1.8018765015637515,
+     "output_tok_s": 796.7575389646158,
+     "ttft": {
+      "mean": 1.997350732223734,
+      "p50": 1.1577163240820596,
+      "p90": 3.9553185981903605,
+      "p99": 15.101526002518096,
+      "max": 45.06290326454422
+     },
+     "tpot": {
+      "mean": 0.054186571179119944,
+      "p50": 0.034809233951920995,
+      "p90": 0.0826254855901721,
+      "p99": 0.5618368506502268,
+      "max": 1.2167255160753194
+     },
+     "e2e": {
+      "mean": 16.38974260882956,
+      "p50": 14.12109196310142,
+      "p90": 33.470577657773,
+      "p99": 64.32948234658407,
+      "max": 119.9173159550171
+     },
+     "hit_rate": 0.19572049870473587,
+     "preemptions": 13,
+     "prefill_tokens": 39437435,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 16.607983948937076,
+     "decision_us": {
+      "mean": 230.4910164624036,
+      "p50": 0,
+      "p90": 0,
+      "p99": 5037.135999999999,
+      "max": 10532.3
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.2284367161434001,
+      "p50": 0.10965000359525161,
+      "p90": 0.6841168481420706,
+      "p99": 0.927304050760807,
+      "max": 2.8201313094420213
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 921,
+       "busy": 1.0046101086210704,
+       "hit_rate": 0.17113633289762306,
+       "preemptions": 0,
+       "evictions": 19432,
+       "mean_batch_tokens": 253.4158673679868,
+       "prefill_tokens": 9517345,
+       "decode_tokens": 311136
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 920,
+       "busy": 1.0057674546774202,
+       "hit_rate": 0.19484770662695278,
+       "preemptions": 0,
+       "evictions": 21663,
+       "mean_batch_tokens": 260.97055858035895,
+       "prefill_tokens": 10034733,
+       "decode_tokens": 318491
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 870,
+       "busy": 1.018989964123317,
+       "hit_rate": 0.21603760437699346,
+       "preemptions": 13,
+       "evictions": 24093,
+       "mean_batch_tokens": 286.72155116009867,
+       "prefill_tokens": 11083559,
+       "decode_tokens": 310182
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 947,
+       "busy": 1.0138930654287373,
+       "hit_rate": 0.22993179114346993,
+       "preemptions": 0,
+       "evictions": 19204,
+       "mean_batch_tokens": 225.43726705008268,
+       "prefill_tokens": 8801798,
+       "decode_tokens": 331342
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1131,
+       "attainment": 0.757736516357206
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1567,
+       "attainment": 0.7945118059987237
+      },
+      {
+       "label": "16k-64k",
+       "requests": 846,
+       "attainment": 0.8368794326241135
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 114,
+       "attainment": 0.6403508771929824
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 5.9496216
+   }
+  },
+  {
+   "policy": "abyss-late-binding",
+   "scale": 0.75,
+   "seed": 1,
+   "result": {
+    "summary": {
+     "policy": "abyss-late-binding",
+     "requests": 4193,
+     "completed": 4186,
+     "rejected": 0,
+     "timed_out": 7,
+     "good": 3146,
+     "duration_s": 1592,
+     "slo_attainment": 0.7502981159074649,
+     "ttft_attainment": 0.8332935845456714,
+     "tpot_attainment": 0.8869544478893394,
+     "token_weighted_attainment": 0.6970354926353395,
+     "goodput_rps": 1.9761306532663316,
+     "output_tok_s": 909.6928391959799,
+     "ttft": {
+      "mean": 2.178988308933506,
+      "p50": 1.2283310631703444,
+      "p90": 3.670499205135002,
+      "p99": 23.06186291395642,
+      "max": 60.14276777075017
+     },
+     "tpot": {
+      "mean": 0.059699638863476776,
+      "p50": 0.039949678696796345,
+      "p90": 0.08550887967582521,
+      "p99": 0.6333662078166167,
+      "max": 1.302419511444744
+     },
+     "e2e": {
+      "mean": 18.279725027974003,
+      "p50": 15.275125491570392,
+      "p90": 34.48176240758551,
+      "p99": 82.42999745390739,
+      "max": 197.95417676397568
+     },
+     "hit_rate": 0.19113457671440173,
+     "preemptions": 30,
+     "prefill_tokens": 39166495,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 15.382099113587566,
+     "decision_us": {
+      "mean": 297.0311162185365,
+      "p50": 0,
+      "p90": 1011.6,
+      "p99": 6063.6279999999915,
+      "max": 10603.7
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.24674325835303926,
+      "p50": 0.13400868094804042,
+      "p90": 0.7257928581682297,
+      "p99": 0.929002094436242,
+      "max": 2.2884912371840693
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1006,
+       "busy": 1.0069718488325352,
+       "hit_rate": 0.18243953851243794,
+       "preemptions": 18,
+       "evictions": 18807,
+       "mean_batch_tokens": 309.1169162856692,
+       "prefill_tokens": 9454407,
+       "decode_tokens": 337612
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 945,
+       "busy": 1.0197347512323296,
+       "hit_rate": 0.24859276753174553,
+       "preemptions": 12,
+       "evictions": 18675,
+       "mean_batch_tokens": 290.3815127676038,
+       "prefill_tokens": 8674659,
+       "decode_tokens": 319696
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1078,
+       "busy": 1.0161430237912776,
+       "hit_rate": 0.21645081824646042,
+       "preemptions": 0,
+       "evictions": 20960,
+       "mean_batch_tokens": 287.84436111912316,
+       "prefill_tokens": 9604492,
+       "decode_tokens": 375072
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1164,
+       "busy": 1.0090888081779017,
+       "hit_rate": 0.17525421505994246,
+       "preemptions": 0,
+       "evictions": 24249,
+       "mean_batch_tokens": 326.53145503666536,
+       "prefill_tokens": 11432937,
+       "decode_tokens": 411665
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1451,
+       "attainment": 0.7126119917298415
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1855,
+       "attainment": 0.7978436657681941
+      },
+      {
+       "label": "16k-64k",
+       "requests": 808,
+       "attainment": 0.7475247524752475
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 79,
+       "attainment": 0.35443037974683544
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 11.0373867
+   }
+  },
+  {
+   "policy": "abyss-late-binding",
+   "scale": 0.75,
+   "seed": 2,
+   "result": {
+    "summary": {
+     "policy": "abyss-late-binding",
+     "requests": 4180,
+     "completed": 4177,
+     "rejected": 0,
+     "timed_out": 3,
+     "good": 3247,
+     "duration_s": 1515.9986666666664,
+     "slo_attainment": 0.7767942583732057,
+     "ttft_attainment": 0.8492822966507177,
+     "tpot_attainment": 0.9043062200956937,
+     "token_weighted_attainment": 0.7201029784843699,
+     "goodput_rps": 2.1418224642238037,
+     "output_tok_s": 920.5562186070526,
+     "ttft": {
+      "mean": 2.040949304617947,
+      "p50": 1.1552574947382936,
+      "p90": 3.597883532228838,
+      "p99": 22.390300239684258,
+      "max": 39.463307999479866
+     },
+     "tpot": {
+      "mean": 0.05426386258217241,
+      "p50": 0.03774696028199956,
+      "p90": 0.07779092887601138,
+      "p99": 0.5312827688500952,
+      "max": 1.1101624756386173
+     },
+     "e2e": {
+      "mean": 16.53484435690926,
+      "p50": 14.590208153377716,
+      "p90": 31.195579848294983,
+      "p99": 74.07227692744034,
+      "max": 159.73767097296374
+     },
+     "hit_rate": 0.20879838307724316,
+     "preemptions": 47,
+     "prefill_tokens": 37308166,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 14.723880407664351,
+     "decision_us": {
+      "mean": 294.44182068648905,
+      "p50": 0,
+      "p90": 1013.8700000000001,
+      "p99": 5625.316999999997,
+      "max": 10836
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.2585954171202361,
+      "p50": 0.14661768092850636,
+      "p90": 0.7322112364144968,
+      "p99": 0.9283422020676846,
+      "max": 3.768006999851198
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1184,
+       "busy": 1.013171339234444,
+       "hit_rate": 0.23105600100890442,
+       "preemptions": 0,
+       "evictions": 17029,
+       "mean_batch_tokens": 224.26857356116545,
+       "prefill_tokens": 8011799,
+       "decode_tokens": 401188
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 794,
+       "busy": 1.0195619186713567,
+       "hit_rate": 0.19083175366099753,
+       "preemptions": 32,
+       "evictions": 23054,
+       "mean_batch_tokens": 397.8963099246711,
+       "prefill_tokens": 11180921,
+       "decode_tokens": 273095
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1249,
+       "busy": 1.0062617081281076,
+       "hit_rate": 0.2588156716612796,
+       "preemptions": 0,
+       "evictions": 17903,
+       "mean_batch_tokens": 212.7546826879386,
+       "prefill_tokens": 8032073,
+       "decode_tokens": 395991
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 953,
+       "busy": 1.0095585352057672,
+       "hit_rate": 0.2425013408061841,
+       "preemptions": 15,
+       "evictions": 22483,
+       "mean_batch_tokens": 309.03178091956755,
+       "prefill_tokens": 10083373,
+       "decode_tokens": 321109
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1520,
+       "attainment": 0.7578947368421053
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1775,
+       "attainment": 0.8005633802816902
+      },
+      {
+       "label": "16k-64k",
+       "requests": 824,
+       "attainment": 0.7961165048543689
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 61,
+       "attainment": 0.29508196721311475
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 10.5121267
+   }
+  },
+  {
+   "policy": "abyss-oracle",
+   "scale": 0.75,
+   "seed": 0,
+   "result": {
+    "summary": {
+     "policy": "abyss-oracle",
+     "requests": 3658,
+     "completed": 3650,
+     "rejected": 0,
+     "timed_out": 8,
+     "good": 2892,
+     "duration_s": 1599.9986666666666,
+     "slo_attainment": 0.7905959540732641,
+     "ttft_attainment": 0.8633132859486058,
+     "tpot_attainment": 0.9067796610169492,
+     "token_weighted_attainment": 0.7459085011792095,
+     "goodput_rps": 1.8075015062512552,
+     "output_tok_s": 794.7506622922186,
+     "ttft": {
+      "mean": 2.2334477117662486,
+      "p50": 1.1657725467730415,
+      "p90": 4.077982474434151,
+      "p99": 20.11524308181069,
+      "max": 56.20500608347271
+     },
+     "tpot": {
+      "mean": 0.05080087888054876,
+      "p50": 0.033534064610429716,
+      "p90": 0.07686963121486887,
+      "p99": 0.562233918450909,
+      "max": 0.9236423450126665
+     },
+     "e2e": {
+      "mean": 16.327164756737947,
+      "p50": 13.741720434284218,
+      "p90": 31.503186102781893,
+      "p99": 71.83802467373656,
+      "max": 157.50963475550475
+     },
+     "hit_rate": 0.1957034319449435,
+     "preemptions": 47,
+     "prefill_tokens": 39303904,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 16.85566019485354,
+     "decision_us": {
+      "mean": 136.70929469655545,
+      "p50": 0,
+      "p90": 0,
+      "p99": 2767.610999999979,
+      "max": 10111.1
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.23492381279729724,
+      "p50": 0.11334598782811128,
+      "p90": 0.700967261139121,
+      "p99": 0.9274669790030572,
+      "max": 4.869479465479156
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 993,
+       "busy": 1.0123691105228765,
+       "hit_rate": 0.23510476708487402,
+       "preemptions": 8,
+       "evictions": 19561,
+       "mean_batch_tokens": 212.83440755885138,
+       "prefill_tokens": 8877548,
+       "decode_tokens": 335415
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 758,
+       "busy": 1.0030214969381857,
+       "hit_rate": 0.21521027657304193,
+       "preemptions": 25,
+       "evictions": 22590,
+       "mean_batch_tokens": 294.55945983188644,
+       "prefill_tokens": 10441665,
+       "decode_tokens": 246425
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 845,
+       "busy": 1.005053642347167,
+       "hit_rate": 0.18904343872671434,
+       "preemptions": 14,
+       "evictions": 24230,
+       "mean_batch_tokens": 323.24104945951177,
+       "prefill_tokens": 11392255,
+       "decode_tokens": 299697
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1062,
+       "busy": 1.0197585346229003,
+       "hit_rate": 0.21392000907532335,
+       "preemptions": 0,
+       "evictions": 17996,
+       "mean_batch_tokens": 206.4149980459321,
+       "prefill_tokens": 8592436,
+       "decode_tokens": 386410
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1131,
+       "attainment": 0.7656940760389036
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1567,
+       "attainment": 0.813018506700702
+      },
+      {
+       "label": "16k-64k",
+       "requests": 846,
+       "attainment": 0.8191489361702128
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 114,
+       "attainment": 0.5175438596491229
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.8256368
+   }
+  },
+  {
+   "policy": "abyss-oracle",
+   "scale": 0.75,
+   "seed": 1,
+   "result": {
+    "summary": {
+     "policy": "abyss-oracle",
+     "requests": 4193,
+     "completed": 4128,
+     "rejected": 0,
+     "timed_out": 65,
+     "good": 3094,
+     "duration_s": 1592,
+     "slo_attainment": 0.7378964941569283,
+     "ttft_attainment": 0.817076079179585,
+     "tpot_attainment": 0.8707369425232531,
+     "token_weighted_attainment": 0.6661569225501928,
+     "goodput_rps": 1.943467336683417,
+     "output_tok_s": 892.9736180904523,
+     "ttft": {
+      "mean": 2.4701498807622517,
+      "p50": 1.221321443333295,
+      "p90": 4.231694448253918,
+      "p99": 25.042179478357685,
+      "max": 51.4796132768395
+     },
+     "tpot": {
+      "mean": 0.05643068635242279,
+      "p50": 0.037276966655138494,
+      "p90": 0.0897910323431156,
+      "p99": 0.5844064497951532,
+      "max": 1.0455558673267953
+     },
+     "e2e": {
+      "mean": 18.129854383430672,
+      "p50": 14.785248307149061,
+      "p90": 35.489810647071224,
+      "p99": 83.43397802477165,
+      "max": 261.7216043788071
+     },
+     "hit_rate": 0.19405111475973388,
+     "preemptions": 62,
+     "prefill_tokens": 38326779,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 15.851827592060415,
+     "decision_us": {
+      "mean": 151.17450512759353,
+      "p50": 0,
+      "p90": 0,
+      "p99": 3109.4239999999995,
+      "max": 10242
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.25343988206001405,
+      "p50": 0.13252555277038894,
+      "p90": 0.7362196851692748,
+      "p99": 0.9316651797991345,
+      "max": 4.16052122578761
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 875,
+       "busy": 1.028579025200003,
+       "hit_rate": 0.21500860279513728,
+       "preemptions": 43,
+       "evictions": 19938,
+       "mean_batch_tokens": 344.5773744911805,
+       "prefill_tokens": 9816458,
+       "decode_tokens": 307198
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1280,
+       "busy": 1.0081450549042534,
+       "hit_rate": 0.26021914464726764,
+       "preemptions": 0,
+       "evictions": 17078,
+       "mean_batch_tokens": 206.83266495628564,
+       "prefill_tokens": 7862205,
+       "decode_tokens": 430538
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1108,
+       "busy": 1.0104112190921104,
+       "hit_rate": 0.19119526314607002,
+       "preemptions": 0,
+       "evictions": 19909,
+       "mean_batch_tokens": 271.2594596078862,
+       "prefill_tokens": 9503928,
+       "decode_tokens": 374799
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 930,
+       "busy": 1.0070382803292557,
+       "hit_rate": 0.2080888730853981,
+       "preemptions": 19,
+       "evictions": 23468,
+       "mean_batch_tokens": 351.7859928152538,
+       "prefill_tokens": 11144188,
+       "decode_tokens": 304951
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1451,
+       "attainment": 0.7332873880082702
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1855,
+       "attainment": 0.7644204851752021
+      },
+      {
+       "label": "16k-64k",
+       "requests": 808,
+       "attainment": 0.7227722772277227
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 79,
+       "attainment": 0.35443037974683544
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.9168275
+   }
+  },
+  {
+   "policy": "abyss-oracle",
+   "scale": 0.75,
+   "seed": 2,
+   "result": {
+    "summary": {
+     "policy": "abyss-oracle",
+     "requests": 4180,
+     "completed": 4160,
+     "rejected": 0,
+     "timed_out": 20,
+     "good": 3108,
+     "duration_s": 1515.9986666666664,
+     "slo_attainment": 0.7435406698564593,
+     "ttft_attainment": 0.8129186602870814,
+     "tpot_attainment": 0.8923444976076556,
+     "token_weighted_attainment": 0.6857100189291397,
+     "goodput_rps": 2.0501337292293136,
+     "output_tok_s": 917.4486960850451,
+     "ttft": {
+      "mean": 2.571903261474106,
+      "p50": 1.1746180552013143,
+      "p90": 4.864800637732728,
+      "p99": 23.71778586901251,
+      "max": 51.78307434289172
+     },
+     "tpot": {
+      "mean": 0.05453602694206399,
+      "p50": 0.03686003580864705,
+      "p90": 0.08215716674963411,
+      "p99": 0.6025623143374664,
+      "max": 1.1706747620011697
+     },
+     "e2e": {
+      "mean": 17.266726527653585,
+      "p50": 14.427415404079209,
+      "p90": 34.459784795320786,
+      "p99": 76.48766325668112,
+      "max": 147.652741596983
+     },
+     "hit_rate": 0.19950138613165225,
+     "preemptions": 50,
+     "prefill_tokens": 37464286,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 15.621760253335903,
+     "decision_us": {
+      "mean": 144.30449760765546,
+      "p50": 0,
+      "p90": 0,
+      "p99": 2756.5790000000084,
+      "max": 10330.7
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.2552844132221769,
+      "p50": 0.140516817491962,
+      "p90": 0.7082681881075805,
+      "p99": 0.9259331644329194,
+      "max": 8.84734252322246
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1123,
+       "busy": 1.0089210405905806,
+       "hit_rate": 0.23779438810223666,
+       "preemptions": 0,
+       "evictions": 17266,
+       "mean_batch_tokens": 225.43650557821658,
+       "prefill_tokens": 7959435,
+       "decode_tokens": 385999
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 857,
+       "busy": 1.018397379155896,
+       "hit_rate": 0.20362182974751847,
+       "preemptions": 33,
+       "evictions": 24817,
+       "mean_batch_tokens": 390.67745146839223,
+       "prefill_tokens": 11449567,
+       "decode_tokens": 286338
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1112,
+       "busy": 1.0055348213665993,
+       "hit_rate": 0.2002776398136742,
+       "preemptions": 7,
+       "evictions": 16313,
+       "mean_batch_tokens": 237.2355092696002,
+       "prefill_tokens": 8136709,
+       "decode_tokens": 360118
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1088,
+       "busy": 1.0185253912659298,
+       "hit_rate": 0.20533876273926138,
+       "preemptions": 10,
+       "evictions": 21336,
+       "mean_batch_tokens": 282.165792292691,
+       "prefill_tokens": 9918575,
+       "decode_tokens": 354235
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1520,
+       "attainment": 0.7493421052631579
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1775,
+       "attainment": 0.7509859154929578
+      },
+      {
+       "label": "16k-64k",
+       "requests": 824,
+       "attainment": 0.7475728155339806
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 61,
+       "attainment": 0.32786885245901637
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.8560744
+   }
+  },
+  {
+   "policy": "abyss-shed",
+   "scale": 0.75,
+   "seed": 0,
+   "result": {
+    "summary": {
+     "policy": "abyss-shed",
+     "requests": 3658,
+     "completed": 3532,
+     "rejected": 126,
+     "timed_out": 0,
+     "good": 2988,
+     "duration_s": 1599.9986666666666,
+     "slo_attainment": 0.8168398031711318,
+     "ttft_attainment": 0.8835429196282122,
+     "tpot_attainment": 0.8903772553307818,
+     "token_weighted_attainment": 0.7795706833214321,
+     "goodput_rps": 1.8675015562512969,
+     "output_tok_s": 768.4962654135545,
+     "ttft": {
+      "mean": 1.7431685490380664,
+      "p50": 1.0758827493882563,
+      "p90": 3.289251831531084,
+      "p99": 13.858357939790578,
+      "max": 31.587267993474597
+     },
+     "tpot": {
+      "mean": 0.04813267547246691,
+      "p50": 0.031404833294448486,
+      "p90": 0.06897918522772084,
+      "p99": 0.5187269733415766,
+      "max": 1.1941926225401651
+     },
+     "e2e": {
+      "mean": 14.698756255792954,
+      "p50": 12.32823289387225,
+      "p90": 27.848689203363634,
+      "p99": 59.88006041211487,
+      "max": 103.14863326154277
+     },
+     "hit_rate": 0.19410529706148658,
+     "preemptions": 4,
+     "prefill_tokens": 38044372,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 16.322112404303653,
+     "decision_us": {
+      "mean": 158.43135593220336,
+      "p50": 0,
+      "p90": 0,
+      "p99": 4122.129999999988,
+      "max": 10116.4
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.22590635233068607,
+      "p50": 0.10621818399909999,
+      "p90": 0.6949552731895368,
+      "p99": 0.9229828871458243,
+      "max": 1.3093131117550632
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 937,
+       "busy": 1.0052759548100503,
+       "hit_rate": 0.1992725386129791,
+       "preemptions": 0,
+       "evictions": 18111,
+       "mean_batch_tokens": 200.52591257323118,
+       "prefill_tokens": 8568844,
+       "decode_tokens": 330496
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 879,
+       "busy": 1.0142962310205637,
+       "hit_rate": 0.16373881572687643,
+       "preemptions": 0,
+       "evictions": 21897,
+       "mean_batch_tokens": 265.9599564151457,
+       "prefill_tokens": 10441420,
+       "decode_tokens": 298309
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 958,
+       "busy": 1.016651385675055,
+       "hit_rate": 0.2198414584162918,
+       "preemptions": 0,
+       "evictions": 23157,
+       "mean_batch_tokens": 239.46856723520648,
+       "prefill_tokens": 10434750,
+       "decode_tokens": 333912
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 758,
+       "busy": 1.0034718697774432,
+       "hit_rate": 0.20358539490791394,
+       "preemptions": 4,
+       "evictions": 18196,
+       "mean_batch_tokens": 226.754534987847,
+       "prefill_tokens": 8599358,
+       "decode_tokens": 263343
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1131,
+       "attainment": 0.7931034482758621
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1567,
+       "attainment": 0.8321633694958519
+      },
+      {
+       "label": "16k-64k",
+       "requests": 846,
+       "attainment": 0.8546099290780141
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 114,
+       "attainment": 0.5614035087719298
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.809977
+   }
+  },
+  {
+   "policy": "abyss-shed",
+   "scale": 0.75,
+   "seed": 1,
+   "result": {
+    "summary": {
+     "policy": "abyss-shed",
+     "requests": 4193,
+     "completed": 4003,
+     "rejected": 190,
+     "timed_out": 0,
+     "good": 3247,
+     "duration_s": 1592,
+     "slo_attainment": 0.7743858812306225,
+     "ttft_attainment": 0.8454567135702361,
+     "tpot_attainment": 0.8740758406868591,
+     "token_weighted_attainment": 0.7173260331856233,
+     "goodput_rps": 2.0395728643216082,
+     "output_tok_s": 870.947864321608,
+     "ttft": {
+      "mean": 1.6953965655584071,
+      "p50": 1.126122034752484,
+      "p90": 3.188929224828451,
+      "p99": 12.71892500509736,
+      "max": 29.214597436327608
+     },
+     "tpot": {
+      "mean": 0.05099211078837591,
+      "p50": 0.034977946172144565,
+      "p90": 0.07034121772776195,
+      "p99": 0.45948382633296314,
+      "max": 1.2151693271732331
+     },
+     "e2e": {
+      "mean": 15.730128132682973,
+      "p50": 13.902601023998386,
+      "p90": 30.33964745329233,
+      "p99": 66.12346965789386,
+      "max": 153.49375690315424
+     },
+     "hit_rate": 0.19872111883901605,
+     "preemptions": 3,
+     "prefill_tokens": 36498895,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 14.895868649949175,
+     "decision_us": {
+      "mean": 154.71221082756972,
+      "p50": 0,
+      "p90": 0,
+      "p99": 2623.835999999989,
+      "max": 10124.1
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.24176537775180773,
+      "p50": 0.11817745520611242,
+      "p90": 0.7535847460815966,
+      "p99": 0.9256123700440759,
+      "max": 0.9569547981005669
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1129,
+       "busy": 1.0076711617682383,
+       "hit_rate": 0.23403661123985936,
+       "preemptions": 0,
+       "evictions": 18855,
+       "mean_batch_tokens": 217.75122221419454,
+       "prefill_tokens": 8653273,
+       "decode_tokens": 388411
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 804,
+       "busy": 1.009367193139436,
+       "hit_rate": 0.17092369965440454,
+       "preemptions": 1,
+       "evictions": 17560,
+       "mean_batch_tokens": 278.6548888888889,
+       "prefill_tokens": 8511406,
+       "decode_tokens": 266223
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1144,
+       "busy": 1.0091756894215502,
+       "hit_rate": 0.20797166013315566,
+       "preemptions": 0,
+       "evictions": 17810,
+       "mean_batch_tokens": 214.20625895843287,
+       "prefill_tokens": 8565796,
+       "decode_tokens": 400878
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 926,
+       "busy": 1.010941442146998,
+       "hit_rate": 0.18404997598354358,
+       "preemptions": 2,
+       "evictions": 22690,
+       "mean_batch_tokens": 302.1802385750858,
+       "prefill_tokens": 10768420,
+       "decode_tokens": 327034
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1451,
+       "attainment": 0.7532736044107512
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1855,
+       "attainment": 0.8075471698113208
+      },
+      {
+       "label": "16k-64k",
+       "requests": 808,
+       "attainment": 0.7735148514851485
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 79,
+       "attainment": 0.3924050632911392
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.8988998
+   }
+  },
+  {
+   "policy": "abyss-shed",
+   "scale": 0.75,
+   "seed": 2,
+   "result": {
+    "summary": {
+     "policy": "abyss-shed",
+     "requests": 4180,
+     "completed": 4003,
+     "rejected": 177,
+     "timed_out": 0,
+     "good": 3326,
+     "duration_s": 1515.9986666666664,
+     "slo_attainment": 0.7956937799043062,
+     "ttft_attainment": 0.8581339712918661,
+     "tpot_attainment": 0.8851674641148325,
+     "token_weighted_attainment": 0.7411228641082084,
+     "goodput_rps": 2.1939333279976503,
+     "output_tok_s": 880.6722785156365,
+     "ttft": {
+      "mean": 1.6245336003411786,
+      "p50": 1.0652423226181327,
+      "p90": 3.069644910307284,
+      "p99": 11.605775296632817,
+      "max": 31.233138025120297
+     },
+     "tpot": {
+      "mean": 0.04963067746275432,
+      "p50": 0.03412688658884566,
+      "p90": 0.0673295611797485,
+      "p99": 0.48193061322126807,
+      "max": 1.413068211474699
+     },
+     "e2e": {
+      "mean": 14.69481189019881,
+      "p50": 13.162924181346852,
+      "p90": 27.27601629559185,
+      "p99": 61.05029619863537,
+      "max": 139.68279616094742
+     },
+     "hit_rate": 0.21242808029031848,
+     "preemptions": 7,
+     "prefill_tokens": 35198339,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 14.513912109749915,
+     "decision_us": {
+      "mean": 154.6287559808612,
+      "p50": 0,
+      "p90": 0,
+      "p99": 2527.645,
+      "max": 10133.5
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.2507315794707909,
+      "p50": 0.13695808049509178,
+      "p90": 0.7225130148986679,
+      "p99": 0.9298144375441038,
+      "max": 3.155868898160786
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1013,
+       "busy": 1.0129274847764769,
+       "hit_rate": 0.22108093025637088,
+       "preemptions": 0,
+       "evictions": 16072,
+       "mean_batch_tokens": 202.78717640745188,
+       "prefill_tokens": 7607021,
+       "decode_tokens": 328244
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 872,
+       "busy": 1.0086173515700456,
+       "hit_rate": 0.19565003424104047,
+       "preemptions": 7,
+       "evictions": 22672,
+       "mean_batch_tokens": 300.733170270721,
+       "prefill_tokens": 10509551,
+       "decode_tokens": 310227
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1247,
+       "busy": 1.0059284655393357,
+       "hit_rate": 0.26798772800924725,
+       "preemptions": 0,
+       "evictions": 15810,
+       "mean_batch_tokens": 179.42680446117515,
+       "prefill_tokens": 7261195,
+       "decode_tokens": 412710
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 871,
+       "busy": 1.0169584478591582,
+       "hit_rate": 0.18906848718720262,
+       "preemptions": 0,
+       "evictions": 21231,
+       "mean_batch_tokens": 285.97882159744046,
+       "prefill_tokens": 9820572,
+       "decode_tokens": 279914
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1520,
+       "attainment": 0.8026315789473685
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1775,
+       "attainment": 0.8056338028169014
+      },
+      {
+       "label": "16k-64k",
+       "requests": 824,
+       "attainment": 0.7900485436893204
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 61,
+       "attainment": 0.4098360655737705
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.8814987
+   }
+  },
+  {
+   "policy": "abyss",
+   "scale": 1,
+   "seed": 0,
+   "result": {
+    "summary": {
+     "policy": "abyss",
+     "requests": 3658,
+     "completed": 3410,
+     "rejected": 0,
+     "timed_out": 248,
+     "good": 2883,
+     "duration_s": 1199.999,
+     "slo_attainment": 0.788135593220339,
+     "ttft_attainment": 0.8231273920174959,
+     "tpot_attainment": 0.868234007654456,
+     "token_weighted_attainment": 0.5996481034236949,
+     "goodput_rps": 2.4025020020850016,
+     "output_tok_s": 980.8183173485978,
+     "ttft": {
+      "mean": 2.567196119619904,
+      "p50": 1.0923379897061523,
+      "p90": 2.824255649371594,
+      "p99": 43.93659924220686,
+      "max": 68.03181434502113
+     },
+     "tpot": {
+      "mean": 0.047860390657822854,
+      "p50": 0.03781868907058618,
+      "p90": 0.057055107492125154,
+      "p99": 0.32750799695511096,
+      "max": 0.7415858691190351
+     },
+     "e2e": {
+      "mean": 16.926565806436976,
+      "p50": 14.548698288722186,
+      "p90": 28.580414830084496,
+      "p99": 95.83389260802335,
+      "max": 246.45240389678702
+     },
+     "hit_rate": 0.22697220979644667,
+     "preemptions": 98,
+     "prefill_tokens": 32483044,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 12.871711128062325,
+     "decision_us": {
+      "mean": 177.66287588846367,
+      "p50": 0,
+      "p90": 0,
+      "p99": 4120.338999999984,
+      "max": 10529.8
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.2475480882559155,
+      "p50": 0.11652347489797485,
+      "p90": 0.7581622719695559,
+      "p99": 0.9263441891128751,
+      "max": 1.6845646979571687
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1024,
+       "busy": 1.020484355845662,
+       "hit_rate": 0.21110654642485352,
+       "preemptions": 0,
+       "evictions": 16569,
+       "mean_batch_tokens": 270.90522243713735,
+       "prefill_tokens": 7911560,
+       "decode_tokens": 351862
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1116,
+       "busy": 1.0251936076673331,
+       "hit_rate": 0.25263658303506364,
+       "preemptions": 0,
+       "evictions": 18317,
+       "mean_batch_tokens": 267.15186299183597,
+       "prefill_tokens": 8325902,
+       "decode_tokens": 378440
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 397,
+       "busy": 1.0303778618955408,
+       "hit_rate": 0.26468588840224105,
+       "preemptions": 98,
+       "evictions": 17722,
+       "mean_batch_tokens": 868.9787598818936,
+       "prefill_tokens": 8769597,
+       "decode_tokens": 59761
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1121,
+       "busy": 1.010629945057168,
+       "hit_rate": 0.27056280836614227,
+       "preemptions": 0,
+       "evictions": 16218,
+       "mean_batch_tokens": 260.6450222192744,
+       "prefill_tokens": 7475985,
+       "decode_tokens": 383505
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1131,
+       "attainment": 0.801945181255526
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1567,
+       "attainment": 0.8647096362476069
+      },
+      {
+       "label": "16k-64k",
+       "requests": 846,
+       "attainment": 0.7281323877068558
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 114,
+       "attainment": 0.043859649122807015
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.9685885
+   }
+  },
+  {
+   "policy": "abyss",
+   "scale": 1,
+   "seed": 1,
+   "result": {
+    "summary": {
+     "policy": "abyss",
+     "requests": 4193,
+     "completed": 3809,
+     "rejected": 0,
+     "timed_out": 384,
+     "good": 3213,
+     "duration_s": 1194,
+     "slo_attainment": 0.7662771285475793,
+     "ttft_attainment": 0.8003815883615549,
+     "tpot_attainment": 0.8461721917481517,
+     "token_weighted_attainment": 0.5852728625221477,
+     "goodput_rps": 2.690954773869347,
+     "output_tok_s": 1099.033500837521,
+     "ttft": {
+      "mean": 2.2358794002123568,
+      "p50": 1.0505188155333371,
+      "p90": 2.5374716028213697,
+      "p99": 38.30511566720876,
+      "max": 74.83129683865687
+     },
+     "tpot": {
+      "mean": 0.05095200493271786,
+      "p50": 0.03897360840690514,
+      "p90": 0.057921693061046844,
+      "p99": 0.4346498666206573,
+      "max": 0.9814113721607234
+     },
+     "e2e": {
+      "mean": 17.482143974037264,
+      "p50": 14.705391099462076,
+      "p90": 28.81496371111539,
+      "p99": 113.92691704886563,
+      "max": 370.4655870523988
+     },
+     "hit_rate": 0.23511436731313018,
+     "preemptions": 95,
+     "prefill_tokens": 30448509,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 11.521093726158664,
+     "decision_us": {
+      "mean": 178.8441688528499,
+      "p50": 0,
+      "p90": 0,
+      "p99": 3203.8959999999743,
+      "max": 10249.4
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.2647968826791029,
+      "p50": 0.1310764235991138,
+      "p90": 0.775661338380204,
+      "p99": 0.9303135580608042,
+      "max": 3.449981747336051
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1251,
+       "busy": 1.0135986404395756,
+       "hit_rate": 0.24619624543130572,
+       "preemptions": 0,
+       "evictions": 15381,
+       "mean_batch_tokens": 258.4267744226152,
+       "prefill_tokens": 7225261,
+       "decode_tokens": 417194
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 517,
+       "busy": 1.0439597696173244,
+       "hit_rate": 0.26119354012065876,
+       "preemptions": 95,
+       "evictions": 14655,
+       "mean_batch_tokens": 1022.8769005068018,
+       "prefill_tokens": 7237413,
+       "decode_tokens": 51897
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1186,
+       "busy": 1.0126003411734739,
+       "hit_rate": 0.22960228566447888,
+       "preemptions": 0,
+       "evictions": 15023,
+       "mean_batch_tokens": 261.9387090205661,
+       "prefill_tokens": 7318437,
+       "decode_tokens": 399849
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1239,
+       "busy": 1.0131493933410736,
+       "hit_rate": 0.26013404215616764,
+       "preemptions": 0,
+       "evictions": 19467,
+       "mean_batch_tokens": 309.5056756389342,
+       "prefill_tokens": 8667398,
+       "decode_tokens": 439497
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1451,
+       "attainment": 0.8008270158511371
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1855,
+       "attainment": 0.8285714285714286
+      },
+      {
+       "label": "16k-64k",
+       "requests": 808,
+       "attainment": 0.6349009900990099
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 79,
+       "attainment": 0.012658227848101266
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 1.0488531
+   }
+  },
+  {
+   "policy": "abyss",
+   "scale": 1,
+   "seed": 2,
+   "result": {
+    "summary": {
+     "policy": "abyss",
+     "requests": 4180,
+     "completed": 3813,
+     "rejected": 0,
+     "timed_out": 367,
+     "good": 3188,
+     "duration_s": 1136.9989999999998,
+     "slo_attainment": 0.7626794258373206,
+     "ttft_attainment": 0.792822966507177,
+     "tpot_attainment": 0.8476076555023924,
+     "token_weighted_attainment": 0.5718725270347533,
+     "goodput_rps": 2.8038722989202283,
+     "output_tok_s": 1106.044068640342,
+     "ttft": {
+      "mean": 2.6281008552537948,
+      "p50": 1.0256587119019969,
+      "p90": 2.709553246688529,
+      "p99": 37.343500167415705,
+      "max": 65.41668060259923
+     },
+     "tpot": {
+      "mean": 0.04947544460912455,
+      "p50": 0.039271786654285296,
+      "p90": 0.05960658110495945,
+      "p99": 0.2943840954962877,
+      "max": 0.9410078101115005
+     },
+     "e2e": {
+      "mean": 17.392366245476147,
+      "p50": 14.597977011989656,
+      "p90": 29.341914965709588,
+      "p99": 99.71973761016051,
+      "max": 348.7549756501945
+     },
+     "hit_rate": 0.23521751851027095,
+     "preemptions": 130,
+     "prefill_tokens": 30350770,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 11.569146586049978,
+     "decision_us": {
+      "mean": 200.2011722488039,
+      "p50": 0,
+      "p90": 0,
+      "p99": 4128.368000000019,
+      "max": 10409.9
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.2688290634739235,
+      "p50": 0.14316470580863452,
+      "p90": 0.7604933163614422,
+      "p99": 0.9306176538133113,
+      "max": 1.4175209890802247
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1274,
+       "busy": 1.0095983549397805,
+       "hit_rate": 0.2525448762790851,
+       "preemptions": 0,
+       "evictions": 13558,
+       "mean_batch_tokens": 240.2732618471117,
+       "prefill_tokens": 6522120,
+       "decode_tokens": 424180
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 561,
+       "busy": 1.0598870964925207,
+       "hit_rate": 0.2695496411180668,
+       "preemptions": 130,
+       "evictions": 18240,
+       "mean_batch_tokens": 1126.4417920978362,
+       "prefill_tokens": 9164257,
+       "decode_tokens": 70656
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1210,
+       "busy": 1.0085106429490918,
+       "hit_rate": 0.2977932542028774,
+       "preemptions": 0,
+       "evictions": 14506,
+       "mean_batch_tokens": 244.3856548486896,
+       "prefill_tokens": 6494140,
+       "decode_tokens": 378229
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1135,
+       "busy": 1.0132539344740221,
+       "hit_rate": 0.26011329062529176,
+       "preemptions": 0,
+       "evictions": 18152,
+       "mean_batch_tokens": 320.94527643283413,
+       "prefill_tokens": 8170253,
+       "decode_tokens": 380692
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1520,
+       "attainment": 0.8151315789473684
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1775,
+       "attainment": 0.8152112676056338
+      },
+      {
+       "label": "16k-64k",
+       "requests": 824,
+       "attainment": 0.6092233009708737
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 61,
+       "attainment": 0
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 1.076242
+   }
+  },
+  {
+   "policy": "abyss-selfish",
+   "scale": 1,
+   "seed": 0,
+   "result": {
+    "summary": {
+     "policy": "abyss-selfish",
+     "requests": 3658,
+     "completed": 3486,
+     "rejected": 0,
+     "timed_out": 172,
+     "good": 755,
+     "duration_s": 1199.999,
+     "slo_attainment": 0.20639693821760524,
+     "ttft_attainment": 0.5164024056861674,
+     "tpot_attainment": 0.36632039365773644,
+     "token_weighted_attainment": 0.20293901866685593,
+     "goodput_rps": 0.6291671909726592,
+     "output_tok_s": 1007.9191732659777,
+     "ttft": {
+      "mean": 4.894218532913535,
+      "p50": 2.2367556720952617,
+      "p90": 13.388034183672346,
+      "p99": 29.733565928409014,
+      "max": 63.412419648910145
+     },
+     "tpot": {
+      "mean": 0.10706166759932213,
+      "p50": 0.08873745249076416,
+      "p90": 0.14685333949409252,
+      "p99": 0.6386544163808148,
+      "max": 1.101138041932515
+     },
+     "e2e": {
+      "mean": 36.441798548531246,
+      "p50": 34.42978537396027,
+      "p90": 67.0292610797685,
+      "p99": 121.90827144052575,
+      "max": 246.37527453688767
+     },
+     "hit_rate": 0.14396305583141086,
+     "preemptions": 380,
+     "prefill_tokens": 40093372,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 59.12728821608786,
+     "decision_us": {
+      "mean": 241.9161290322581,
+      "p50": 0,
+      "p90": 0,
+      "p99": 5125.2389999999905,
+      "max": 10118.8
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.32459609278600593,
+      "p50": 0.13654661670803378,
+      "p90": 0.7493092198387716,
+      "p99": 2.532975137462218,
+      "max": 28.445419654378103
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 976,
+       "busy": 1.023446594565722,
+       "hit_rate": 0.25205031542657785,
+       "preemptions": 75,
+       "evictions": 19631,
+       "mean_batch_tokens": 688.4324455541685,
+       "prefill_tokens": 9582640,
+       "decode_tokens": 332592
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1077,
+       "busy": 1.0122312803947973,
+       "hit_rate": 0.18079196372110748,
+       "preemptions": 47,
+       "evictions": 21542,
+       "mean_batch_tokens": 830.0376587684766,
+       "prefill_tokens": 10786432,
+       "decode_tokens": 347503
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 771,
+       "busy": 1.0201834097903573,
+       "hit_rate": 0.28260461633840656,
+       "preemptions": 157,
+       "evictions": 20840,
+       "mean_batch_tokens": 789.4078439933057,
+       "prefill_tokens": 10504123,
+       "decode_tokens": 262854
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 834,
+       "busy": 1.050030714053893,
+       "hit_rate": 0.2604927587494538,
+       "preemptions": 101,
+       "evictions": 18694,
+       "mean_batch_tokens": 669.8475244735545,
+       "prefill_tokens": 9220177,
+       "decode_tokens": 263048
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1131,
+       "attainment": 0.21043324491600354
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1567,
+       "attainment": 0.20165922144224632
+      },
+      {
+       "label": "16k-64k",
+       "requests": 846,
+       "attainment": 0.2127659574468085
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 114,
+       "attainment": 0.18421052631578946
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 1.0890414
+   }
+  },
+  {
+   "policy": "abyss-selfish",
+   "scale": 1,
+   "seed": 1,
+   "result": {
+    "summary": {
+     "policy": "abyss-selfish",
+     "requests": 4193,
+     "completed": 3893,
+     "rejected": 0,
+     "timed_out": 300,
+     "good": 641,
+     "duration_s": 1194,
+     "slo_attainment": 0.1528738373479609,
+     "ttft_attainment": 0.46410684474123537,
+     "tpot_attainment": 0.283567851180539,
+     "token_weighted_attainment": 0.13502511468624614,
+     "goodput_rps": 0.5368509212730318,
+     "output_tok_s": 1126.1264656616415,
+     "ttft": {
+      "mean": 5.253168753152313,
+      "p50": 2.362649058164209,
+      "p90": 16.297220488853583,
+      "p99": 29.629311630420816,
+      "max": 75.00298115549623
+     },
+     "tpot": {
+      "mean": 0.11920717317509409,
+      "p50": 0.09667326446553054,
+      "p90": 0.17339279688278303,
+      "p99": 0.7169016111857863,
+      "max": 1.1778319614135482
+     },
+     "e2e": {
+      "mean": 40.330645335351186,
+      "p50": 36.71093922613625,
+      "p90": 76.83053019568534,
+      "p99": 144.60278891518269,
+      "max": 275.52184588243074
+     },
+     "hit_rate": 0.13632484806346024,
+     "preemptions": 420,
+     "prefill_tokens": 38354607,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 72.1246690865424,
+     "decision_us": {
+      "mean": 212.01748151681386,
+      "p50": 0,
+      "p90": 0,
+      "p99": 4150.895999999969,
+      "max": 10438.1
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.33364130003774667,
+      "p50": 0.16450667219038023,
+      "p90": 0.7666780476655229,
+      "p99": 2.234633568565454,
+      "max": 29.433224738700062
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1056,
+       "busy": 1.0204291927549667,
+       "hit_rate": 0.22323844569842566,
+       "preemptions": 84,
+       "evictions": 18602,
+       "mean_batch_tokens": 754.5328104372136,
+       "prefill_tokens": 9340611,
+       "decode_tokens": 350999
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 924,
+       "busy": 1.043062757889843,
+       "hit_rate": 0.2899011169238748,
+       "preemptions": 167,
+       "evictions": 16504,
+       "mean_batch_tokens": 982.1154872451702,
+       "prefill_tokens": 8758044,
+       "decode_tokens": 229894
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1191,
+       "busy": 1.025037740589654,
+       "hit_rate": 0.2074953703846876,
+       "preemptions": 44,
+       "evictions": 19231,
+       "mean_batch_tokens": 760.5394955444797,
+       "prefill_tokens": 9659049,
+       "decode_tokens": 412015
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1022,
+       "busy": 1.0209761303811382,
+       "hit_rate": 0.24876913867068634,
+       "preemptions": 125,
+       "evictions": 21153,
+       "mean_batch_tokens": 806.6920252606844,
+       "prefill_tokens": 10596903,
+       "decode_tokens": 347773
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1451,
+       "attainment": 0.16126809097174363
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1855,
+       "attainment": 0.14663072776280323
+      },
+      {
+       "label": "16k-64k",
+       "requests": 808,
+       "attainment": 0.16336633663366337
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 79,
+       "attainment": 0.0379746835443038
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 1.1170854000000001
+   }
+  },
+  {
+   "policy": "abyss-selfish",
+   "scale": 1,
+   "seed": 2,
+   "result": {
+    "summary": {
+     "policy": "abyss-selfish",
+     "requests": 4180,
+     "completed": 3882,
+     "rejected": 0,
+     "timed_out": 298,
+     "good": 716,
+     "duration_s": 1136.9989999999998,
+     "slo_attainment": 0.17129186602870813,
+     "ttft_attainment": 0.47990430622009567,
+     "tpot_attainment": 0.30933014354066984,
+     "token_weighted_attainment": 0.16499777656144016,
+     "goodput_rps": 0.6297279065328995,
+     "output_tok_s": 1136.5973057144292,
+     "ttft": {
+      "mean": 5.175380089724932,
+      "p50": 2.239224904990806,
+      "p90": 17.491355439648146,
+      "p99": 29.692265553393884,
+      "max": 54.58493211034795
+     },
+     "tpot": {
+      "mean": 0.11216516241349563,
+      "p50": 0.0961727263461803,
+      "p90": 0.1553764500035961,
+      "p99": 0.6562457506677335,
+      "max": 1.4004023584819851
+     },
+     "e2e": {
+      "mean": 37.685911451551206,
+      "p50": 34.820765860985375,
+      "p90": 68.78816189580877,
+      "p99": 124.20002434097626,
+      "max": 295.4072998680921
+     },
+     "hit_rate": 0.14031520199474615,
+     "preemptions": 352,
+     "prefill_tokens": 37549367,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 64.42140555669329,
+     "decision_us": {
+      "mean": 249.23526315789485,
+      "p50": 0,
+      "p90": 413.75999999999976,
+      "p99": 5578.713,
+      "max": 10455.7
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.3897180065398482,
+      "p50": 0.15869165227389379,
+      "p90": 0.7709917085604554,
+      "p99": 2.117970023748212,
+      "max": 116.08194821627598
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1195,
+       "busy": 1.0311426734895324,
+       "hit_rate": 0.1689166903531261,
+       "preemptions": 20,
+       "evictions": 18172,
+       "mean_batch_tokens": 786.7722358722359,
+       "prefill_tokens": 9209987,
+       "decode_tokens": 396502
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 980,
+       "busy": 1.0103265911804091,
+       "hit_rate": 0.22595587196346675,
+       "preemptions": 81,
+       "evictions": 20574,
+       "mean_batch_tokens": 823.262552139657,
+       "prefill_tokens": 10316979,
+       "decode_tokens": 325799
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1120,
+       "busy": 1.018498900694458,
+       "hit_rate": 0.2337903971519281,
+       "preemptions": 52,
+       "evictions": 18501,
+       "mean_batch_tokens": 757.5664188752424,
+       "prefill_tokens": 9012886,
+       "decode_tokens": 354333
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 885,
+       "busy": 1.0240772077410907,
+       "hit_rate": 0.32421923400883434,
+       "preemptions": 199,
+       "evictions": 17310,
+       "mean_batch_tokens": 867.1586232352126,
+       "prefill_tokens": 9009515,
+       "decode_tokens": 211770
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1520,
+       "attainment": 0.18881578947368421
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1775,
+       "attainment": 0.16
+      },
+      {
+       "label": "16k-64k",
+       "requests": 824,
+       "attainment": 0.16262135922330098
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 61,
+       "attainment": 0.18032786885245902
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 1.2923125
+   }
+  },
+  {
+   "policy": "abyss-no-interference",
+   "scale": 1,
+   "seed": 0,
+   "result": {
+    "summary": {
+     "policy": "abyss-no-interference",
+     "requests": 3658,
+     "completed": 3432,
+     "rejected": 0,
+     "timed_out": 226,
+     "good": 742,
+     "duration_s": 1199.999,
+     "slo_attainment": 0.202843083652269,
+     "ttft_attainment": 0.47102241662110444,
+     "tpot_attainment": 0.37588846364133405,
+     "token_weighted_attainment": 0.20825381343668523,
+     "goodput_rps": 0.6183338486115405,
+     "output_tok_s": 993.1033275861063,
+     "ttft": {
+      "mean": 5.788757872782188,
+      "p50": 2.47678674543738,
+      "p90": 18.080819827506435,
+      "p99": 29.697726808410323,
+      "max": 60.324159962390695
+     },
+     "tpot": {
+      "mean": 0.10793241630813115,
+      "p50": 0.08840299034677321,
+      "p90": 0.148613040124711,
+      "p99": 0.6637475127755522,
+      "max": 1.1101955596390767
+     },
+     "e2e": {
+      "mean": 37.17900484552163,
+      "p50": 34.222655301023565,
+      "p90": 68.48161047566678,
+      "p99": 120.21848833077297,
+      "max": 253.4276042890806
+     },
+     "hit_rate": 0.14429810372936527,
+     "preemptions": 448,
+     "prefill_tokens": 39755456,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 58.66678270447615,
+     "decision_us": {
+      "mean": 206.60347184253695,
+      "p50": 0,
+      "p90": 0,
+      "p99": 4536.912999999995,
+      "max": 10131.5
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.34401758774455665,
+      "p50": 0.16045504757707169,
+      "p90": 0.7786417857285212,
+      "p99": 2.947710908589296,
+      "max": 20.794654202066656
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1063,
+       "busy": 1.022167663654142,
+       "hit_rate": 0.23976792124458732,
+       "preemptions": 68,
+       "evictions": 20357,
+       "mean_batch_tokens": 720.8524346162025,
+       "prefill_tokens": 9786571,
+       "decode_tokens": 357915
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 763,
+       "busy": 1.0298633101351893,
+       "hit_rate": 0.2901113009347477,
+       "preemptions": 165,
+       "evictions": 19384,
+       "mean_batch_tokens": 699.3161174189975,
+       "prefill_tokens": 9816652,
+       "decode_tokens": 251550
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 866,
+       "busy": 1.0252103626839901,
+       "hit_rate": 0.2644298721337701,
+       "preemptions": 141,
+       "evictions": 20987,
+       "mean_batch_tokens": 743.7865700752299,
+       "prefill_tokens": 10326761,
+       "decode_tokens": 254187
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 966,
+       "busy": 1.0224097711740165,
+       "hit_rate": 0.21914512352116344,
+       "preemptions": 74,
+       "evictions": 19388,
+       "mean_batch_tokens": 755.9942704070244,
+       "prefill_tokens": 9825472,
+       "decode_tokens": 324611
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1131,
+       "attainment": 0.1927497789566755
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1567,
+       "attainment": 0.20229738353541799
+      },
+      {
+       "label": "16k-64k",
+       "requests": 846,
+       "attainment": 0.2198581560283688
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 114,
+       "attainment": 0.18421052631578946
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 1.0251943
+   }
+  },
+  {
+   "policy": "abyss-no-interference",
+   "scale": 1,
+   "seed": 1,
+   "result": {
+    "summary": {
+     "policy": "abyss-no-interference",
+     "requests": 4193,
+     "completed": 3871,
+     "rejected": 0,
+     "timed_out": 322,
+     "good": 502,
+     "duration_s": 1194,
+     "slo_attainment": 0.11972334843787265,
+     "ttft_attainment": 0.42070116861435725,
+     "tpot_attainment": 0.24588600047698544,
+     "token_weighted_attainment": 0.10773851226873486,
+     "goodput_rps": 0.4204355108877722,
+     "output_tok_s": 1116.4438860971525,
+     "ttft": {
+      "mean": 5.877232716019509,
+      "p50": 2.6550075180126385,
+      "p90": 18.136300968836395,
+      "p99": 29.76841896255892,
+      "max": 62.63836900961576
+     },
+     "tpot": {
+      "mean": 0.1221664660190074,
+      "p50": 0.10212536177233547,
+      "p90": 0.16826296721384354,
+      "p99": 0.7315542088927103,
+      "max": 1.1587885037049133
+     },
+     "e2e": {
+      "mean": 41.62593827664854,
+      "p50": 38.88364308837515,
+      "p90": 77.27653955423523,
+      "p99": 136.16159512337262,
+      "max": 266.5730365943148
+     },
+     "hit_rate": 0.13920282430993894,
+     "preemptions": 537,
+     "prefill_tokens": 38432756,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 101.1621675419927,
+     "decision_us": {
+      "mean": 248.27021225852596,
+      "p50": 0,
+      "p90": 430.88000000000477,
+      "p99": 5028.816,
+      "max": 10312.3
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.41486149255551485,
+      "p50": 0.19977252089429542,
+      "p90": 0.8176956825718618,
+      "p99": 3.71141579370762,
+      "max": 29.433224738700062
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 915,
+       "busy": 1.0294625697895197,
+       "hit_rate": 0.3173122619852435,
+       "preemptions": 213,
+       "evictions": 16355,
+       "mean_batch_tokens": 877.2575115562404,
+       "prefill_tokens": 8710945,
+       "decode_tokens": 240140
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1136,
+       "busy": 1.019060196487975,
+       "hit_rate": 0.25213382086245706,
+       "preemptions": 71,
+       "evictions": 18661,
+       "mean_batch_tokens": 830.644060475162,
+       "prefill_tokens": 9220478,
+       "decode_tokens": 385384
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1104,
+       "busy": 1.0343963339350413,
+       "hit_rate": 0.2426911665331585,
+       "preemptions": 119,
+       "evictions": 20131,
+       "mean_batch_tokens": 856.5481628599802,
+       "prefill_tokens": 9932493,
+       "decode_tokens": 365152
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1038,
+       "busy": 1.0241477560614038,
+       "hit_rate": 0.2556377565489443,
+       "preemptions": 134,
+       "evictions": 20857,
+       "mean_batch_tokens": 839.1983180428134,
+       "prefill_tokens": 10568840,
+       "decode_tokens": 338455
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1451,
+       "attainment": 0.13852515506547208
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1855,
+       "attainment": 0.10835579514824797
+      },
+      {
+       "label": "16k-64k",
+       "requests": 808,
+       "attainment": 0.11633663366336634
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 79,
+       "attainment": 0.0759493670886076
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 1.3478188
+   }
+  },
+  {
+   "policy": "abyss-no-interference",
+   "scale": 1,
+   "seed": 2,
+   "result": {
+    "summary": {
+     "policy": "abyss-no-interference",
+     "requests": 4180,
+     "completed": 3950,
+     "rejected": 0,
+     "timed_out": 230,
+     "good": 830,
+     "duration_s": 1136.9989999999998,
+     "slo_attainment": 0.19856459330143542,
+     "ttft_attainment": 0.5035885167464115,
+     "tpot_attainment": 0.3401913875598086,
+     "token_weighted_attainment": 0.18382713208317758,
+     "goodput_rps": 0.7299918469585287,
+     "output_tok_s": 1155.6668035767843,
+     "ttft": {
+      "mean": 4.527003687384427,
+      "p50": 2.134296466110527,
+      "p90": 10.55700257342204,
+      "p99": 28.980132626376246,
+      "max": 54.37736721083263
+     },
+     "tpot": {
+      "mean": 0.10888334750834049,
+      "p50": 0.09185510215701395,
+      "p90": 0.16011914684703563,
+      "p99": 0.664107406344128,
+      "max": 0.9765976318260037
+     },
+     "e2e": {
+      "mean": 35.87221874005187,
+      "p50": 32.8918163311412,
+      "p90": 65.4181117790207,
+      "p99": 130.601059323268,
+      "max": 302.3057238880142
+     },
+     "hit_rate": 0.15480317240572208,
+     "preemptions": 319,
+     "prefill_tokens": 37321059,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 49.569764155898724,
+     "decision_us": {
+      "mean": 269.0229665071771,
+      "p50": 0,
+      "p90": 514.1399999999999,
+      "p99": 6020.467000000002,
+      "max": 10120.8
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.33748150653565506,
+      "p50": 0.1529962368555413,
+      "p90": 0.7623084664176095,
+      "p99": 2.9549367131288324,
+      "max": 30.59511719874624
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1207,
+       "busy": 1.0446760196929297,
+       "hit_rate": 0.2392967635548256,
+       "preemptions": 55,
+       "evictions": 18071,
+       "mean_batch_tokens": 754.9685569904548,
+       "prefill_tokens": 8998818,
+       "decode_tokens": 364677
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 917,
+       "busy": 1.013214830441817,
+       "hit_rate": 0.24259846072973557,
+       "preemptions": 119,
+       "evictions": 20471,
+       "mean_batch_tokens": 755.4725498762195,
+       "prefill_tokens": 10033338,
+       "decode_tokens": 317777
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1104,
+       "busy": 1.0153718177227482,
+       "hit_rate": 0.23317596529798978,
+       "preemptions": 78,
+       "evictions": 17128,
+       "mean_batch_tokens": 754.8646427373365,
+       "prefill_tokens": 8631851,
+       "decode_tokens": 320806
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 952,
+       "busy": 1.016398018985061,
+       "hit_rate": 0.2268330010755561,
+       "preemptions": 67,
+       "evictions": 19718,
+       "mean_batch_tokens": 772.6458365638083,
+       "prefill_tokens": 9657052,
+       "decode_tokens": 306753
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1520,
+       "attainment": 0.21776315789473685
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1775,
+       "attainment": 0.18535211267605634
+      },
+      {
+       "label": "16k-64k",
+       "requests": 824,
+       "attainment": 0.20024271844660194
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 61,
+       "attainment": 0.08196721311475409
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 1.3780995
+   }
+  },
+  {
+   "policy": "abyss-no-cache",
+   "scale": 1,
+   "seed": 0,
+   "result": {
+    "summary": {
+     "policy": "abyss-no-cache",
+     "requests": 3658,
+     "completed": 3406,
+     "rejected": 0,
+     "timed_out": 252,
+     "good": 2845,
+     "duration_s": 1199.999,
+     "slo_attainment": 0.777747402952433,
+     "ttft_attainment": 0.8116457080371788,
+     "tpot_attainment": 0.8693275013668671,
+     "token_weighted_attainment": 0.6000239044100986,
+     "goodput_rps": 2.3708353090294243,
+     "output_tok_s": 982.2666518888766,
+     "ttft": {
+      "mean": 2.634957724809474,
+      "p50": 1.1156298563466862,
+      "p90": 2.944461124533177,
+      "p99": 43.595430009062994,
+      "max": 69.53555069176127
+     },
+     "tpot": {
+      "mean": 0.04748381792156978,
+      "p50": 0.038693780997614904,
+      "p90": 0.05927808453958948,
+      "p99": 0.28537718063056244,
+      "max": 0.7152839540956393
+     },
+     "e2e": {
+      "mean": 17.531076033600247,
+      "p50": 14.871622608198209,
+      "p90": 29.35171539629266,
+      "p99": 95.92394324084793,
+      "max": 240.45595903765854
+     },
+     "hit_rate": 0.21830811065846523,
+     "preemptions": 101,
+     "prefill_tokens": 32996886,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 13.068347052813026,
+     "decision_us": {
+      "mean": 151.26178239475132,
+      "p50": 0,
+      "p90": 0,
+      "p99": 2507.2439999999997,
+      "max": 10082
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.2424573898769053,
+      "p50": 0.11606289553768054,
+      "p90": 0.7315729722596839,
+      "p99": 0.93115798249716,
+      "max": 2.4321653069689795
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1084,
+       "busy": 1.0302113359019385,
+       "hit_rate": 0.2133491023134426,
+       "preemptions": 0,
+       "evictions": 16344,
+       "mean_batch_tokens": 263.8070101488279,
+       "prefill_tokens": 7747624,
+       "decode_tokens": 388448
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1085,
+       "busy": 1.0088795332110199,
+       "hit_rate": 0.22037017976990414,
+       "preemptions": 0,
+       "evictions": 18630,
+       "mean_batch_tokens": 303.89745813596636,
+       "prefill_tokens": 8748885,
+       "decode_tokens": 361353
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 412,
+       "busy": 1.0267712084224068,
+       "hit_rate": 0.28404505745532105,
+       "preemptions": 101,
+       "evictions": 18017,
+       "mean_batch_tokens": 850.0203526542863,
+       "prefill_tokens": 8720920,
+       "decode_tokens": 64210
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1077,
+       "busy": 1.0134665761164257,
+       "hit_rate": 0.25853673925730125,
+       "preemptions": 0,
+       "evictions": 16554,
+       "mean_batch_tokens": 284.1650027925161,
+       "prefill_tokens": 7779457,
+       "decode_tokens": 361302
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1131,
+       "attainment": 0.8010610079575596
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1567,
+       "attainment": 0.8366305041480536
+      },
+      {
+       "label": "16k-64k",
+       "requests": 846,
+       "attainment": 0.735224586288416
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 114,
+       "attainment": 0.05263157894736842
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.8083442
+   }
+  },
+  {
+   "policy": "abyss-no-cache",
+   "scale": 1,
+   "seed": 1,
+   "result": {
+    "summary": {
+     "policy": "abyss-no-cache",
+     "requests": 4193,
+     "completed": 3822,
+     "rejected": 0,
+     "timed_out": 371,
+     "good": 3164,
+     "duration_s": 1194,
+     "slo_attainment": 0.7545909849749582,
+     "ttft_attainment": 0.7903648938707369,
+     "tpot_attainment": 0.8435487717624612,
+     "token_weighted_attainment": 0.5847413577689696,
+     "goodput_rps": 2.6499162479061975,
+     "output_tok_s": 1103.2370184254607,
+     "ttft": {
+      "mean": 2.3549153564950527,
+      "p50": 1.1069348162487245,
+      "p90": 2.5959865333865317,
+      "p99": 36.35999038308187,
+      "max": 74.83129683865687
+     },
+     "tpot": {
+      "mean": 0.05151391340123545,
+      "p50": 0.04031078005214381,
+      "p90": 0.05997638145202756,
+      "p99": 0.3464284504730576,
+      "max": 0.9814113721607234
+     },
+     "e2e": {
+      "mean": 18.142345215209446,
+      "p50": 14.925824613894633,
+      "p90": 29.310163683648703,
+      "p99": 122.8485578131029,
+      "max": 370.6995185522385
+     },
+     "hit_rate": 0.22854675588820506,
+     "preemptions": 106,
+     "prefill_tokens": 30890995,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 11.670966642141645,
+     "decision_us": {
+      "mean": 200.16033865967088,
+      "p50": 0,
+      "p90": 0,
+      "p99": 4612.787999999995,
+      "max": 10280.1
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.2580663036084069,
+      "p50": 0.12824593510345653,
+      "p90": 0.7567515578359055,
+      "p99": 0.9237494751720374,
+      "max": 3.449981747336051
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1222,
+       "busy": 1.0124238204564542,
+       "hit_rate": 0.22506240562256968,
+       "preemptions": 0,
+       "evictions": 15537,
+       "mean_batch_tokens": 277.3364841986456,
+       "prefill_tokens": 7457171,
+       "decode_tokens": 405873
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 518,
+       "busy": 1.0441918014034475,
+       "hit_rate": 0.318152008978493,
+       "preemptions": 106,
+       "evictions": 14854,
+       "mean_batch_tokens": 1009.2603867258949,
+       "prefill_tokens": 7323826,
+       "decode_tokens": 57936
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1216,
+       "busy": 1.0099688630254275,
+       "hit_rate": 0.24307517044513038,
+       "preemptions": 0,
+       "evictions": 15354,
+       "mean_batch_tokens": 274.72159270303456,
+       "prefill_tokens": 7413701,
+       "decode_tokens": 417238
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1237,
+       "busy": 1.0131887505055455,
+       "hit_rate": 0.2513008590719289,
+       "preemptions": 0,
+       "evictions": 19173,
+       "mean_batch_tokens": 311.6871073477192,
+       "prefill_tokens": 8696297,
+       "decode_tokens": 432395
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1451,
+       "attainment": 0.7691247415575465
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1855,
+       "attainment": 0.8274932614555256
+      },
+      {
+       "label": "16k-64k",
+       "requests": 808,
+       "attainment": 0.6324257425742574
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 79,
+       "attainment": 0.02531645569620253
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 1.1082294
+   }
+  },
+  {
+   "policy": "abyss-no-cache",
+   "scale": 1,
+   "seed": 2,
+   "result": {
+    "summary": {
+     "policy": "abyss-no-cache",
+     "requests": 4180,
+     "completed": 3799,
+     "rejected": 0,
+     "timed_out": 381,
+     "good": 3143,
+     "duration_s": 1136.9989999999998,
+     "slo_attainment": 0.7519138755980861,
+     "ttft_attainment": 0.780622009569378,
+     "tpot_attainment": 0.8440191387559809,
+     "token_weighted_attainment": 0.5703673145065755,
+     "goodput_rps": 2.764294427699585,
+     "output_tok_s": 1102.4231331777778,
+     "ttft": {
+      "mean": 2.650281445407466,
+      "p50": 1.0547235430882438,
+      "p90": 2.752199661248028,
+      "p99": 38.684368324635585,
+      "max": 62.68351711331343
+     },
+     "tpot": {
+      "mean": 0.05039029698232652,
+      "p50": 0.040046109001381766,
+      "p90": 0.0597445938431127,
+      "p99": 0.3352196709562028,
+      "max": 0.8275133935333485
+     },
+     "e2e": {
+      "mean": 17.409076785409752,
+      "p50": 14.711503386777395,
+      "p90": 29.106522476211726,
+      "p99": 93.12788716433687,
+      "max": 347.0515823403332
+     },
+     "hit_rate": 0.2246149392646862,
+     "preemptions": 129,
+     "prefill_tokens": 30499185,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 11.720871225987864,
+     "decision_us": {
+      "mean": 186.02488038277514,
+      "p50": 0,
+      "p90": 0,
+      "p99": 3632.7259999999997,
+      "max": 10263
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.26443268059909397,
+      "p50": 0.1372620515963268,
+      "p90": 0.7589997194352753,
+      "p99": 0.9282485394864007,
+      "max": 3.033873918427741
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1202,
+       "busy": 1.013898046774646,
+       "hit_rate": 0.2593367963644982,
+       "preemptions": 0,
+       "evictions": 14503,
+       "mean_batch_tokens": 259.20768560220836,
+       "prefill_tokens": 6743974,
+       "decode_tokens": 392532
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 572,
+       "busy": 1.0574413493891244,
+       "hit_rate": 0.2741010985090048,
+       "preemptions": 129,
+       "evictions": 17808,
+       "mean_batch_tokens": 1077.5308684240556,
+       "prefill_tokens": 9030477,
+       "decode_tokens": 69961
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1299,
+       "busy": 1.0124180168500367,
+       "hit_rate": 0.30480155753015903,
+       "preemptions": 0,
+       "evictions": 14224,
+       "mean_batch_tokens": 237.83402115484654,
+       "prefill_tokens": 6443818,
+       "decode_tokens": 414126
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1107,
+       "busy": 1.0086272012982263,
+       "hit_rate": 0.21838657344220344,
+       "preemptions": 0,
+       "evictions": 17613,
+       "mean_batch_tokens": 326.8849059454559,
+       "prefill_tokens": 8280916,
+       "decode_tokens": 373035
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1520,
+       "attainment": 0.8032894736842106
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1775,
+       "attainment": 0.7954929577464789
+      },
+      {
+       "label": "16k-64k",
+       "requests": 824,
+       "attainment": 0.6189320388349514
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 61,
+       "attainment": 0
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 1.0680346
+   }
+  },
+  {
+   "policy": "abyss-late-binding",
+   "scale": 1,
+   "seed": 0,
+   "result": {
+    "summary": {
+     "policy": "abyss-late-binding",
+     "requests": 3658,
+     "completed": 3534,
+     "rejected": 0,
+     "timed_out": 124,
+     "good": 2791,
+     "duration_s": 1199.999,
+     "slo_attainment": 0.7629852378348825,
+     "ttft_attainment": 0.8283214871514489,
+     "tpot_attainment": 0.8622197922361946,
+     "token_weighted_attainment": 0.5963393210617229,
+     "goodput_rps": 2.325835271529393,
+     "output_tok_s": 1025.1325209437675,
+     "ttft": {
+      "mean": 2.6234808376932364,
+      "p50": 1.1725153182509302,
+      "p90": 3.420207329746961,
+      "p99": 42.106222782223725,
+      "max": 70.87494948087556
+     },
+     "tpot": {
+      "mean": 0.05879233988483325,
+      "p50": 0.04415129658086778,
+      "p90": 0.08322362718516985,
+      "p99": 0.43721617430355014,
+      "max": 0.9517658795631974
+     },
+     "e2e": {
+      "mean": 19.754404604957898,
+      "p50": 17.2493752221269,
+      "p90": 35.57597449996385,
+      "p99": 97.3388885724521,
+      "max": 226.3048786694178
+     },
+     "hit_rate": 0.22503897537478637,
+     "preemptions": 109,
+     "prefill_tokens": 34792829,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 12.970575846514725,
+     "decision_us": {
+      "mean": 511.45932627023814,
+      "p50": 0,
+      "p90": 2004.1,
+      "p99": 8032.450000000009,
+      "max": 12156.9
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.2510783329360996,
+      "p50": 0.1391567055060876,
+      "p90": 0.7098469367062679,
+      "p99": 0.9314085360862182,
+      "max": 3.2488809451480085
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1188,
+       "busy": 1.0129621126268769,
+       "hit_rate": 0.24746666441040605,
+       "preemptions": 0,
+       "evictions": 18717,
+       "mean_batch_tokens": 350.6830656876988,
+       "prefill_tokens": 8538399,
+       "decode_tokens": 393148
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1123,
+       "busy": 1.0271435863097962,
+       "hit_rate": 0.22138238765309293,
+       "preemptions": 0,
+       "evictions": 20146,
+       "mean_batch_tokens": 366.56264496748923,
+       "prefill_tokens": 9226994,
+       "decode_tokens": 413237
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 276,
+       "busy": 1.0194674445227452,
+       "hit_rate": 0.27378046987720744,
+       "preemptions": 97,
+       "evictions": 17818,
+       "mean_batch_tokens": 777.4185263903648,
+       "prefill_tokens": 8510472,
+       "decode_tokens": 62752
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1071,
+       "busy": 1.0260558022275004,
+       "hit_rate": 0.24048068743229695,
+       "preemptions": 12,
+       "evictions": 18023,
+       "mean_batch_tokens": 354.2553590675023,
+       "prefill_tokens": 8516964,
+       "decode_tokens": 357487
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1131,
+       "attainment": 0.7630415561450045
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1567,
+       "attainment": 0.8315252074026803
+      },
+      {
+       "label": "16k-64k",
+       "requests": 846,
+       "attainment": 0.7281323877068558
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 114,
+       "attainment": 0.07894736842105263
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 41.4155577
+   }
+  },
+  {
+   "policy": "abyss-late-binding",
+   "scale": 1,
+   "seed": 1,
+   "result": {
+    "summary": {
+     "policy": "abyss-late-binding",
+     "requests": 4193,
+     "completed": 3987,
+     "rejected": 0,
+     "timed_out": 206,
+     "good": 3069,
+     "duration_s": 1194,
+     "slo_attainment": 0.7319341760076318,
+     "ttft_attainment": 0.8006200810875268,
+     "tpot_attainment": 0.8292392082041498,
+     "token_weighted_attainment": 0.5344981007681594,
+     "goodput_rps": 2.57035175879397,
+     "output_tok_s": 1152.1641541038525,
+     "ttft": {
+      "mean": 2.7345299683523567,
+      "p50": 1.2042769040581334,
+      "p90": 3.0350119045280284,
+      "p99": 37.93183934089381,
+      "max": 75.81827247482909
+     },
+     "tpot": {
+      "mean": 0.06394798052965091,
+      "p50": 0.04768626488980537,
+      "p90": 0.09335282618391727,
+      "p99": 0.4657033902496544,
+      "max": 0.9591739319207985
+     },
+     "e2e": {
+      "mean": 21.441714401677153,
+      "p50": 17.74815158472734,
+      "p90": 38.237445999064406,
+      "p99": 112.66307899224486,
+      "max": 265.65596902978507
+     },
+     "hit_rate": 0.23427988529751115,
+     "preemptions": 140,
+     "prefill_tokens": 33049624,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 11.754240514661667,
+     "decision_us": {
+      "mean": 505.22953932572665,
+      "p50": 0,
+      "p90": 2004.1,
+      "p99": 7806.599999999659,
+      "max": 25455.8
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.26399639220885285,
+      "p50": 0.16964037570476903,
+      "p90": 0.7177879647206175,
+      "p99": 0.9236083599292921,
+      "max": 4.4328810951900675
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1403,
+       "busy": 1.0148267391502943,
+       "hit_rate": 0.28775211097618253,
+       "preemptions": 0,
+       "evictions": 18567,
+       "mean_batch_tokens": 348.52016047331523,
+       "prefill_tokens": 8129789,
+       "decode_tokens": 470643
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1176,
+       "busy": 1.0264279280483322,
+       "hit_rate": 0.27167562137762624,
+       "preemptions": 25,
+       "evictions": 15729,
+       "mean_batch_tokens": 342.9010816468946,
+       "prefill_tokens": 7317003,
+       "decode_tokens": 405932
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1272,
+       "busy": 1.0108735699938252,
+       "hit_rate": 0.23353790205369152,
+       "preemptions": 0,
+       "evictions": 18170,
+       "mean_batch_tokens": 400.1412210338681,
+       "prefill_tokens": 8544649,
+       "decode_tokens": 434520
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 342,
+       "busy": 1.0416545692755075,
+       "hit_rate": 0.26949946994577223,
+       "preemptions": 115,
+       "evictions": 18581,
+       "mean_batch_tokens": 1101.8407775977782,
+       "prefill_tokens": 9058183,
+       "decode_tokens": 60600
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1451,
+       "attainment": 0.7560303239145417
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1855,
+       "attainment": 0.8382749326145552
+      },
+      {
+       "label": "16k-64k",
+       "requests": 808,
+       "attainment": 0.5160891089108911
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 79,
+       "attainment": 0
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 49.9602875
+   }
+  },
+  {
+   "policy": "abyss-late-binding",
+   "scale": 1,
+   "seed": 2,
+   "result": {
+    "summary": {
+     "policy": "abyss-late-binding",
+     "requests": 4180,
+     "completed": 4008,
+     "rejected": 0,
+     "timed_out": 172,
+     "good": 2945,
+     "duration_s": 1136.9989999999998,
+     "slo_attainment": 0.7045454545454546,
+     "ttft_attainment": 0.7832535885167464,
+     "tpot_attainment": 0.8172248803827751,
+     "token_weighted_attainment": 0.5006961070586249,
+     "goodput_rps": 2.5901517943287553,
+     "output_tok_s": 1176.1830925093163,
+     "ttft": {
+      "mean": 2.785528149537549,
+      "p50": 1.1910476724951309,
+      "p90": 3.402716511635247,
+      "p99": 34.82653629838177,
+      "max": 63.3426369599685
+     },
+     "tpot": {
+      "mean": 0.06518187185063923,
+      "p50": 0.04899071458056151,
+      "p90": 0.09705342645985716,
+      "p99": 0.5276712217839411,
+      "max": 0.8107586270821656
+     },
+     "e2e": {
+      "mean": 21.271220775271523,
+      "p50": 17.61176040451869,
+      "p90": 40.48003119017038,
+      "p99": 97.36101507377757,
+      "max": 325.78894938333724
+     },
+     "hit_rate": 0.22563865083216714,
+     "preemptions": 195,
+     "prefill_tokens": 33195553,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 12.283069748402562,
+     "decision_us": {
+      "mean": 453.46197646528367,
+      "p50": 0,
+      "p90": 2003.4,
+      "p99": 8318.330999999918,
+      "max": 11487
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.2639342139683368,
+      "p50": 0.16088381419484876,
+      "p90": 0.7262082525792943,
+      "p99": 0.9333094479966233,
+      "max": 2.3722321794070704
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1359,
+       "busy": 1.0102338500797592,
+       "hit_rate": 0.2463072433472793,
+       "preemptions": 0,
+       "evictions": 16306,
+       "mean_batch_tokens": 369.15498957672435,
+       "prefill_tokens": 7695653,
+       "decode_tokens": 450121
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 378,
+       "busy": 1.0558633134021442,
+       "hit_rate": 0.28762965518464456,
+       "preemptions": 138,
+       "evictions": 19127,
+       "mean_batch_tokens": 950.9973096851335,
+       "prefill_tokens": 9235864,
+       "decode_tokens": 86393
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1342,
+       "busy": 1.012491611664323,
+       "hit_rate": 0.2641660633152722,
+       "preemptions": 0,
+       "evictions": 16481,
+       "mean_batch_tokens": 360.9057464000361,
+       "prefill_tokens": 7564431,
+       "decode_tokens": 430714
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1101,
+       "busy": 1.0148187933488892,
+       "hit_rate": 0.29188291034736874,
+       "preemptions": 57,
+       "evictions": 19116,
+       "mean_batch_tokens": 464.0043701407592,
+       "prefill_tokens": 8699605,
+       "decode_tokens": 366081
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1520,
+       "attainment": 0.7618421052631579
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1775,
+       "attainment": 0.7814084507042254
+      },
+      {
+       "label": "16k-64k",
+       "requests": 824,
+       "attainment": 0.4854368932038835
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 61,
+       "attainment": 0
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 44.49858
+   }
+  },
+  {
+   "policy": "abyss-oracle",
+   "scale": 1,
+   "seed": 0,
+   "result": {
+    "summary": {
+     "policy": "abyss-oracle",
+     "requests": 3658,
+     "completed": 3396,
+     "rejected": 0,
+     "timed_out": 262,
+     "good": 2802,
+     "duration_s": 1199.999,
+     "slo_attainment": 0.7659923455440131,
+     "ttft_attainment": 0.8045379989065062,
+     "tpot_attainment": 0.8613996719518863,
+     "token_weighted_attainment": 0.5934188425900714,
+     "goodput_rps": 2.335001945834955,
+     "output_tok_s": 973.794144828454,
+     "ttft": {
+      "mean": 2.665727303208958,
+      "p50": 1.1115210500591388,
+      "p90": 2.9927063032932892,
+      "p99": 42.21334348220407,
+      "max": 69.14503586753568
+     },
+     "tpot": {
+      "mean": 0.04931033728402777,
+      "p50": 0.038831150340712564,
+      "p90": 0.061524333602355465,
+      "p99": 0.33509879494439465,
+      "max": 0.9384211135457508
+     },
+     "e2e": {
+      "mean": 17.72357141361331,
+      "p50": 14.752614982929188,
+      "p90": 30.955326602058165,
+      "p99": 95.9461389742566,
+      "max": 248.92899688410807
+     },
+     "hit_rate": 0.21278615086746897,
+     "preemptions": 109,
+     "prefill_tokens": 33282994,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 13.337741353393527,
+     "decision_us": {
+      "mean": 178.1786495352651,
+      "p50": 0,
+      "p90": 0,
+      "p99": 4544.009999999986,
+      "max": 10257.1
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.24948023529367527,
+      "p50": 0.12668660139139143,
+      "p90": 0.7545047367308009,
+      "p99": 0.9283246650311372,
+      "max": 2.2370209919559607
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1066,
+       "busy": 1.0082637597394726,
+       "hit_rate": 0.25190706831545867,
+       "preemptions": 0,
+       "evictions": 16775,
+       "mean_batch_tokens": 287.0845712297791,
+       "prefill_tokens": 7891372,
+       "decode_tokens": 360874
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1101,
+       "busy": 1.0271776258990315,
+       "hit_rate": 0.2044398617593974,
+       "preemptions": 0,
+       "evictions": 18513,
+       "mean_batch_tokens": 304.583225934371,
+       "prefill_tokens": 8848266,
+       "decode_tokens": 368727
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 426,
+       "busy": 1.0324416911048326,
+       "hit_rate": 0.28030810196463146,
+       "preemptions": 109,
+       "evictions": 17824,
+       "mean_batch_tokens": 851.1192550037065,
+       "prefill_tokens": 8836428,
+       "decode_tokens": 66583
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1065,
+       "busy": 1.0083950340817824,
+       "hit_rate": 0.2264295178062392,
+       "preemptions": 0,
+       "evictions": 16472,
+       "mean_batch_tokens": 288.6930363909344,
+       "prefill_tokens": 7706928,
+       "decode_tokens": 368971
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1131,
+       "attainment": 0.7807250221043325
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1567,
+       "attainment": 0.8379068283343969
+      },
+      {
+       "label": "16k-64k",
+       "requests": 846,
+       "attainment": 0.7092198581560284
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 114,
+       "attainment": 0.05263157894736842
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.9388294
+   }
+  },
+  {
+   "policy": "abyss-oracle",
+   "scale": 1,
+   "seed": 1,
+   "result": {
+    "summary": {
+     "policy": "abyss-oracle",
+     "requests": 4193,
+     "completed": 3814,
+     "rejected": 0,
+     "timed_out": 379,
+     "good": 3182,
+     "duration_s": 1194,
+     "slo_attainment": 0.7588838540424517,
+     "ttft_attainment": 0.7939422847603148,
+     "tpot_attainment": 0.8425948008585739,
+     "token_weighted_attainment": 0.5867023282919933,
+     "goodput_rps": 2.66499162479062,
+     "output_tok_s": 1093.6834170854272,
+     "ttft": {
+      "mean": 2.326919148883522,
+      "p50": 1.0685687024133728,
+      "p90": 2.597347357747658,
+      "p99": 38.62578359783291,
+      "max": 70.34302115546537
+     },
+     "tpot": {
+      "mean": 0.05270658525219262,
+      "p50": 0.039861044783946635,
+      "p90": 0.059401723943026175,
+      "p99": 0.3615476517550563,
+      "max": 0.9878682146926647
+     },
+     "e2e": {
+      "mean": 18.075045391292377,
+      "p50": 14.81743306982625,
+      "p90": 29.430647181372212,
+      "p99": 120.80910081851316,
+      "max": 306.0225430335498
+     },
+     "hit_rate": 0.22864131517125266,
+     "preemptions": 91,
+     "prefill_tokens": 30864014,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 11.660276293554181,
+     "decision_us": {
+      "mean": 177.5606963987599,
+      "p50": 0,
+      "p90": 0,
+      "p99": 3094.1159999999973,
+      "max": 10425.6
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.26258992564071637,
+      "p50": 0.1340759870547592,
+      "p90": 0.7663540108601277,
+      "p99": 0.9292459689746795,
+      "max": 1.3794859784602334
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1262,
+       "busy": 1.0142645369339858,
+       "hit_rate": 0.24757937577797087,
+       "preemptions": 0,
+       "evictions": 14809,
+       "mean_batch_tokens": 255.61995394202114,
+       "prefill_tokens": 7111028,
+       "decode_tokens": 436918
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 522,
+       "busy": 1.044874558199711,
+       "hit_rate": 0.26043086897304024,
+       "preemptions": 91,
+       "evictions": 15017,
+       "mean_batch_tokens": 1138.9430764774045,
+       "prefill_tokens": 7408614,
+       "decode_tokens": 52718
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1172,
+       "busy": 1.0090905723835992,
+       "hit_rate": 0.23962971974240965,
+       "preemptions": 0,
+       "evictions": 15636,
+       "mean_batch_tokens": 282.2804495839187,
+       "prefill_tokens": 7447303,
+       "decode_tokens": 388520
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1237,
+       "busy": 1.013251104610904,
+       "hit_rate": 0.2422369923966222,
+       "preemptions": 0,
+       "evictions": 19445,
+       "mean_batch_tokens": 322.2679528403001,
+       "prefill_tokens": 8897069,
+       "decode_tokens": 423887
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1451,
+       "attainment": 0.7911784975878704
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1855,
+       "attainment": 0.8242587601078167
+      },
+      {
+       "label": "16k-64k",
+       "requests": 808,
+       "attainment": 0.6225247524752475
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 79,
+       "attainment": 0.02531645569620253
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.9998205
+   }
+  },
+  {
+   "policy": "abyss-oracle",
+   "scale": 1,
+   "seed": 2,
+   "result": {
+    "summary": {
+     "policy": "abyss-oracle",
+     "requests": 4180,
+     "completed": 3809,
+     "rejected": 0,
+     "timed_out": 371,
+     "good": 3137,
+     "duration_s": 1136.9989999999998,
+     "slo_attainment": 0.7504784688995215,
+     "ttft_attainment": 0.7787081339712919,
+     "tpot_attainment": 0.8399521531100479,
+     "token_weighted_attainment": 0.5607893650537549,
+     "goodput_rps": 2.7590173782034992,
+     "output_tok_s": 1105.5462669712113,
+     "ttft": {
+      "mean": 2.7642293233948783,
+      "p50": 1.0733749991401282,
+      "p90": 2.8454852879309787,
+      "p99": 38.12081333052395,
+      "max": 67.52267724365043
+     },
+     "tpot": {
+      "mean": 0.0510740121169909,
+      "p50": 0.039950447466949535,
+      "p90": 0.0621186917545819,
+      "p99": 0.40328887327190654,
+      "max": 0.7676061401528784
+     },
+     "e2e": {
+      "mean": 17.857814764779015,
+      "p50": 14.68711020410808,
+      "p90": 29.70277640829669,
+      "p99": 107.140665438983,
+      "max": 322.32131388868356
+     },
+     "hit_rate": 0.22823531550429352,
+     "preemptions": 140,
+     "prefill_tokens": 30396807,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 11.755649667106082,
+     "decision_us": {
+      "mean": 218.2137081339713,
+      "p50": 0,
+      "p90": 0,
+      "p99": 4563.2880000000005,
+      "max": 10253.4
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.2702927354226955,
+      "p50": 0.14554238795477883,
+      "p90": 0.7629333666842606,
+      "p99": 0.9294328656870774,
+      "max": 3.897955280315034
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1193,
+       "busy": 1.012873513759215,
+       "hit_rate": 0.2574560595550471,
+       "preemptions": 0,
+       "evictions": 14257,
+       "mean_batch_tokens": 257.08660024546964,
+       "prefill_tokens": 6739608,
+       "decode_tokens": 382205
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 581,
+       "busy": 1.0472314821364792,
+       "hit_rate": 0.28530017054055606,
+       "preemptions": 140,
+       "evictions": 18288,
+       "mean_batch_tokens": 1101.1697152118545,
+       "prefill_tokens": 9114565,
+       "decode_tokens": 76072
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1206,
+       "busy": 1.012619371135274,
+       "hit_rate": 0.26855161713972286,
+       "preemptions": 0,
+       "evictions": 13851,
+       "mean_batch_tokens": 247.66147664490205,
+       "prefill_tokens": 6495691,
+       "decode_tokens": 407625
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1200,
+       "busy": 1.009904668909817,
+       "hit_rate": 0.2629816035351488,
+       "preemptions": 0,
+       "evictions": 17622,
+       "mean_batch_tokens": 311.62885645667836,
+       "prefill_tokens": 8046943,
+       "decode_tokens": 387292
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1520,
+       "attainment": 0.8085526315789474
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1775,
+       "attainment": 0.7971830985915493
+      },
+      {
+       "label": "16k-64k",
+       "requests": 824,
+       "attainment": 0.5983009708737864
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 61,
+       "attainment": 0
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 1.1923075
+   }
+  },
+  {
+   "policy": "abyss-shed",
+   "scale": 1,
+   "seed": 0,
+   "result": {
+    "summary": {
+     "policy": "abyss-shed",
+     "requests": 3658,
+     "completed": 3397,
+     "rejected": 261,
+     "timed_out": 0,
+     "good": 2744,
+     "duration_s": 1199.999,
+     "slo_attainment": 0.7501366867140514,
+     "ttft_attainment": 0.8288682340076544,
+     "tpot_attainment": 0.8370694368507381,
+     "token_weighted_attainment": 0.6539668573104561,
+     "goodput_rps": 2.2866685722238103,
+     "output_tok_s": 982.2983185819321,
+     "ttft": {
+      "mean": 1.733691146000906,
+      "p50": 1.104934866268536,
+      "p90": 3.047335111056152,
+      "p99": 13.628301136612052,
+      "max": 43.06340176800495
+     },
+     "tpot": {
+      "mean": 0.05426057213367699,
+      "p50": 0.04087150791320764,
+      "p90": 0.0793077693849929,
+      "p99": 0.43413899817201484,
+      "max": 1.024247791483262
+     },
+     "e2e": {
+      "mean": 18.136373260235377,
+      "p50": 16.148593600019012,
+      "p90": 34.81102412303608,
+      "p99": 76.92768108175373,
+      "max": 160.8678736083882
+     },
+     "hit_rate": 0.20677031346341462,
+     "preemptions": 9,
+     "prefill_tokens": 33784646,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 13.573571715978227,
+     "decision_us": {
+      "mean": 196.00896664844166,
+      "p50": 0,
+      "p90": 0,
+      "p99": 4629.0629999999965,
+      "max": 10213
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.22974738687312002,
+      "p50": 0.10599910446864459,
+      "p90": 0.7222323639913032,
+      "p99": 0.9235436250917877,
+      "max": 1.5527571402938158
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 835,
+       "busy": 1.0138556456823578,
+       "hit_rate": 0.22734399644775005,
+       "preemptions": 0,
+       "evictions": 16176,
+       "mean_batch_tokens": 329.6088951935915,
+       "prefill_tokens": 7607690,
+       "decode_tokens": 292376
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 888,
+       "busy": 1.0191953660674191,
+       "hit_rate": 0.19908867524876706,
+       "preemptions": 0,
+       "evictions": 18286,
+       "mean_batch_tokens": 359.65454256670904,
+       "prefill_tokens": 8753803,
+       "decode_tokens": 303737
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1015,
+       "busy": 1.025439776469905,
+       "hit_rate": 0.23160946877959077,
+       "preemptions": 1,
+       "evictions": 20396,
+       "mean_batch_tokens": 354.1562317144529,
+       "prefill_tokens": 9327110,
+       "decode_tokens": 356938
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 659,
+       "busy": 1.0088092597522282,
+       "hit_rate": 0.18548899330069524,
+       "preemptions": 8,
+       "evictions": 16507,
+       "mean_batch_tokens": 405.5159167357286,
+       "prefill_tokens": 8096043,
+       "decode_tokens": 222305
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1131,
+       "attainment": 0.76657824933687
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1567,
+       "attainment": 0.7830248883216337
+      },
+      {
+       "label": "16k-64k",
+       "requests": 846,
+       "attainment": 0.7222222222222222
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 114,
+       "attainment": 0.34210526315789475
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 0.9331735
+   }
+  },
+  {
+   "policy": "abyss-shed",
+   "scale": 1,
+   "seed": 1,
+   "result": {
+    "summary": {
+     "policy": "abyss-shed",
+     "requests": 4193,
+     "completed": 3781,
+     "rejected": 410,
+     "timed_out": 2,
+     "good": 2893,
+     "duration_s": 1194,
+     "slo_attainment": 0.6899594562365848,
+     "ttft_attainment": 0.7832101120915812,
+     "tpot_attainment": 0.7877414738850466,
+     "token_weighted_attainment": 0.5796505841896649,
+     "goodput_rps": 2.4229480737018427,
+     "output_tok_s": 1097.5226130653266,
+     "ttft": {
+      "mean": 1.6770407056017562,
+      "p50": 1.128829240887967,
+      "p90": 3.0436187298812456,
+      "p99": 12.043913949292948,
+      "max": 48.37495714776156
+     },
+     "tpot": {
+      "mean": 0.06001710907207602,
+      "p50": 0.044078892384419824,
+      "p90": 0.0916729698471437,
+      "p99": 0.44540555344861765,
+      "max": 1.0938692223207787
+     },
+     "e2e": {
+      "mean": 19.575525019446435,
+      "p50": 16.983324189618543,
+      "p90": 38.30883787641915,
+      "p99": 81.63863112696595,
+      "max": 203.42134508436098
+     },
+     "hit_rate": 0.21886346518216102,
+     "preemptions": 21,
+     "prefill_tokens": 31680322,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 12.753800002316488,
+     "decision_us": {
+      "mean": 213.28015740519922,
+      "p50": 0,
+      "p90": 0,
+      "p99": 4023.8559999999993,
+      "max": 11539.2
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.23229138627475882,
+      "p50": 0.11264058460853961,
+      "p90": 0.6875697968596428,
+      "p99": 0.9195203975357903,
+      "max": 5.35341880217435
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 1054,
+       "busy": 1.0158283892354874,
+       "hit_rate": 0.256961080641363,
+       "preemptions": 1,
+       "evictions": 16587,
+       "mean_batch_tokens": 320.06746015735325,
+       "prefill_tokens": 7575819,
+       "decode_tokens": 357053
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 658,
+       "busy": 1.0144510911908264,
+       "hit_rate": 0.17629040936257964,
+       "preemptions": 7,
+       "evictions": 15315,
+       "mean_batch_tokens": 447.846969347776,
+       "prefill_tokens": 7538744,
+       "decode_tokens": 234088
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 1211,
+       "busy": 1.0122788259246671,
+       "hit_rate": 0.2577538978837407,
+       "preemptions": 0,
+       "evictions": 16335,
+       "mean_batch_tokens": 315.7339215138329,
+       "prefill_tokens": 7494329,
+       "decode_tokens": 414490
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 860,
+       "busy": 1.022429015063404,
+       "hit_rate": 0.2251063950578359,
+       "preemptions": 13,
+       "evictions": 18889,
+       "mean_batch_tokens": 435.9687877942134,
+       "prefill_tokens": 9071430,
+       "decode_tokens": 301027
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1451,
+       "attainment": 0.7174362508614749
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1855,
+       "attainment": 0.722911051212938
+      },
+      {
+       "label": "16k-64k",
+       "requests": 808,
+       "attainment": 0.6076732673267327
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 79,
+       "attainment": 0.25316455696202533
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 1.1703346
+   }
+  },
+  {
+   "policy": "abyss-shed",
+   "scale": 1,
+   "seed": 2,
+   "result": {
+    "summary": {
+     "policy": "abyss-shed",
+     "requests": 4180,
+     "completed": 3761,
+     "rejected": 419,
+     "timed_out": 0,
+     "good": 2932,
+     "duration_s": 1136.9989999999998,
+     "slo_attainment": 0.7014354066985646,
+     "ttft_attainment": 0.7904306220095694,
+     "tpot_attainment": 0.789712918660287,
+     "token_weighted_attainment": 0.611335400862604,
+     "goodput_rps": 2.578718187087236,
+     "output_tok_s": 1100.5146002766935,
+     "ttft": {
+      "mean": 1.6207636021581133,
+      "p50": 1.0476046087751456,
+      "p90": 2.949050757229543,
+      "p99": 12.055931775758104,
+      "max": 36.6677908768273
+     },
+     "tpot": {
+      "mean": 0.05855733707100522,
+      "p50": 0.043360273667341964,
+      "p90": 0.09001769457962308,
+      "p99": 0.3706428783444812,
+      "max": 1.1898852053266398
+     },
+     "e2e": {
+      "mean": 18.60650575452701,
+      "p50": 16.28566433706243,
+      "p90": 35.92039099740225,
+      "p99": 77.94824604704374,
+      "max": 217.15521206806557
+     },
+     "hit_rate": 0.22351139955115673,
+     "preemptions": 13,
+     "prefill_tokens": 31033147,
+     "cost_per_hour": 39.84,
+     "usd_per_m_good_tokens": 12.49868528008365,
+     "decision_us": {
+      "mean": 188.17296650717714,
+      "p50": 0,
+      "p90": 0,
+      "p99": 3113.481000000007,
+      "max": 10205.6
+     },
+     "pred_abs_rel_error": {
+      "mean": 0.25426774370240207,
+      "p50": 0.1163800763351194,
+      "p90": 0.7393766234276771,
+      "p99": 0.9314955760622236,
+      "max": 23.847113354388686
+     },
+     "replicas": [
+      {
+       "name": "H100 SXM x4",
+       "requests": 980,
+       "busy": 1.012703099899093,
+       "hit_rate": 0.2308055191415649,
+       "preemptions": 0,
+       "evictions": 14586,
+       "mean_batch_tokens": 318.79307631785997,
+       "prefill_tokens": 6973721,
+       "decode_tokens": 319627
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 988,
+       "busy": 1.0079584654990932,
+       "hit_rate": 0.2440538605490767,
+       "preemptions": 8,
+       "evictions": 19256,
+       "mean_batch_tokens": 418.7637179076472,
+       "prefill_tokens": 8820711,
+       "decode_tokens": 329695
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 836,
+       "busy": 1.0358538408267162,
+       "hit_rate": 0.20149142176566448,
+       "preemptions": 0,
+       "evictions": 14616,
+       "mean_batch_tokens": 360.8383992143383,
+       "prefill_tokens": 7067185,
+       "decode_tokens": 281289
+      },
+      {
+       "name": "H100 SXM x4",
+       "requests": 957,
+       "busy": 1.0094344962478394,
+       "hit_rate": 0.23390807712892664,
+       "preemptions": 5,
+       "evictions": 18180,
+       "mean_batch_tokens": 397.5290591485974,
+       "prefill_tokens": 8171530,
+       "decode_tokens": 316908
+      }
+     ],
+     "length_attainment": [
+      {
+       "label": "\u003c4k",
+       "requests": 1520,
+       "attainment": 0.7546052631578948
+      },
+      {
+       "label": "4k-16k",
+       "requests": 1775,
+       "attainment": 0.6963380281690141
+      },
+      {
+       "label": "16k-64k",
+       "requests": 824,
+       "attainment": 0.6480582524271845
+      },
+      {
+       "label": "\u003e64k",
+       "requests": 61,
+       "attainment": 0.2459016393442623
+      }
+     ]
+    },
+    "fleet": [
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4",
+     "H100 SXM x4"
+    ],
+    "wall_s": 1.0543211
+   }
+  }
+ ]
+}
