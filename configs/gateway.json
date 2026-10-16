@@ -1,0 +1,13 @@
+{
+  "listen": ":8080",
+  "policy": "abyss",
+  "slo": {"ttft_base_s": 0.5, "ttft_per_ktok_s": 0.12, "tpot_s": 0.04},
+  "block_bytes": 256,
+  "chars_per_token": 4,
+  "backends": [
+    {"name": "h100-a", "url": "http://localhost:9001", "model": "llama-3.1-8b", "hardware": "h100", "tp": 1, "scrape_metrics": true},
+    {"name": "h100-b", "url": "http://localhost:9002", "model": "llama-3.1-8b", "hardware": "h100", "tp": 1, "scrape_metrics": true},
+    {"name": "h100-c", "url": "http://localhost:9003", "model": "llama-3.1-8b", "hardware": "h100", "tp": 1, "scrape_metrics": true},
+    {"name": "a100-d", "url": "http://localhost:9004", "model": "llama-3.1-8b", "hardware": "a100", "tp": 1, "scrape_metrics": true}
+  ]
+}
